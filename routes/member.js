@@ -1,8 +1,13 @@
 var express = require('express');
 var router = express.Router();
 
+var db = require('../public/javascripts/member')();
+
 router.get('/', function (req, res, next) {
-    res.send("member test");
+    db.select(function(err, result){
+        if(err) console.log(err);
+        else res.send(result);
+    });
 });
 
 router.post('/', function (req, res){
