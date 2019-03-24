@@ -12,9 +12,9 @@ module.exports = function () {
                 });
             });
         },
-        insert: function (b_id, w_id, empname, phno) {
+        insert: function (u_id, u_pw) {
             pool.getConnection(function (err, con) {
-                var sql = `insert into beacon (b_id, w_id, empname, phno) values ('${b_id}', '${w_id}', '${empname}', '${phno}')`;
+                var sql = `insert into member (u_id, u_pw) values ('${u_id}', '${u_pw}')`;
                 con.query(sql, function (err, result) {
                     con.release();
                     if (err) console.log(err);
