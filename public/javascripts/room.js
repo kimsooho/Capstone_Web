@@ -4,7 +4,7 @@ module.exports = function () {
     return {
         select: function (callback) {
             pool.getConnection(function (err, con) {
-                var sql = 'select * from member';
+                var sql = 'select * from room';
                 con.query(sql, function (err, result, fields) {
                     con.release();
                     if (err) return callback(err);
@@ -12,9 +12,9 @@ module.exports = function () {
                 });
             });
         },
-        insert: function (u_id, u_pw) {
+        insert: function (r_id, u_id, txt) {
             pool.getConnection(function (err, con) {
-                var sql = `insert into member (u_id, u_pw) values ('${u_id}', '${u_pw}')`;
+                var sql = `insert into room (r_id, u_id, txt, chat_time) values ('${r_id}', '${u_id}', '${txt}', NOW())`;
                 con.query(sql, function (err, result) {
                     con.release();
                     if (err) console.log(err);

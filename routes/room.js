@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var db = require('../public/javascripts/chat.js')();
+var db = require('../public/javascripts/room.js')();
 
 router.get('/', function (req, res, next) {
     db.select(function(err, result){
@@ -10,10 +10,9 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res){
-    var str = "전송 ID : " + req.body.u_id + "\n전송 텍스트 : " + req.body.txt;
-    var dt = "2019-03-27";
-    db.insert(req.body.u_id, req.body.txt, dt);
-    res.send(str + " " + dt );
+    var str = "방 번호 : " + req.body.r_id + "\n전송 ID : " + req.body.u_id + "\n전송 텍스트 : " + req.body.txt;
+    db.insert(req.body.r_id, req.body.u_id, req.body.txt);
+    res.send(str);
     console.log(str);
 });
 

@@ -9,6 +9,7 @@ var usersRouter = require('./routes/users');
 
 var chatRouter = require('./routes/chat');
 var memberRouter = require('./routes/member');
+var roomRouter = require('./routes/room');
 
 var app = express();
 
@@ -26,6 +27,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/chat', chatRouter);
 app.use('/member', memberRouter);
+app.use('/room', roomRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -39,7 +41,7 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
-  res.status(err.status || 80 );
+  res.status(err.status || 500 );
   res.render('error');
 });
 
