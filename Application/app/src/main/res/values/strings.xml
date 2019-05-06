@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">capstone</string>
+    <color name="background">#203864</color>
+    <color name="textcolor">#FFC000</color>
+</resources>
