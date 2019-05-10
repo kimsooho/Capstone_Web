@@ -1,4 +1,4 @@
-package com.example.capstone;
+package com.example.capstone.Item;
 
 
 import android.graphics.drawable.Drawable;

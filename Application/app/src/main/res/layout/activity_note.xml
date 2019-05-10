@@ -18,19 +18,13 @@
 
 
 
-        ]]></FrameLayout>
+        ]]></FrameLayout><![CDATA[
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="293dp"
-        android:layout_height="66dp"
-        android:layout_marginStart="68dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/listening_green"
-        tools:layout_editor_absoluteY="322dp" /><![CDATA[
+
 
 
     >
+
 
 
 ]]>

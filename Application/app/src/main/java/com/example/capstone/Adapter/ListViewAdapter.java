@@ -1,4 +1,4 @@
-package com.example.capstone;
+package com.example.capstone.Adapter;
 
 
 import android.content.Context;
@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.capstone.Item.ListViewItem;
+import com.example.capstone.R;
 
 import java.util.ArrayList;
 

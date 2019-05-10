@@ -1,4 +1,4 @@
-package com.example.capstone;
+package com.example.capstone.Activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
+
+import com.example.capstone.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,7 +15,6 @@ import org.json.JSONObject;
 
 import self.philbrown.droidQuery.$;
 import self.philbrown.droidQuery.AjaxOptions;
-import self.philbrown.droidQuery.Callbacks;
 import self.philbrown.droidQuery.Function;
 
 public class LoginActivity extends AppCompatActivity {
