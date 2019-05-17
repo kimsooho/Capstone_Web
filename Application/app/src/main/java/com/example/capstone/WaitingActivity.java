@@ -38,7 +38,7 @@ public class WaitingActivity extends AppCompatActivity {
     }
 
     public void startConference(View view)
-    {
+    { //
         Intent intent=new Intent(WaitingActivity.this,ConferenceActivity.class);
         startActivity(intent);
         overridePendingTransition(0,0);
