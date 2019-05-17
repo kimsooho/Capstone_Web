@@ -18,7 +18,7 @@
         </activity>
         <activity android:name=".Activity.ConferenceActivity"/>
         <activity android:name=".Activity.CloseActivity"/>
-        <activity android:name=".Activity.ChannelListActivity"/>
+        <activity android:name=".Activity.ChannelListActivity" android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".Activity.JoinActivity"/>
         <activity android:name=".Activity.MakeChannelActivity"/>
         <activity android:name=".Activity.NoteActivity"/>

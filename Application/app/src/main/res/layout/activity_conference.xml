@@ -25,7 +25,8 @@
             android:id="@+id/listView_dialogue"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:stackFromBottom="true"/>
 
         <LinearLayout
             android:layout_width="match_parent"
