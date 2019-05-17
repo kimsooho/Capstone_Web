@@ -9,20 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".Activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ChannelListActivity"></activity>
-        <activity android:name=".WaitingActivity"></activity>
-        <activity android:name=".ConferenceActivity"></activity>
-        <activity android:name=".NoteActivity"></activity>
-        <activity android:name=".CloseActivity"></activity>
-        <activity android:name=".JoinActivity"></activity>
-        <activity android:name=".MakeChannelActivity"></activity>
+        <activity android:name=".Activity.ConferenceActivity"/>
+        <activity android:name=".Activity.CloseActivity"/>
+        <activity android:name=".Activity.ChannelListActivity"/>
+        <activity android:name=".Activity.JoinActivity"/>
+        <activity android:name=".Activity.MakeChannelActivity"/>
+        <activity android:name=".Activity.NoteActivity"/>
+        <activity android:name=".Activity.WaitingActivity"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>
