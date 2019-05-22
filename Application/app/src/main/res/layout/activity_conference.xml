@@ -34,20 +34,18 @@
             android:layout_weight="8"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/editText4"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Name" />
+                android:text="발언권" />
 
             <ImageButton
                 android:id="@+id/btn_stop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="9"
+                android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:onClick="stopConference"
                 android:scaleType="fitCenter"
