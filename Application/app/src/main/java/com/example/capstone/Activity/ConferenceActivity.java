@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.capstone.Adapter.DialogueViewAdapter;
+import com.example.capstone.Popup.PeoplePopup;
 import com.example.capstone.R;
 
 //회의화면
@@ -74,6 +75,13 @@ public class ConferenceActivity extends AppCompatActivity {
         //값보내기
         //       goList.putExtra("key", editID.getText().toString());
         startActivity(goClose);
+    }
+
+    public void checkPeople(View v){ //btn_people
+        Intent goCheck = new Intent(ConferenceActivity.this, PeoplePopup.class);
+        //값보내기
+        //       goList.putExtra("key", editID.getText().toString());
+        startActivity(goCheck);
     }
 
     @Override

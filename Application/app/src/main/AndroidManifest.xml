@@ -23,6 +23,8 @@
         <activity android:name=".Activity.MakeChannelActivity"/>
         <activity android:name=".Activity.NoteActivity"/>
         <activity android:name=".Activity.WaitingActivity"/>
+        <activity android:name=".Popup.PeoplePopup" android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".Popup.SettingPopup" android:theme="@android:style/Theme.Dialog"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

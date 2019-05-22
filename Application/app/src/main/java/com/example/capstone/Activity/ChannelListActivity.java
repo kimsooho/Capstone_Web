@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.capstone.Adapter.ListViewAdapter;
+import com.example.capstone.Popup.SettingPopup;
 import com.example.capstone.R;
 
 public class ChannelListActivity extends AppCompatActivity {
@@ -64,5 +65,11 @@ public class ChannelListActivity extends AppCompatActivity {
         //값보내기
         //       goList.putExtra("key", editID.getText().toString());
         startActivity(goMake);
+    }
+    public void Setting(View v) {
+        Intent goSetting = new Intent(ChannelListActivity.this, SettingPopup.class);
+        //값보내기
+        //       goList.putExtra("key", editID.getText().toString());
+        startActivity(goSetting);
     }
 }
