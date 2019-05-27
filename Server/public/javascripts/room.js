@@ -12,9 +12,9 @@ module.exports = function () {
                 });
             });
         },
-        insert: function (title, pwd) {
+        insert: function (title, pwd, make_member) {
             pool.getConnection(function (err, con) {
-                var sql = `insert into room (title, room_pwd, status, make_time) values ('${title}', '${pwd}', 0, NOW())`;
+                var sql = `insert into room (title, room_pwd, status, make_time, make_member) values ('${title}', '${pwd}', 0, NOW(), '${make_member}')`;
                 con.query(sql, function (err, result) {
                     con.release();
                     if (err) console.log(err);

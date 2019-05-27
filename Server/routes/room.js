@@ -11,7 +11,7 @@ router.get('/', function (req, res, next) {
 
 router.post('/', function (req, res){
     var str = "방 제목 : " + req.body.title + "\n방 비밀번호 : " + req.body.pwd;
-    db.insert(req.body.title, req.body.pwd);
+    db.insert(req.body.title, req.body.pwd, req.body.make_member);
     res.send(str);
     console.log(str);
 });
