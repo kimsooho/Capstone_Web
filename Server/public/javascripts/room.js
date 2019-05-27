@@ -53,13 +53,33 @@ module.exports = function () {
                             if(err_) console.log(err_);                            
                         });
                     }else{
-                        sql = `UPDATE join_user SET status = 0 WHERE room_id = '${room_id}' AND member_id = '${member_id}'`;
+                        sql = `UPDATE join_user SET status = 0 WHERE room_id = ${room_id} AND member_id = '${member_id}'`;
                         con.query(sql, function(err__, result__){
                             if(err__) console.log(err__);                            
                         });
                     }
                 });
                 con.release();
+            });
+        },
+        roomOut : function(room_id, member_id){
+            pool.getConnection(function (err, con) {
+                var sql = `UPDATE room SET status = 1 WHERE room_id = ${room_id} AND member_id = '${member_id}'`;
+                con.query(sql, function (err, result) {
+                    con.release();
+                    if (err) console.log(err);
+                    else console.log('방 나가기');
+                });
+            });
+        },
+        roomEnd : function(room_id, member_id){
+            pool.getConnection(function (err, con) {
+                var sql = `UPDATE room SET status = 2 WHERE room_id = ${room_id} AND member_id = '${member_id}'`;
+                con.query(sql, function (err, result) {
+                    con.release();
+                    if (err) console.log(err);
+                    else console.log('회의 종료');
+                });
             });
         },
         pool: pool
