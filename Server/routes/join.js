@@ -18,7 +18,7 @@ router.post('/roomout', function(req, res){
 });
 
 router.post('/roomend', function(req, res){
-    db.roomOut(req.body.room_id, req.body.member_id);
+    db.roomEnd(req.body.room_id, req.body.member_id);
     res.send("회의 종료");
 });
 

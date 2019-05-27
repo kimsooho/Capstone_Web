@@ -82,6 +82,16 @@ module.exports = function () {
                 });
             });
         },
-        pool: pool
+        roomList: function (title, callback) {
+            pool.getConnection(function (err, con) {
+                var sql = `SELECT * FROM room WHERE title LIKE "%${title}%" AND room.status <> 2`;
+                con.query(sql, function (err, result, fields) {
+                    con.release();
+                    if (err) return callback(err);
+                    callback(null, result);
+                });
+            });
+        },
+        pool: pool        
     }
 };
