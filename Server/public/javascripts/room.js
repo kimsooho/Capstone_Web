@@ -14,11 +14,31 @@ module.exports = function () {
         },
         insert: function (title, pwd) {
             pool.getConnection(function (err, con) {
-                var sql = `insert into room (title, room_pwd, status) values ('${title}', '${pwd}', 0)`;
+                var sql = `insert into room (title, room_pwd, status, make_time) values ('${title}', '${pwd}', 0, NOW())`;
                 con.query(sql, function (err, result) {
                     con.release();
                     if (err) console.log(err);
                     else console.log('입력 성공');
+                });
+            });
+        },
+        conferenceStart : function(id){
+            pool.getConnection(function (err, con) {
+                var sql = `UPDATE room SET status = 1 WHERE room_id = ${id}`;
+                con.query(sql, function (err, result) {
+                    con.release();
+                    if (err) console.log(err);
+                    else console.log('회의 시작');
+                });
+            });
+        },
+        conferenceEnd : function(id){
+            pool.getConnection(function (err, con) {
+                var sql = `UPDATE room SET status = 2 WHERE room_id = ${id}`;
+                con.query(sql, function (err, result) {
+                    con.release();
+                    if (err) console.log(err);
+                    else console.log('회의 종료');
                 });
             });
         },

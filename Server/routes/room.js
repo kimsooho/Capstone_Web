@@ -16,4 +16,14 @@ router.post('/', function (req, res){
     console.log(str);
 });
 
+router.post('/start', function(req, res){
+    db.conferenceStart(req.body.room_id);
+    res.send(" ");
+});
+
+router.post('/end', function(req, res){
+    db.conferenceEnd(req.body.room_id);
+    res.send(" ");
+});
+
 module.exports = router;
