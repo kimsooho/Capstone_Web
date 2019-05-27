@@ -29,6 +29,7 @@ public class MakeChannelActivity extends Activity {
     public void MakeChannel(View view) //activity_make_channel 의 btn_create
     {
         Intent waitingIntent=new Intent(MakeChannelActivity.this,WaitingActivity.class);
+        waitingIntent.putExtra("구분","fromMakeChannel");
         startActivity(waitingIntent);
     }
     public void MakeCancel(View view) //activity_make_channel 의 btn_cancel
