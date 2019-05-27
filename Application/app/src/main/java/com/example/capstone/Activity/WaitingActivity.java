@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.example.capstone.R;
@@ -20,8 +21,14 @@ public class WaitingActivity extends AppCompatActivity {
         activity = WaitingActivity.this;
 
         //이전 액티비티 종료
-        MakeChannelActivity makeChannelActivity = (MakeChannelActivity)MakeChannelActivity.createChannelActivity;
-        makeChannelActivity.finish();
+       /*Intent intent = getIntent();
+       if(intent.getExtras().getString("구분") == "formMakeChannel" )
+       {
+           Log.d("Debug","---");
+           MakeChannelActivity makeChannelActivity = (MakeChannelActivity)MakeChannelActivity.createChannelActivity;
+           makeChannelActivity.finish();
+       }*/
+
 
 
         //Button btn=(Button)findViewById(R.id.button2);

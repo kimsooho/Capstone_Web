@@ -12,7 +12,10 @@ import com.example.capstone.Adapter.ListViewAdapter;
 import com.example.capstone.Popup.SettingPopup;
 import com.example.capstone.R;
 
+
+
 public class ChannelListActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,22 +38,14 @@ public class ChannelListActivity extends AppCompatActivity {
 
         // 첫 번째 아이템 추가.
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.main), ContextCompat.getDrawable(this, R.drawable.green),
-                "노터 마케팅 1팀", 6,"최유진 조영태 등등") ;
+                "노터 마케팅 1팀", "최유진 조영태 등등", 5) ;
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-                //이부분에 채널 목록을 클릭했을때 이벤트 작성하면됨    채널목록->회의대기 상태
-                waiting(v);
-                // get item 해당 채널 데이터 받아오는 구문  수정 필요 일단 지우지망
-/*            ListViewItem item = (ListViewItem) parent.getItemAtPosition(position) ;
-
-                String titleStr = item.getTitle() ;
-                String descStr = item.getDesc() ;
-                Drawable iconDrawable = item.getIcon() ;
-*/
-
-                //Log.d("debug", "dd");
+                Intent waitingIntent=new Intent(ChannelListActivity.this,WaitingActivity.class);
+                waitingIntent.putExtra("구분", "fromChannelList");
+                startActivity(waitingIntent);
             }
         });
     }
@@ -71,5 +66,10 @@ public class ChannelListActivity extends AppCompatActivity {
         //값보내기
         //       goList.putExtra("key", editID.getText().toString());
         startActivity(goSetting);
+    }
+    public void  ChannelClick(View v)
+    {
+
+
     }
 }
