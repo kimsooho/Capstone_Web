@@ -10,8 +10,8 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res){
-    var str = "방 번호 : " + req.body.r_id + "\n전송 ID : " + req.body.u_id + "\n전송 텍스트 : " + req.body.txt;
-    db.insert(req.body.r_id, req.body.u_id, req.body.txt);
+    var str = "방 제목 : " + req.body.title + "\n방 비밀번호 : " + req.body.pwd;
+    db.insert(req.body.title, req.body.pwd);
     res.send(str);
     console.log(str);
 });
