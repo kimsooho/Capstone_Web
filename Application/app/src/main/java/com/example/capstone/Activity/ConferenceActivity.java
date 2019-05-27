@@ -15,9 +15,12 @@ import com.example.capstone.Adapter.DialogueViewAdapter;
 import com.example.capstone.Popup.PeoplePopup;
 import com.example.capstone.R;
 
+import java.nio.channels.InterruptedByTimeoutException;
+
 //회의화면
 public class ConferenceActivity extends AppCompatActivity {
     public static Activity activity;
+    public int roomNum;
 
     DialogueViewAdapter adapter;
 
@@ -26,6 +29,10 @@ public class ConferenceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conference);
         activity = ConferenceActivity.this;
+
+        Intent intent = getIntent();
+        roomNum = intent.getExtras().getInt("RoomNum");
+
         //이전 액티비티 종료
         WaitingActivity waitingActivity = (WaitingActivity) WaitingActivity.activity;
         waitingActivity.finish();
@@ -61,14 +68,8 @@ public class ConferenceActivity extends AppCompatActivity {
         });
     }
 
-    public void stopConference(View v) {
-/*
-        EditText edit = (EditText) findViewById(R.id.editText4);
+    public void stopConference(View v) {//btn_stop
 
-        adapter.addDialogue("조영태","04/10",edit.getText().toString()); ;
-
-        adapter.notifyDataSetChanged(); //갱신
-        */
         Intent goClose = new Intent(ConferenceActivity.this, CloseActivity.class);
 
         Log.d("dbug","스탑 버튼");
@@ -77,12 +78,22 @@ public class ConferenceActivity extends AppCompatActivity {
         startActivity(goClose);
     }
 
-    public void checkPeople(View v){ //btn_people
+    public void checkPeople_con(View v){ //btn_people_conference
         Intent goCheck = new Intent(ConferenceActivity.this, PeoplePopup.class);
         //값보내기
-        //       goList.putExtra("key", editID.getText().toString());
+        goCheck.putExtra("RoomNum", roomNum);
         startActivity(goCheck);
     }
+    public void Say(View v) //btn_say
+    {
+        /*stt*/
+/*
+        adapter.addDialogue("조영태","04/10", "대화내용");
+        adapter.notifyDataSetChanged(); //갱신
+*/
+    }
+
+
 
     @Override
     public void onBackPressed() {

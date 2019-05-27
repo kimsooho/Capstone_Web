@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.example.capstone.Popup.PeoplePopup;
 import com.example.capstone.R;
 
 //회의대기 화면
@@ -45,10 +46,17 @@ public class WaitingActivity extends AppCompatActivity {
         });*/
     }
 
-    public void startConference(View view)
+    public void startConference(View view)//btn_play
     {
         Intent intent=new Intent(WaitingActivity.this,ConferenceActivity.class);
+        intent.putExtra("RoomNum", roomNum);
         startActivity(intent);
         overridePendingTransition(0,0);
+    }
+    public void checkPeople_wait(View v){ //btn_people_waiting
+        Intent goCheck = new Intent(WaitingActivity.this, PeoplePopup.class);
+        //값보내기
+        goCheck.putExtra("RoomNum", roomNum);
+        startActivity(goCheck);
     }
 }

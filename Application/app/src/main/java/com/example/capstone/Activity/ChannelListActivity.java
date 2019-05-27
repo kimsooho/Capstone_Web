@@ -16,15 +16,15 @@ import com.example.capstone.R;
 
 public class ChannelListActivity extends AppCompatActivity {
 
+    public static String id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel_list);
         Intent intent=new Intent(this.getIntent());
-        //값 받아오기
-        //String s=intent.getExtras().getString("key");
-        //로그찍기
-        //Log.d("debug", s);
+
+        id =intent.getExtras().getString("ID");
 
         ListView listview ;
         ListViewAdapter adapter;

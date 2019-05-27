@@ -48,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                         String result=objects[0].toString();
                         Log.d("test",objects[0].toString());
                         if(result.equals("success")){
+                            goList.putExtra("ID", editID.getText());
                             startActivity(goList);
                         }
                         else{
