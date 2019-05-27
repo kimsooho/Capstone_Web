@@ -64,7 +64,7 @@ module.exports = function () {
         },
         roomOut : function(room_id, member_id){
             pool.getConnection(function (err, con) {
-                var sql = `UPDATE room SET status = 1 WHERE room_id = ${room_id} AND member_id = '${member_id}'`;
+                var sql = `UPDATE join_user SET status = 1 WHERE room_id = ${room_id} AND member_id = '${member_id}'`;
                 con.query(sql, function (err, result) {
                     con.release();
                     if (err) console.log(err);
@@ -74,7 +74,7 @@ module.exports = function () {
         },
         roomEnd : function(room_id, member_id){
             pool.getConnection(function (err, con) {
-                var sql = `UPDATE room SET status = 2 WHERE room_id = ${room_id} AND member_id = '${member_id}'`;
+                var sql = `UPDATE join_user SET status = 2 WHERE room_id = ${room_id} AND member_id = '${member_id}'`;
                 con.query(sql, function (err, result) {
                     con.release();
                     if (err) console.log(err);
