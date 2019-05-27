@@ -67,9 +67,9 @@ public class ChannelListActivity extends AppCompatActivity {
         //       goList.putExtra("key", editID.getText().toString());
         startActivity(goSetting);
     }
-    public void  ChannelClick(View v)
+
+    public void search(View v)
     {
-
-
+        
     }
 }
