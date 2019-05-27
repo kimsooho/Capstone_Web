@@ -33,6 +33,17 @@ module.exports = function () {
                 });
             });
         },
+        checkid: function (id, callback) {
+            pool.getConnection(function (err, con) {
+                var sql = `SELECT count(*) id_check FROM member WHERE id = '${id}' `;
+                con.query(sql, function (err, result) {
+                    con.release();
+                    if(err) return callback(err);
+                    else if(result[0].id_check==0) callback(null, "success");
+                    else callback(null, "fail");
+                });
+            });
+        },
         pool: pool
     }
 };

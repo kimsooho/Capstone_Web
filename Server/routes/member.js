@@ -17,4 +17,11 @@ router.post('/', function (req, res){
     console.log(str);
 });
 
+router.post('/checkid', function(req, res){
+    db.checkid(req.body.id, function(err, result){
+        res.send(result)
+    });
+    
+});
+
 module.exports = router;

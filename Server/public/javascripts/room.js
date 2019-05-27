@@ -42,6 +42,16 @@ module.exports = function () {
                 });
             });
         },
+        roomJoin : function(room_id, member_id){
+            pool.getConnection(function (err, con) {
+                var sql = `insert into join_user (room_id, member_id, status) values ('${room_id}', '${member_id}', 0)`;
+                con.query(sql, function (err, result) {
+                    con.release();
+                    if (err) console.log(err);
+                    else console.log('접속 성공');
+                });
+            });
+        },
         pool: pool
     }
 };
