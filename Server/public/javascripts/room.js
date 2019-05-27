@@ -44,12 +44,22 @@ module.exports = function () {
         },
         roomJoin : function(room_id, member_id){
             pool.getConnection(function (err, con) {
-                var sql = `insert into join_user (room_id, member_id, status) values ('${room_id}', '${member_id}', 0)`;
-                con.query(sql, function (err, result) {
-                    con.release();
+                var sql = `SELECT count(*) cnt FROM join_user WHERE room_id = '${room_id}' AND member_id = '${member_id}'`;
+                con.query(sql, function (err, result) {                    
                     if (err) console.log(err);
-                    else console.log('접속 성공');
+                    else if(result[0].cnt == 0){ // 회의에 첫 참가
+                        sql = `insert into join_user (room_id, member_id, status) values (${room_id}, '${member_id}', 0)`;
+                        con.query(sql, function(err_, result_){
+                            if(err_) console.log(err_);                            
+                        });
+                    }else{
+                        sql = `UPDATE join_user SET status = 0 WHERE room_id = '${room_id}' AND member_id = '${member_id}'`;
+                        con.query(sql, function(err__, result__){
+                            if(err__) console.log(err__);                            
+                        });
+                    }
                 });
+                con.release();
             });
         },
         pool: pool

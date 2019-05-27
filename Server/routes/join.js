@@ -8,7 +8,8 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res){
-    res.send("z");
+    db.roomJoin(req.body.room_id, req.body.member_id);
+    res.send("참가");
 });
 
 module.exports = router;
