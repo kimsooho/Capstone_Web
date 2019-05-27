@@ -26,7 +26,7 @@ router.post('/end', function(req, res){
     res.send(" ");
 });
 
-router.post('roomlist',function(req, res){
+router.post('/roomlist',function(req, res){
     db.roomList(req.body.title, function(err, result){
         res.send(result);
     });
