@@ -12,7 +12,7 @@ router.post('/', function (req, res){
     db.login(req.body.id, req.body.pwd, function(err, result){
         if(result=="success"){
             res.send("success");
-            console.log(req.body.u_id + "접속");
+            console.log(req.body.id + "접속");
         }else{
             res.send("fail");
         }
