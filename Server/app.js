@@ -31,7 +31,7 @@ app.use('/chat', chatRouter);
 app.use('/member', memberRouter);
 app.use('/login', loginRouter);
 app.use('/room', roomRouter);
-app.use('join', joinRouter);
+app.use('/join', joinRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
