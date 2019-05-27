@@ -12,12 +12,12 @@ router.post('/', function (req, res){
     res.send("참가");
 });
 
-router.post('roomOut', function(req, res){
+router.post('/roomOut', function(req, res){
     db.roomOut(req.body.room_id, req.body.member_id);
     res.send("나가기");
 });
 
-router.post('roomEnd', function(req, res){
+router.post('/roomEnd', function(req, res){
     db.roomOut(req.body.room_id, req.body.member_id);
     res.send("회의 종료");
 });
