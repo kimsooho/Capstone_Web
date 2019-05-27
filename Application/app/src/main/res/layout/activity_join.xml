@@ -47,6 +47,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5" />
 
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="중복체크" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5" />
+
         <EditText
             android:id="@+id/edit_pw"
             android:layout_width="match_parent"
