@@ -10,6 +10,7 @@ router.get('/', function(req, res){
 router.post('/', function (req, res){    
     console.log(req.ip);
     db.login(req.body.id, req.body.pwd, function(err, result){
+        console.log(req.body.id + " : " + req.body.pwd);
         if(result=="success"){
             res.send("success");
             console.log(req.body.id + "접속");
