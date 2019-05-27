@@ -16,15 +16,15 @@ import com.example.capstone.R;
 
 public class ChannelListActivity extends AppCompatActivity {
 
+    public static String id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel_list);
         Intent intent=new Intent(this.getIntent());
-        //값 받아오기
-        //String s=intent.getExtras().getString("key");
-        //로그찍기
-        //Log.d("debug", s);
+
+        id =intent.getExtras().getString("ID");
 
         ListView listview ;
         ListViewAdapter adapter;
@@ -44,7 +44,7 @@ public class ChannelListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 Intent waitingIntent=new Intent(ChannelListActivity.this,WaitingActivity.class);
-                waitingIntent.putExtra("구분", "fromChannelList");
+                waitingIntent.putExtra("RoomNum",1);
                 startActivity(waitingIntent);
             }
         });
@@ -67,9 +67,9 @@ public class ChannelListActivity extends AppCompatActivity {
         //       goList.putExtra("key", editID.getText().toString());
         startActivity(goSetting);
     }
-    public void  ChannelClick(View v)
+
+    public void search(View v)//검색 버튼 누르면 시작
     {
-
-
+        /*검색어가 포함된 방들의 타이틀, 방 만든사람, 방번호 다 가져와야함*/
     }
 }

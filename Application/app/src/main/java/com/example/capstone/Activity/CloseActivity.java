@@ -70,6 +70,13 @@ public class CloseActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
+        Intent intent = new Intent(CloseActivity.this, ChannelListActivity.class);
+        startActivity(intent);
+        //        super.onBackPressed();
+    }
+    public void home(View v)//btn_home
+    {
+        Intent intent = new Intent(CloseActivity.this, ChannelListActivity.class);
+        startActivity(intent);
     }
 }

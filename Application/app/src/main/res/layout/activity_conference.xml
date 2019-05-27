@@ -35,7 +35,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btn_people_conference"
                 android:layout_width="46dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -43,7 +43,7 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:background="@drawable/user"
-                android:onClick="checkPeople"
+                android:onClick="checkPeople_con"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/imageView3"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -67,7 +67,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btn_say"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

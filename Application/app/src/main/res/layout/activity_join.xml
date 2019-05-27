@@ -34,7 +34,7 @@
             android:layout_weight="0.5" />
 
         <EditText
-            android:id="@+id/edit__name"
+            android:id="@+id/edit__id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
@@ -47,28 +47,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5" />
 
-        <EditText
-            android:id="@+id/edit_phon_num"
+        <Button
+            android:id="@+id/button3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:background="@drawable/join_phone_number"
-            android:ems="10"
-            android:inputType="textPersonName" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5" />
-
-        <EditText
-            android:id="@+id/edit_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:background="@drawable/id"
-            android:ems="10"
-            android:inputType="textPersonName" />
+            android:text="중복체크" />
 
         <Space
             android:layout_width="match_parent"
