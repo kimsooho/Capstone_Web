@@ -51,7 +51,6 @@ public class ListViewAdapter extends BaseAdapter {
         ImageView mainImage = (ImageView) convertView.findViewById(R.id.image_main) ;
         ImageView stateImage = (ImageView) convertView.findViewById(R.id.image_state) ;
         TextView titleText = (TextView) convertView.findViewById(R.id.text_title) ;
-        TextView numText = (TextView) convertView.findViewById(R.id.text_num) ;
         TextView peopleText = (TextView) convertView.findViewById(R.id.text_people) ;
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
@@ -61,7 +60,6 @@ public class ListViewAdapter extends BaseAdapter {
         mainImage.setImageDrawable(listViewItem.getIcon());
         stateImage.setImageDrawable(listViewItem.getState());
         titleText.setText(listViewItem.getTitle());
-        numText.setText(Integer.toString(listViewItem.getPeopleNum()));
         peopleText.setText(listViewItem.getPeople());
 
         return convertView;
@@ -82,14 +80,14 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Drawable icon, Drawable state, String title, int num, String people) {
+    public void addItem(Drawable icon, Drawable state, String title, String people, int num) {
         ListViewItem item = new ListViewItem();
 
         item.setIcon(icon);
         item.setState(state);
         item.setTitle(title);
-        item.setPeopleNum(num);
         item.setPeople(people);
+        item.setRoomNum(num);
 
         listViewItemList.add(item);
     }
