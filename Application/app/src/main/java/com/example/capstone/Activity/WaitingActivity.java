@@ -13,7 +13,7 @@ import com.example.capstone.R;
 //회의대기 화면
 public class WaitingActivity extends AppCompatActivity {
     public static Activity activity;
-
+    public int roomNum;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +21,10 @@ public class WaitingActivity extends AppCompatActivity {
         activity = WaitingActivity.this;
 
         //이전 액티비티 종료
-       /*Intent intent = getIntent();
+       Intent intent = getIntent();
+       roomNum = intent.getExtras().getInt("RoomNum");
+
+/*
        if(intent.getExtras().getString("구분") == "formMakeChannel" )
        {
            Log.d("Debug","---");
