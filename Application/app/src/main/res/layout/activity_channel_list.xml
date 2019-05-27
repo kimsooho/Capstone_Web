@@ -83,7 +83,8 @@
                 android:layout_weight="8"
                 android:background="@drawable/search"
                 android:padding="10dp"
-                tools:background="@drawable/search" />
+                tools:background="@drawable/search"
+                android:onClick="search"/>
 
         </LinearLayout>
 
