@@ -22,12 +22,13 @@ module.exports = function () {
                                     FROM room 
                                     WHERE title = '${title}' AND make_member = '${make_member}' AND room_pwd = '${pwd}'
                                     ORDER BY room_id DESC`;
-                        con.query(sql, function (err, result) {
-                            con.release();
-                            if(err) return callback(null, "fail");
+                        con.query(sql, function (err, result) {                            
+                            console.log(result[0].room_id + " : zzzz");
+                            if(err) return callback(null, "fail");                            
                             else {
-                                callback(null, result[0].room_id);
+                                callback(null, result[0].room_id);                                
                             }
+                            con.release();
                         });
                     }
                 });
