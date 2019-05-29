@@ -1,6 +1,7 @@
+import {PythonShell} from 'python-shell';
 var express = require('express');
 var router = express.Router();
-import {PythonShell} from 'python-shell';
+
 
 
 
