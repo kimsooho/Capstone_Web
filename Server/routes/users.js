@@ -22,10 +22,8 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/test', function (req, res) {
-  PythonShell.run('test.py', options, function (err, results) {
-    if (err) throw err;
-    console.log('results: %j', results);
-    res.send(results);
+  shell.PythonShell.runString('print ("123")', null, function (err) {    
+    res.send("f");
   });
 });
 
