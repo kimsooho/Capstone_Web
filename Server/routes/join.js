@@ -22,4 +22,10 @@ router.post('/roomend', function(req, res){
     res.send("회의 종료");
 });
 
+router.post('/joinusers', function(req, res){
+    db.users(req.body.room_id, function(err, result){
+        res.send(result);
+    });
+});
+
 module.exports = router;

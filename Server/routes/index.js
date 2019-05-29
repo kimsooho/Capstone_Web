@@ -7,4 +7,6 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: '황제펭귄 TEST' });
 });
 
+
+
 module.exports = router;

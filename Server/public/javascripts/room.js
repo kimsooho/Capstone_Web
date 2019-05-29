@@ -12,13 +12,35 @@ module.exports = function () {
                 });
             });
         },
-        insert: function (title, pwd, make_member) {
+        users: function (room_id, callback) {
+            pool.getConnection(function (err, con) {
+                var sql = `SELECT member_id FROM join_user WHERE room_id = ${room_id}`;
+                con.query(sql, function (err, result, fields) {
+                    con.release();
+                    if (err) return callback(err);
+                    callback(null, result);
+                });
+            });
+        },
+        insert: function (title, pwd, make_member, callback) {
             pool.getConnection(function (err, con) {
                 var sql = `insert into room (title, room_pwd, status, make_time, make_member) values ('${title}', '${pwd}', 0, NOW(), '${make_member}')`;
-                con.query(sql, function (err, result) {
-                    con.release();
+                con.query(sql, function (err, result) {                                        
                     if (err) console.log(err);
-                    else console.log('입력 성공');
+                    else {
+                        sql = `SELECT room_id 
+                                    FROM room 
+                                    WHERE title = '${title}' AND make_member = '${make_member}' AND room_pwd = '${pwd}'
+                                    ORDER BY room_id DESC`;
+                        con.query(sql, function (err, result) {                            
+                            console.log(result[0].room_id + " : zzzz");
+                            if(err) return callback(null, "fail");                            
+                            else {
+                                callback(null, result[0].room_id);                                
+                            }
+                            con.release();
+                        });
+                    }
                 });
             });
         },
