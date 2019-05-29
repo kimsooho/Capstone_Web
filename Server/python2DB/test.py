@@ -1,2 +1,2 @@
 import sys
-print "121"
+print ("121")
