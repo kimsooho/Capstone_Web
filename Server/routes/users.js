@@ -1,9 +1,6 @@
-let PythonShell = require('python-shell');
+let {PythonShell} = require('python-shell');
 var express = require('express');
 var router = express.Router();
-
-
-
 
 var options = {
 
@@ -13,7 +10,7 @@ var options = {
 
   pythonOptions: ['-u'],
 
-  scriptPath: ''
+  scriptPath: '/home/suho/jungwon/Capstone_Web/Server/routes'
 
 };
 
@@ -24,11 +21,11 @@ router.get('/', function (req, res, next) {
 
 router.get('/test', function (req, res) {
   console.log("test");
-  PythonShell.PythonShell.run('test.py', null, function (err) {
-    console.log("err");    
-    res.send("test");
-    //console.log('results: %j', results);
-    //res.send(results);
+  PythonShell.run('test.py', options, function (err, results) {
+    if(err) throw err;
+
+    console.log('results: %j', results);
+    res.send(results);
   });
 });
 
