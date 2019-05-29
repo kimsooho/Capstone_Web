@@ -10,9 +10,7 @@ var options = {
 
   pythonOptions: ['-u'],
 
-  scriptPath: '',
-
-  args: ['value1', 'value2', 'value3']
+  scriptPath: ''
 
 };
 
