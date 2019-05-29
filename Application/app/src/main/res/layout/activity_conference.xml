@@ -14,18 +14,51 @@
         android:background="@drawable/coner_rectangle"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageView3"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="8"
-            android:background="@drawable/text" />
+            android:layout_weight="8">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_weight="8"
+                android:background="@drawable/text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_people_conference"
+                android:layout_width="46dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/user"
+                android:onClick="checkPeople_con"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/imageView3"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+        </android.support.constraint.ConstraintLayout>
 
         <ListView
             android:id="@+id/listView_dialogue"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:stackFromBottom="true"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,20 +66,18 @@
             android:layout_weight="8"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/editText4"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btn_say"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Name" />
+                android:text="발언권" />
 
             <ImageButton
                 android:id="@+id/btn_stop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="9"
+                android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:onClick="stopConference"
                 android:scaleType="fitCenter"

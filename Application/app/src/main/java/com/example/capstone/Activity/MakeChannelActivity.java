@@ -1,10 +1,11 @@
-package com.example.capstone;
+package com.example.capstone.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+
+import com.example.capstone.R;
 
 public class MakeChannelActivity extends Activity {
     public static Activity createChannelActivity; //액티비티 넘어갈때 종료를 위한 변수
@@ -28,6 +29,10 @@ public class MakeChannelActivity extends Activity {
     public void MakeChannel(View view) //activity_make_channel 의 btn_create
     {
         Intent waitingIntent=new Intent(MakeChannelActivity.this,WaitingActivity.class);
+        //서버로 id 보내주기 ChannelListActivity.id
+        //서버에서 방 번호 가져오기
+
+        waitingIntent.putExtra("RoomNum",2/*가져온 방번호 int 형으로*/);
         startActivity(waitingIntent);
     }
     public void MakeCancel(View view) //activity_make_channel 의 btn_cancel

@@ -14,7 +14,7 @@ module.exports = function () {
         },
         insert: function (u_id, u_pw) {
             pool.getConnection(function (err, con) {
-                var sql = `insert into member (u_id, u_pw) values ('${u_id}', '${u_pw}')`;
+                var sql = `insert into member (id, pwd) values ('${u_id}', '${u_pw}')`;
                 con.query(sql, function (err, result) {
                     con.release();
                     if (err) console.log(err);
@@ -24,11 +24,22 @@ module.exports = function () {
         },
         login: function (u_id, u_pw, callback){
             pool.getConnection(function (err, con) {
-                var sql = 'SELECT count(*) id_check FROM member WHERE u_id = "' + u_id +'" AND u_pw = "' + u_pw + '"';
+                var sql = 'SELECT count(*) id_check FROM member WHERE id = "' + u_id +'" AND pwd = "' + u_pw + '"';
                 con.query(sql, function (err, result) {
                     con.release();
                     if(err) return callback(err);
                     else if(result[0].id_check==1) callback(null, "success");
+                    else callback(null, "fail");
+                });
+            });
+        },
+        checkid: function (id, callback) {
+            pool.getConnection(function (err, con) {
+                var sql = `SELECT count(*) id_check FROM member WHERE id = '${id}' `;
+                con.query(sql, function (err, result) {
+                    con.release();
+                    if(err) return callback(err);
+                    else if(result[0].id_check==0) callback(null, "success");
                     else callback(null, "fail");
                 });
             });

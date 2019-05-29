@@ -9,10 +9,11 @@ router.get('/', function(req, res){
 });
 router.post('/', function (req, res){    
     console.log(req.ip);
-    db.login(req.body.u_id, req.body.u_pw, function(err, result){
+    db.login(req.body.id, req.body.pwd, function(err, result){
+        console.log(req.body.id + " : " + req.body.pwd);
         if(result=="success"){
             res.send("success");
-            console.log(req.body.u_id + "접속");
+            console.log(req.body.id + "접속");
         }else{
             res.send("fail");
         }
