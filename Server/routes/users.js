@@ -1,4 +1,4 @@
-import {PythonShell} from 'python-shell';
+let PythonShell = require('python-shell');
 var express = require('express');
 var router = express.Router();
 
@@ -24,7 +24,7 @@ router.get('/', function (req, res, next) {
 
 router.get('/test', function (req, res) {
   console.log("test");
-  PythonShell.run('test.py', null, function (err) {
+  PythonShell.PythonShell.run('test.py', null, function (err) {
     console.log("err");    
     res.send("test");
     //console.log('results: %j', results);
