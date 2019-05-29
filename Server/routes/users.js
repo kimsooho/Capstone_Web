@@ -24,6 +24,7 @@ router.get('/', function (req, res, next) {
 router.get('/test', function (req, res) {
   shell.PythonShell.run('../python2DB/test.py', options, function (err, result) {
     console.log(result);
+    res.send(result);
   });
 });
 
