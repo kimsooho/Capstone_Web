@@ -10,7 +10,7 @@ var options = {
 
   pythonOptions: ['-u'],
 
-  scriptPath: '../python2DB/',
+  scriptPath: '',
 
   args: ['value1', 'value2', 'value3']
 
