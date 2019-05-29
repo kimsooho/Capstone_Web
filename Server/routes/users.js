@@ -22,7 +22,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/test', function (req, res) {
-  shell.PythonShell.run('test.py', options, function (err, results) {
+  shell.PythonShell.run('../python2DB/test.py', options, function (err, results) {
     if (err) throw err;
     console.log('results: %j', results);
     res.send(results);
