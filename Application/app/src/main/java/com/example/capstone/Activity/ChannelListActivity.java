@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.capstone.Adapter.ListViewAdapter;
+import com.example.capstone.Item.ListViewItem;
 import com.example.capstone.Popup.SettingPopup;
 import com.example.capstone.R;
 
@@ -49,9 +50,20 @@ public class ChannelListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-                Intent waitingIntent=new Intent(ChannelListActivity.this,WaitingActivity.class);
-                waitingIntent.putExtra("RoomNum",1);
-                startActivity(waitingIntent);
+                ListViewItem listViewItem = (ListViewItem)adapter.getItem(position);
+                if (listViewItem.getStatus())
+                {
+                    Intent waitingIntent=new Intent(ChannelListActivity.this,WaitingActivity.class);
+                    waitingIntent.putExtra("RoomNum",1);
+                    startActivity(waitingIntent);
+                }
+                else
+                {
+                    Intent closeIntent=new Intent(ChannelListActivity.this, CloseActivity.class);
+                    closeIntent.putExtra("staus",false);
+                    startActivity(closeIntent);
+                }
+
             }
         });
     }
@@ -76,7 +88,12 @@ public class ChannelListActivity extends AppCompatActivity {
 
     public void search(View v)//검색 버튼 누르면 시작
     {
+        /*if(editSearch.getText().toString() != "")
+        {
+         빈칸 검색일 경우 이전 채널 리스트 불러오기
+        }else{} */
         /*검색어가 포함된 방들의 타이틀, 방 만든사람, 방번호 다 가져와야함*/
+
         JSONObject jsonObject=new JSONObject();
         try {
             jsonObject.put("title",editSearch.getText());
