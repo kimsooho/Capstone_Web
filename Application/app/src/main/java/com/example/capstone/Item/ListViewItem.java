@@ -10,6 +10,7 @@ public class ListViewItem {
     private String titleStr ;
     private String peopleStr ;
     private int roomNum;
+    private boolean status;
 
     public void setIcon(Drawable icon) {
         iconDrawable = icon ;
@@ -24,6 +25,7 @@ public class ListViewItem {
         peopleStr = people;
     }
     public void setRoomNum(int num){roomNum = num;}
+    public void setStatus(boolean b){status = b;}
 
     public void modPeople(String people) {
         people += ", "+people;
@@ -41,6 +43,7 @@ public class ListViewItem {
     public String getPeople() {
         return this.peopleStr ;
     }
+    public boolean getStatus(){return this.status;}
 }
 
 

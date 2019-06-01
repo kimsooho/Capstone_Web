@@ -10,11 +10,7 @@ var options = {
 
   pythonOptions: ['-u'],
 
-  //args:['1', '1'],
-
-  //scriptPath: '/home/suho/jungwon/Capstone_Web/Server/routes'
   scriptPath:'./python2DB'
-
 };
 
 /* GET users listing. */
@@ -23,7 +19,7 @@ router.get('/', function (req, res, next) {
 });
 
 //2 args
-router.get('/select', function (req, res) {
+router.get('/do', function (req, res) {
   console.log("select used python");
   options.args=[req.query.roomid, req.query.memberid];
 
@@ -31,19 +27,6 @@ router.get('/select', function (req, res) {
     if(err) throw err;
 
     console.log('results: %j', results);
-    res.send(results);
-  });
-});
-
-//3 args
-router.get('/insert', function (req, res) {
-  console.log("select used python");
-  options.args=[req.query.roomid, req.query.memberid, req.query.contents];
-
-  PythonShell.run('insert.py', options, function (err, results) {
-    if(err) throw err;
-
-    console.log('contents: %j', results);
     res.send(results);
   });
 });

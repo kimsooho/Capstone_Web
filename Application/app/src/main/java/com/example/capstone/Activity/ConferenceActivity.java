@@ -72,9 +72,7 @@ public class ConferenceActivity extends AppCompatActivity {
 
         Intent goClose = new Intent(ConferenceActivity.this, CloseActivity.class);
 
-        Log.d("dbug","스탑 버튼");
-        //값보내기
-        //       goList.putExtra("key", editID.getText().toString());
+        goClose.putExtra("status", true);
         startActivity(goClose);
     }
 
