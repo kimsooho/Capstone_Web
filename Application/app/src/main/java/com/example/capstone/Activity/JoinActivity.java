@@ -60,7 +60,7 @@ public class JoinActivity extends Activity {
     public void checkID(View view){
         JSONObject jsonObject=new JSONObject();
         try {
-            jsonObject.put("id",editID.getText());
+            jsonObject.put("userID",editID.getText());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -96,7 +96,7 @@ public class JoinActivity extends Activity {
         final Intent intent=new Intent(JoinActivity.this,LoginActivity.class);
         JSONObject jsonObject=new JSONObject();
         try {
-            jsonObject.put("id",editID.getText());
+            jsonObject.put("userID",editID.getText());
             jsonObject.put("pwd",editPW.getText());
         } catch (JSONException e) {
             e.printStackTrace();

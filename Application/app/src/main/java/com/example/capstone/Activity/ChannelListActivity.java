@@ -26,7 +26,7 @@ import self.philbrown.droidQuery.Function;
 
 public class ChannelListActivity extends AppCompatActivity {
 
-    String id;
+    String userID;
     TextView editSearch;
     ListView listView;
     ListViewAdapter adapter;
@@ -38,7 +38,7 @@ public class ChannelListActivity extends AppCompatActivity {
         editSearch=(TextView)findViewById(R.id.edit_search);
         Intent intent=getIntent();
 
-        id =intent.getStringExtra("ID");
+        userID =intent.getStringExtra("userID");
 
         // Adapter 생성
         adapter = new ListViewAdapter() ;
@@ -51,9 +51,10 @@ public class ChannelListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 ListViewItem listViewItem = (ListViewItem)adapter.getItem(position);
-                if (listViewItem.getStatus())
+                if (listViewItem.getStatus()) //방 상태에 따라서 waitingActivity로 가거나 이미 종료한 방이면 결과를 볼수있는 CloseActivity로 가야함
                 {
                     Intent waitingIntent=new Intent(ChannelListActivity.this,WaitingActivity.class);
+                    waitingIntent.putExtra("userID",userID);
                     waitingIntent.putExtra("RoomNum",1);
                     startActivity(waitingIntent);
                 }
@@ -66,7 +67,7 @@ public class ChannelListActivity extends AppCompatActivity {
 
             }
         });
-        Log.d("test",id);
+        Log.d("test", userID);
     }
 
     public void waiting(View v){
@@ -76,7 +77,7 @@ public class ChannelListActivity extends AppCompatActivity {
 
     public void MakeChannel(View v) {
         Intent goMake = new Intent(ChannelListActivity.this, MakeChannelActivity.class);
-        goMake.putExtra("ID",id);
+        goMake.putExtra("userID", userID);
         //값보내기
         //       goList.putExtra("key", editID.getText().toString());
         startActivity(goMake);
@@ -124,6 +125,7 @@ public class ChannelListActivity extends AppCompatActivity {
                                 makeMember=jo.get("make_member").toString();
                                 Log.d("test",makeMember);
                                 roomID=Integer.parseInt(jo.get("room_id").toString());
+                                //상태도 받아와야함
                                 adapter.addItem(ContextCompat.getDrawable(ChannelListActivity.this, R.drawable.main),
                                         ContextCompat.getDrawable(ChannelListActivity.this, R.drawable.green),
                                         title, makeMember, roomID) ;
