@@ -31,11 +31,7 @@ public class WaitingActivity extends AppCompatActivity {
         if (intent.getExtras().getBoolean("where")) { //채널 생성 액티비티에서 왓으면 생성 액티비티 종료
             MakeChannelActivity makeChannelActivity = (MakeChannelActivity) MakeChannelActivity.createChannelActivity;
             makeChannelActivity.finish();
-            Log.d("test","wati");
         }
-
-
-
     }
 
     public void startConference(View view)//btn_play
@@ -51,6 +47,11 @@ public class WaitingActivity extends AppCompatActivity {
         //값보내기
         goCheck.putExtra("RoomNum", roomNum);
         startActivity(goCheck);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override

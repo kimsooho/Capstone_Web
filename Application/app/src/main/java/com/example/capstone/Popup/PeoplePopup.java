@@ -27,7 +27,8 @@ import self.philbrown.droidQuery.Function;
 public class PeoplePopup extends Activity {
 
     public int roomNum;
-
+    Vector<String> List;
+    ArrayAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,18 +36,19 @@ public class PeoplePopup extends Activity {
         setContentView(R.layout.popup_people);
 
         Intent intent = getIntent();
-        roomNum = intent.getExtras().getInt("RomNum");
+        roomNum = intent.getExtras().getInt("RoomNum");
+        List = new Vector<String>();
         //String[] List;
         /*현재 이방에 참여중인 인원 가져와서 List Vector에 넣기*/
 
-        final Vector<String> List = new Vector<String>();
-        JSONObject jsonObject=new JSONObject();
+
+        JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("방번호",roomNum);
+            jsonObject.put("room_id", roomNum);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/room/roomlist")
+        $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/join/joinusers")
                 .contentType("application/json; charset=utf-8")
                 .type("POST")
                 .data(jsonObject.toString())
@@ -60,12 +62,16 @@ public class PeoplePopup extends Activity {
                         //JSONObject.get(json key)로 원하는 값만 구할 수 있음
                         String userID;
                         try {
-                            JSONArray array=new JSONArray(objects[0].toString());
-                            for(int i=0;i<array.length();i++){
-                                JSONObject jo=array.getJSONObject(i);
-                                userID = jo.get("사용자아이디").toString();
+
+                            JSONArray array = new JSONArray(objects[0].toString());
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject jo = array.getJSONObject(i);
+                                userID = jo.get("member_id").toString();
+                                //  Log.d("debug", userID);
                                 List.add(userID);
                             }
+                            adapter.notifyDataSetChanged();
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -74,21 +80,22 @@ public class PeoplePopup extends Activity {
                 .error(new Function() {
                     @Override
                     public void invoke($ $, Object... objects) {
-                        Log.d("test","서버 통신 에러");
+                        Log.d("debug", "서버 통신 에러");
                     }
                 }));
 
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, List);
+
+        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, List);
 
         ListView listview = (ListView) findViewById(R.id.listView_people);
         listview.setAdapter(adapter);
     }
+
     @Override
     public void onBackPressed() {
         //안드로이드 백버튼 막기
         return;
     }
-
 
 
 }

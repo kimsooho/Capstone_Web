@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         final Intent goList = new Intent(LoginActivity.this, ChannelListActivity.class);
         JSONObject jsonObject=new JSONObject();
         try {
-            jsonObject.put("userID",editID.getText().toString());
+            jsonObject.put("id",editID.getText().toString());
             jsonObject.put("pwd",editPW.getText().toString());
             Log.d("test",editID.getText().toString());
 
