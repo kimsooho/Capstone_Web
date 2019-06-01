@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.capstone.Adapter.ListViewAdapter;
 import com.example.capstone.Item.ListViewItem;
+import com.example.capstone.Popup.PasswordPopup;
 import com.example.capstone.Popup.SettingPopup;
 import com.example.capstone.R;
 
@@ -27,6 +28,7 @@ import self.philbrown.droidQuery.Function;
 
 public class ChannelListActivity extends AppCompatActivity {
 
+    static public ChannelListActivity channelListActivity;
     String userID;
     TextView editSearch;
     ListView listView;
@@ -37,8 +39,12 @@ public class ChannelListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel_list);
+        channelListActivity = ChannelListActivity.this;
+
+
         editSearch = (TextView) findViewById(R.id.edit_search);
         check_before = (CheckBox) findViewById(R.id.check_pre);
+
 
         Intent intent = getIntent();
 
@@ -57,18 +63,19 @@ public class ChannelListActivity extends AppCompatActivity {
                 ListViewItem listViewItem = (ListViewItem) adapter.getItem(position);
                 if (listViewItem.getStatus() == 0) //방 상태에 따라서 waitingActivity로 가거나 이미 종료한 방이면 결과를 볼수있는 CloseActivity로 가야함
                 {
-                    Intent conferenceIntent = new Intent(ChannelListActivity.this, ConferenceActivity.class);
-                    conferenceIntent.putExtra("userID", userID);
-                    conferenceIntent.putExtra("RoomNum", listViewItem.getRoomNum());
-                    startActivity(conferenceIntent);
+                    Intent passwordIntent = new Intent(ChannelListActivity.this, PasswordPopup.class);
+                    passwordIntent.putExtra("userID", userID);
+                    passwordIntent.putExtra("RoomNum", listViewItem.getRoomNum());
+                    startActivity(passwordIntent);
                 } else {
                     Intent closeIntent = new Intent(ChannelListActivity.this, CloseActivity.class);
-                    closeIntent.putExtra("staus", false);
+                    closeIntent.putExtra("RoomNum", listViewItem.getRoomNum());
+                    closeIntent.putExtra("status", false);
                     startActivity(closeIntent);
                 }
             }
         });
-        Log.d("test", userID);
+//        Log.d("test", userID);
     }
 
     public void waiting(View v) {
@@ -189,7 +196,8 @@ public class ChannelListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        adapter.getListViewItemList().removeAll(adapter.getListViewItemList());
+        adapter.getListViewItemList().clear();
+        adapter.notifyDataSetChanged();
         editSearch.setText("");
     }
 }

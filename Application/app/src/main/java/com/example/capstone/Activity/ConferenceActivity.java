@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.capstone.Adapter.DialogueViewAdapter;
+import com.example.capstone.Popup.PasswordPopup;
 import com.example.capstone.Popup.PeoplePopup;
 import com.example.capstone.R;
 
@@ -41,6 +42,11 @@ public class ConferenceActivity extends AppCompatActivity {
         if (intent.getExtras().getBoolean("where")) { //채널 생성 액티비티에서 왓으면 생성 액티비티 종료
             MakeChannelActivity makeChannelActivity = (MakeChannelActivity) MakeChannelActivity.createChannelActivity;
             makeChannelActivity.finish();
+        }
+        else//일반 접속시 패스워드 팝업 종료
+        {
+            PasswordPopup passwordPopup = (PasswordPopup) PasswordPopup.passwordPopup;
+            passwordPopup.finish();
         }
 
         ListView listview;
@@ -77,7 +83,7 @@ public class ConferenceActivity extends AppCompatActivity {
     public void stopConference(View v) {//btn_stop
         //서버에게 사용자 나감을 알려야함
         Intent goClose = new Intent(ConferenceActivity.this, CloseActivity.class);
-
+        goClose.putExtra("RoomNum", roomNum);
         goClose.putExtra("status", true);
         startActivity(goClose);
     }
