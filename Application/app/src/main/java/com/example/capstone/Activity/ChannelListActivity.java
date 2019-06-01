@@ -1,6 +1,8 @@
 package com.example.capstone.Activity;
 
+import android.app.Notification;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -37,6 +39,9 @@ public class ChannelListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_channel_list);
         editSearch=(TextView)findViewById(R.id.edit_search);
         Intent intent=getIntent();
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent);
+        }*/
 
         id =intent.getStringExtra("ID");
 

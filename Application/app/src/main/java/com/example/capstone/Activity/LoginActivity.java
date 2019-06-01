@@ -1,6 +1,8 @@
 package com.example.capstone.Activity;
 
 import android.content.Intent;
+import android.os.Build;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,6 +53,11 @@ public class LoginActivity extends AppCompatActivity {
                         if(result.equals("success")){
                             goList.putExtra("ID", editID.getText().toString());
                             startActivity(goList);
+                            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                LoginActivity.this.startForegroundService(new Intent(LoginActivity.this, ChannelListActivity.class));
+                            } else {
+                                LoginActivity.this.startService(new Intent(LoginActivity.this, ChannelListActivity.class));
+                            }*/
                         }
                         else{
                             Toast.makeText(LoginActivity.this, "ID / PW를 확인해주세요.", Toast.LENGTH_SHORT).show();
@@ -60,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                 .error(new Function() {
                     @Override
                     public void invoke($ $, Object... objects) {
-                        Log.d("test","서버 통신 에러");
+                        Log.d("test",objects[0].toString());
                     }
                 }));
     }
