@@ -43,7 +43,7 @@ public class MakeChannelActivity extends Activity {
 
     public void MakeChannel(View view) //activity_make_channel 의 btn_create
     {
-        final Intent waitingIntent=new Intent(MakeChannelActivity.this,WaitingActivity.class);
+        final Intent waitingIntent=new Intent(MakeChannelActivity.this, ConferenceActivity.class);
 
         //서버로 userID 보내주기 ChannelListActivity.userID
         //서버에서 방 번호 가져오기

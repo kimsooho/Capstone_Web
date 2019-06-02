@@ -115,7 +115,7 @@ public class ConferenceActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        //super.onBackPressed();
         this.finish();
     }
 }
