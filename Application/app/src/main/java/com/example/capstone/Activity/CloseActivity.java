@@ -26,9 +26,16 @@ public class CloseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_close);
-        //이전 액티비티 종료
-        ConferenceActivity conferenceActivity = (ConferenceActivity)ConferenceActivity.activity;
-        conferenceActivity.finish();
+
+        Intent intent = getIntent();
+        if (intent.getExtras().getBoolean("status"))
+        {
+            //회의후 넘어온 것이라면 회의 액티비티 종료
+            //이전 액티비티 종료
+            ConferenceActivity conferenceActivity = (ConferenceActivity)ConferenceActivity.activity;
+            conferenceActivity.finish();
+        }
+
 
         //탭
         mContext = getApplicationContext();

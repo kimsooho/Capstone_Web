@@ -1,6 +1,8 @@
 package com.example.capstone.Activity;
 
+import android.app.Notification;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.capstone.Adapter.ListViewAdapter;
+import com.example.capstone.Item.ListViewItem;
 import com.example.capstone.Popup.SettingPopup;
 import com.example.capstone.R;
 
@@ -25,7 +28,7 @@ import self.philbrown.droidQuery.Function;
 
 public class ChannelListActivity extends AppCompatActivity {
 
-    public static String id;
+    String id;
     TextView editSearch;
     ListView listView;
     ListViewAdapter adapter;
@@ -35,9 +38,12 @@ public class ChannelListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel_list);
         editSearch=(TextView)findViewById(R.id.edit_search);
-        Intent intent=new Intent(this.getIntent());
+        Intent intent=getIntent();
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent);
+        }*/
 
-        id =intent.getExtras().getString("ID");
+        id =intent.getStringExtra("ID");
 
         // Adapter 생성
         adapter = new ListViewAdapter() ;
@@ -49,11 +55,23 @@ public class ChannelListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-                Intent waitingIntent=new Intent(ChannelListActivity.this,WaitingActivity.class);
-                waitingIntent.putExtra("RoomNum",1);
-                startActivity(waitingIntent);
+                ListViewItem listViewItem = (ListViewItem)adapter.getItem(position);
+                if (listViewItem.getStatus())
+                {
+                    Intent waitingIntent=new Intent(ChannelListActivity.this,WaitingActivity.class);
+                    waitingIntent.putExtra("RoomNum",1);
+                    startActivity(waitingIntent);
+                }
+                else
+                {
+                    Intent closeIntent=new Intent(ChannelListActivity.this, CloseActivity.class);
+                    closeIntent.putExtra("staus",false);
+                    startActivity(closeIntent);
+                }
+
             }
         });
+        Log.d("test",id);
     }
 
     public void waiting(View v){
@@ -63,6 +81,7 @@ public class ChannelListActivity extends AppCompatActivity {
 
     public void MakeChannel(View v) {
         Intent goMake = new Intent(ChannelListActivity.this, MakeChannelActivity.class);
+        goMake.putExtra("ID",id);
         //값보내기
         //       goList.putExtra("key", editID.getText().toString());
         startActivity(goMake);
@@ -76,7 +95,12 @@ public class ChannelListActivity extends AppCompatActivity {
 
     public void search(View v)//검색 버튼 누르면 시작
     {
+        /*if(editSearch.getText().toString() != "")
+        {
+         빈칸 검색일 경우 이전 채널 리스트 불러오기
+        }else{} */
         /*검색어가 포함된 방들의 타이틀, 방 만든사람, 방번호 다 가져와야함*/
+
         JSONObject jsonObject=new JSONObject();
         try {
             jsonObject.put("title",editSearch.getText());
@@ -97,21 +121,7 @@ public class ChannelListActivity extends AppCompatActivity {
                         //JSONObject.get(json key)로 원하는 값만 구할 수 있음
                         String title,makeMember;
                         int roomID;
-                        /*try {
-                            for(int i=0;i<array.length();i++) {
-                                JSONObject jo = array.getJSONObject(0);
-                                title = jo.get("title").toString();
-                                makeMember=jo.get("make_member").toString();
-                                roomID=Integer.parseInt(jo.get("room_id").toString());
-                                adapter.addItem(ContextCompat.getDrawable(ChannelListActivity.this, R.drawable.main),
-                                        ContextCompat.getDrawable(ChannelListActivity.this, R.drawable.green),
-                                        title, makeMember, roomID) ;
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }*/
                         try {
-
                             JSONArray array=new JSONArray(objects[0].toString());
                             for(int i=0;i<array.length();i++){
                                 JSONObject jo=array.getJSONObject(i);

@@ -29,39 +29,29 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-                <EditText
-                    android:id="@+id/edit__team_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/team_name"
-                    android:ems="10"
+            <EditText
+                android:id="@+id/edit_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/team_name"
+                android:ems="10"
 
-                    android:inputType="textPersonName"
-                    tools:background="@drawable/team_name" />
+                android:inputType="textPersonName"
+                tools:background="@drawable/team_name" />
 
-                <EditText
-                    android:id="@+id/edit_team"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/team"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    tools:background="@drawable/team" />
-
-                <EditText
-                    android:id="@+id/edit_pw_create"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    tools:background="@drawable/pw" />
+            <EditText
+                android:id="@+id/edit_pw_create"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/pw"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:visibility="visible"
+                tools:background="@drawable/pw" />
 
         </LinearLayout>
 
