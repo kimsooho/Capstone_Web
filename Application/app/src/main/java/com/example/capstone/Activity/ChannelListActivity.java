@@ -41,7 +41,6 @@ public class ChannelListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_channel_list);
         channelListActivity = ChannelListActivity.this;
 
-
         editSearch = (TextView) findViewById(R.id.edit_search);
         check_before = (CheckBox) findViewById(R.id.check_pre);
 
