@@ -30,6 +30,10 @@ public class ConferenceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_conference);
         activity = ConferenceActivity.this;
 
+
+
+
+
         Intent intent = getIntent();
         roomNum = intent.getExtras().getInt("RoomNum");
 
