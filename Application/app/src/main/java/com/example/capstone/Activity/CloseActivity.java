@@ -3,6 +3,7 @@ package com.example.capstone.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -22,19 +23,29 @@ public class CloseActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private ContentPagerAdapter mContentPagerAdapter;
 
+    public int roomNum;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_close);
-        //이전 액티비티 종료
-        ConferenceActivity conferenceActivity = (ConferenceActivity)ConferenceActivity.activity;
-        conferenceActivity.finish();
+
+        Intent intent = getIntent();
+        roomNum = intent.getExtras().getInt("RoomNum");
+        Log.d("debug","  d  "+roomNum);
+        if (intent.getExtras().getBoolean("status"))
+        {
+            //회의후 넘어온 것이라면 회의 액티비티 종료
+            //이전 액티비티 종료
+            ConferenceActivity conferenceActivity = (ConferenceActivity)ConferenceActivity.activity;
+            conferenceActivity.finish();
+        }
+
 
         //탭
         mContext = getApplicationContext();
         mTabLayout = (TabLayout) findViewById(R.id.tab);
 
-        mTabLayout.addTab(mTabLayout.newTab().setText("Dialouge"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("Dialogue"));
         mTabLayout.addTab(mTabLayout.newTab().setText("Summary"));
 
         mViewPager = (ViewPager) findViewById(R.id.pager_content);
@@ -70,13 +81,9 @@ public class CloseActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(CloseActivity.this, ChannelListActivity.class);
+        Intent intent = new Intent(CloseActivity.this,ChannelListActivity.channelListActivity.getClass());
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         //        super.onBackPressed();
-    }
-    public void home(View v)//btn_home
-    {
-        Intent intent = new Intent(CloseActivity.this, ChannelListActivity.class);
-        startActivity(intent);
     }
 }

@@ -25,6 +25,7 @@
         <activity android:name=".Activity.WaitingActivity"/>
         <activity android:name=".Popup.PeoplePopup" android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".Popup.SettingPopup" android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".Popup.PasswordPopup" android:theme="@android:style/Theme.Dialog"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
