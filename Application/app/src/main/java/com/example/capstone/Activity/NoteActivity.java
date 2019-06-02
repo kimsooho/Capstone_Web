@@ -16,7 +16,7 @@ public class NoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
 /*
-        Button btn=(Button)findViewById(R.userID.button5);
+        Button btn=(Button)findViewById(R.id.button5);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

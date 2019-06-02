@@ -1,6 +1,8 @@
 package com.example.capstone.Activity;
 
 import android.content.Intent;
+import android.os.Build;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,22 +27,16 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         editID = (EditText)findViewById(R.id.edit_id);
         editPW = (EditText)findViewById(R.id.edit_pw);
-
-
     }
     public void LoginClick(View v)
     {
-
         final Intent goList = new Intent(LoginActivity.this, ChannelListActivity.class);
         JSONObject jsonObject=new JSONObject();
         try {
-            jsonObject.put("id",editID.getText().toString());
-            jsonObject.put("pwd",editPW.getText().toString());
-            Log.d("test",editID.getText().toString());
-
+            jsonObject.put("id",editID.getText());
+            jsonObject.put("pwd",editPW.getText());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -55,18 +51,23 @@ public class LoginActivity extends AppCompatActivity {
                         String result=objects[0].toString();
                         Log.d("test",objects[0].toString());
                         if(result.equals("success")){
-                            goList.putExtra("userID", editID.getText().toString());
+                            goList.putExtra("ID", editID.getText().toString());
                             startActivity(goList);
+                            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                LoginActivity.this.startForegroundService(new Intent(LoginActivity.this, ChannelListActivity.class));
+                            } else {
+                                LoginActivity.this.startService(new Intent(LoginActivity.this, ChannelListActivity.class));
+                            }*/
                         }
                         else{
-                            Toast.makeText(LoginActivity.this, "userID / PW를 확인해주세요.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "ID / PW를 확인해주세요.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 })
                 .error(new Function() {
                     @Override
                     public void invoke($ $, Object... objects) {
-                        Log.d("test","서버 통신 에러");
+                        Log.d("test",objects[0].toString());
                     }
                 }));
     }
