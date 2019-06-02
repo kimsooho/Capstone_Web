@@ -1,4 +1,4 @@
-﻿package com.example.capstone.Activity;
+package com.example.capstone.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,10 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-<<<<<<< HEAD
-import android.widget.Toast;
-=======
->>>>>>> origin/jungwon
 
 import com.example.capstone.R;
 

@@ -1,4 +1,4 @@
-﻿package com.example.capstone.Activity;
+package com.example.capstone.Activity;
 
 import android.app.Notification;
 import android.content.Intent;
@@ -57,7 +57,6 @@ public class ChannelListActivity extends AppCompatActivity {
         check_before = (CheckBox) findViewById(R.id.check_pre);
 
 
-        Intent intent = getIntent();
 
         userID = intent.getStringExtra("userID");
 
@@ -71,23 +70,6 @@ public class ChannelListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-
-                ListViewItem listViewItem = (ListViewItem)adapter.getItem(position);
-                if (listViewItem.getStatus())
-                {
-                    Intent waitingIntent=new Intent(ChannelListActivity.this,WaitingActivity.class);
-                    waitingIntent.putExtra("RoomNum",1);
-                    startActivity(waitingIntent);
-                }
-                else
-                {
-                    Intent closeIntent=new Intent(ChannelListActivity.this, CloseActivity.class);
-                    closeIntent.putExtra("staus",false);
-                    startActivity(closeIntent);
-                }
-
-            }
-        });
 
                 ListViewItem listViewItem = (ListViewItem) adapter.getItem(position);
                 if (listViewItem.getStatus() == 0) //방 상태에 따라서 waitingActivity로 가거나 이미 종료한 방이면 결과를 볼수있는 CloseActivity로 가야함
@@ -215,6 +197,7 @@ public class ChannelListActivity extends AppCompatActivity {
                                             ContextCompat.getDrawable(ChannelListActivity.this, R.drawable.green),
                                             title, makeMember, roomID, roomStatus);
                                     adapter.notifyDataSetChanged();
+
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

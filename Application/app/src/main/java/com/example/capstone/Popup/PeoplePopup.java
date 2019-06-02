@@ -62,7 +62,6 @@ public class PeoplePopup extends Activity {
                         //JSONObject.get(json key)로 원하는 값만 구할 수 있음
                         String userID;
                         try {
-
                             JSONArray array = new JSONArray(objects[0].toString());
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject jo = array.getJSONObject(i);
@@ -71,7 +70,6 @@ public class PeoplePopup extends Activity {
                                 List.add(userID);
                             }
                             adapter.notifyDataSetChanged();
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -83,7 +81,6 @@ public class PeoplePopup extends Activity {
                         Log.d("debug", "서버 통신 에러");
                     }
                 }));
-
 
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, List);
 

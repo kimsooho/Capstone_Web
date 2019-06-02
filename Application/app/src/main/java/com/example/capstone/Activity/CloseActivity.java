@@ -1,4 +1,4 @@
-﻿package com.example.capstone.Activity;
+package com.example.capstone.Activity;
 
 import android.content.Context;
 import android.content.Intent;
