@@ -8,9 +8,18 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res){
-    db.roomJoin(req.body.room_id, req.body.member_id);
-    res.send("참가");
+    db.roomJoin(req.body.room_id, req.body.member_id, req.body.room_pwd, function(err, result){
+	console.log(req.body.room_id + " : "+req.body.member_id+" : "+req.body.room_pwd);
+	if(result == "success"){
+		res.send("success");
+		console.log(req.body.room_id+" 접속 성공")
+	}
+	else{
+		res.send("fail");
+	}
+	});
 });
+
 
 router.post('/roomout', function(req, res){
     db.roomOut(req.body.room_id, req.body.member_id);
