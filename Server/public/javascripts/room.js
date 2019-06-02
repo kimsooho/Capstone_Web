@@ -64,9 +64,9 @@ module.exports = function () {
                 });
             });
         },
-        roomJoin : function(room_id, member_id){
+        roomJoin : function(room_id, member_id, room_pwd){
             pool.getConnection(function (err, con) {
-                var sql = `SELECT count(*) cnt FROM join_user WHERE room_id = '${room_id}' AND member_id = '${member_id}'`;
+                var sql = `SELECT count(*) cnt FROM join_user WHERE room_id = '${room_id}' AND member_id = '${member_id}' AND room_pwd= '${room_pwd}'`;
                 con.query(sql, function (err, result) {                    
                     if (err) console.log(err);
                     else if(result[0].cnt == 0){ // 회의에 첫 참가
