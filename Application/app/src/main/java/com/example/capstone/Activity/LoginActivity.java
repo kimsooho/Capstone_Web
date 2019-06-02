@@ -27,16 +27,22 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         editID = (EditText)findViewById(R.id.edit_id);
         editPW = (EditText)findViewById(R.id.edit_pw);
+
+
     }
     public void LoginClick(View v)
     {
+
         final Intent goList = new Intent(LoginActivity.this, ChannelListActivity.class);
         JSONObject jsonObject=new JSONObject();
         try {
-            jsonObject.put("id",editID.getText());
-            jsonObject.put("pwd",editPW.getText());
+            jsonObject.put("id",editID.getText().toString());
+            jsonObject.put("pwd",editPW.getText().toString());
+            Log.d("test",editID.getText().toString());
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -51,7 +57,9 @@ public class LoginActivity extends AppCompatActivity {
                         String result=objects[0].toString();
                         Log.d("test",objects[0].toString());
                         if(result.equals("success")){
-                            goList.putExtra("ID", editID.getText().toString());
+
+                            goList.putExtra("userID", editID.getText().toString());
+
                             startActivity(goList);
                             /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                 LoginActivity.this.startForegroundService(new Intent(LoginActivity.this, ChannelListActivity.class));
@@ -60,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                             }*/
                         }
                         else{
-                            Toast.makeText(LoginActivity.this, "ID / PW를 확인해주세요.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "userID / PW를 확인해주세요.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 })

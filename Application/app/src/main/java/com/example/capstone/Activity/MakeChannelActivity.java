@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.capstone.R;
 
@@ -20,7 +19,9 @@ import self.philbrown.droidQuery.Function;
 public class MakeChannelActivity extends Activity {
     public static Activity createChannelActivity; //액티비티 넘어갈때 종료를 위한 변수
     EditText editTitle,editPW;
-    String id;
+
+    String userID;
+
 
 
     @Override
@@ -31,7 +32,9 @@ public class MakeChannelActivity extends Activity {
         editTitle=(EditText)findViewById(R.id.edit_title);
         editPW=(EditText)findViewById(R.id.edit_pw_create);
         Intent intent=new Intent(this.getIntent());
-        id=intent.getStringExtra("ID");
+
+        userID =intent.getStringExtra("userID");
+
         //값 받아오기
         //String s=intent.getExtras().getString("key");
         //로그찍기
@@ -41,17 +44,21 @@ public class MakeChannelActivity extends Activity {
     public void MakeChannel(View view) //activity_make_channel 의 btn_create
     {
         final Intent waitingIntent=new Intent(MakeChannelActivity.this,WaitingActivity.class);
-        //서버로 id 보내주기 ChannelListActivity.id
+
+        //서버로 userID 보내주기 ChannelListActivity.userID
         //서버에서 방 번호 가져오기
         JSONObject jsonObject=new JSONObject();
         try {
-            jsonObject.put("make_member",id);
+            jsonObject.put("make_member", userID);
+
             jsonObject.put("title",editTitle.getText());
             jsonObject.put("pwd",editPW.getText());
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("test",id);
+
+        Log.d("test", userID);
+
         $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/room")
                 .contentType("application/json; charset=utf-8")
                 .type("POST")
@@ -62,6 +69,9 @@ public class MakeChannelActivity extends Activity {
                     public void invoke($ $, Object... objects) {
                         String result=objects[0].toString();
                         waitingIntent.putExtra("RoomNum",Integer.parseInt(result));
+
+                        waitingIntent.putExtra("where",true);
+
                         startActivity(waitingIntent);
                     }
                 })
