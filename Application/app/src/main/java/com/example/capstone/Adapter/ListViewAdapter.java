@@ -27,6 +27,11 @@ public class ListViewAdapter extends BaseAdapter {
     // ListViewAdapter의 생성자
      public ListViewAdapter( ) {}
 
+    //
+
+    public ArrayList<ListViewItem> getListViewItemList() {
+        return listViewItemList;
+    }
 
     // Adapter에 사용되는 데이터의 개수를 리턴. : 필수 구현
     @Override
@@ -80,7 +85,7 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Drawable icon, Drawable state, String title, String people, int num) {
+    public void addItem(Drawable icon, Drawable state, String title, String people, int num, int st) {
         ListViewItem item = new ListViewItem();
 
         item.setIcon(icon);
@@ -88,7 +93,7 @@ public class ListViewAdapter extends BaseAdapter {
         item.setTitle(title);
         item.setPeople(people);
         item.setRoomNum(num);
-
+        item.setStatus(st);
         listViewItemList.add(item);
     }
 

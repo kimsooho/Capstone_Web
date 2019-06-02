@@ -14,9 +14,11 @@ memberid = sys.argv[2]
 curs.execute(sql,(roomid, memberid))
 
 rows = curs.fetchall()
-result=[]
+#result=[]
 for item in rows:
 	#result.extend(item)
 	print(item)
 
 #print(result)
+
+

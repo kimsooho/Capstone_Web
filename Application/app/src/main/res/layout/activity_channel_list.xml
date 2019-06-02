@@ -76,15 +76,30 @@
                 android:hint="검색어를 입력하세요"
                 android:inputType="textPersonName" />
 
-            <Button
-                android:id="@+id/btn_search"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="8"
-                android:background="@drawable/search"
-                android:padding="10dp"
-                tools:background="@drawable/search"
-                android:onClick="search"/>
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btn_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="8"
+                    android:background="@drawable/search"
+                    android:onClick="search"
+                    android:padding="10dp"
+                    tools:background="@drawable/search" />
+
+                <CheckBox
+                    android:id="@+id/check_pre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="Before"
+                    android:textSize="11dp"/>
+            </LinearLayout>
 
         </LinearLayout>
 

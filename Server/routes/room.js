@@ -34,4 +34,18 @@ router.post('/roomlist',function(req, res){
     });
 });
 
+
+router.post('/roomlisttrue', function(req, res){
+    db.roomListTrue(req.body.title, function(err, result){
+        res.send(result);
+    });
+});
+
+router.post('/roomlistfalse', function(req, res){
+    db.roomListFalse(req.body.title, function(err, result){
+        res.send(result);
+    });
+});
+
+
 module.exports = router;
