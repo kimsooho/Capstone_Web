@@ -17,6 +17,7 @@ import com.example.capstone.Adapter.ListViewAdapter;
 import com.example.capstone.Item.ListViewItem;
 import com.example.capstone.Popup.PasswordPopup;
 import com.example.capstone.Popup.SettingPopup;
+import com.example.capstone.PreferenceUtil;
 import com.example.capstone.R;
 
 import org.json.JSONArray;
@@ -43,19 +44,30 @@ public class ChannelListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel_list);
-        editSearch=(TextView)findViewById(R.id.edit_search);
-        Intent intent=getIntent();
+        editSearch = (TextView) findViewById(R.id.edit_search);
+
+        //설정 초기값 저장
+
+        if (PreferenceUtil.getInstance(this).getIntExtra("SettingValue") == 0) {
+            PreferenceUtil.getInstance(this).putIntExtra("SettingValue", 50);
+        }
+
+        if (PreferenceUtil.getInstance(this).getStringExtra("Division").equals("-")) {
+            PreferenceUtil.getInstance(this).putStringExtra("Division", "percentage");
+        }
+
+
+        Intent intent = getIntent();
         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(intent);
         }*/
 
-        id =intent.getStringExtra("ID");
+        id = intent.getStringExtra("ID");
         channelListActivity = ChannelListActivity.this;
 
 
         editSearch = (TextView) findViewById(R.id.edit_search);
         check_before = (CheckBox) findViewById(R.id.check_pre);
-
 
 
         userID = intent.getStringExtra("userID");
