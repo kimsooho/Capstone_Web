@@ -271,6 +271,11 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
                             public void invoke($ $, Object... objects) {
                                 String result=objects[0].toString();
                                 try {
+                                    Log.d("test1",jsonObject.getString("memberid"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                try {
                                     Log.d("test1",URLDecoder.decode(objects[0].toString(),"UTF-8"));
                                 } catch (UnsupportedEncodingException e) {
                                     e.printStackTrace();
