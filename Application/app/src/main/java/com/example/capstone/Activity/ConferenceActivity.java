@@ -26,8 +26,19 @@ import com.kakao.sdk.newtoneapi.SpeechRecognizeListener;
 import com.kakao.sdk.newtoneapi.SpeechRecognizerClient;
 import com.kakao.sdk.newtoneapi.SpeechRecognizerManager;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.nio.channels.InterruptedByTimeoutException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
+import self.philbrown.droidQuery.$;
+import self.philbrown.droidQuery.AjaxOptions;
+import self.philbrown.droidQuery.Function;
 
 //회의화면
 public class ConferenceActivity extends AppCompatActivity implements View.OnClickListener, SpeechRecognizeListener {
@@ -97,9 +108,6 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         listview = (ListView) findViewById(R.id.listView_dialogue);
         listview.setAdapter(adapter);
 
-        // 첫 번째 아이템 추가.
-        adapter.addDialogue("조영태", "04/10", "ㅇㅇㅇ");
-
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -149,19 +157,14 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
     protected void onDestroy() {
         super.onDestroy();
         //서버에게 사용자가 나감을 알려야함
+        // API를 더이상 사용하지 않을 때 finalizeLibrary()를 호출한다.
+        SpeechRecognizerManager.getInstance().finalizeLibrary();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         this.finish();
-    }
-
-    public void onDestroy(){
-        super.onDestroy();
-
-        // API를 더이상 사용하지 않을 때 finalizeLibrary()를 호출한다.
-        SpeechRecognizerManager.getInstance().finalizeLibrary();
     }
     //상황에 따라 버튼을 사용가능할지 불가능하게 할지 설정한다.
     private void setButtonsStatus(boolean enabled) {
@@ -182,9 +185,9 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
             client.setSpeechRecognizeListener(this);
             client.startRecording(true);
 
-            Toast.makeText(this, "음성인식을 시작합니다.", Toast.LENGTH_SHORT).show();
-
-            setButtonsStatus(false);
+            Toast.makeText(this, "발언해주세요.", Toast.LENGTH_SHORT).show();
+            findViewById(R.id.btn_say).setEnabled(false);
+            findViewById(R.id.btn_stop).setEnabled(false);
         }
     }
     @Override
@@ -219,6 +222,11 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         final ArrayList<String> texts = results.getStringArrayList(SpeechRecognizerClient.KEY_RECOGNITION_RESULTS);
         ArrayList<Integer> confs = results.getIntegerArrayList(SpeechRecognizerClient.KEY_CONFIDENCE_VALUES);
 
+        //현재시간 설정
+        final long now = System.currentTimeMillis();
+        Date date=new Date(now);
+        SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        final String formatDate = sdfNow.format(date);
 
         for (int i = 0; i < texts.size(); i++){
             builder.append(texts.get(i));
@@ -233,10 +241,46 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void run() {
                 if(activity.isFinishing()) return;
-
-                //tv_result.setText(texts.get(0));
-
+                adapter.addDialogue(userID, formatDate, texts.get(0));
+                adapter.notifyDataSetChanged();
                 setButtonsStatus(true);
+
+
+                final JSONObject jsonObject=new JSONObject();
+                try {
+                    jsonObject.put("contents", URLEncoder.encode(texts.get(0),"UTF-8"));
+                    jsonObject.put("roomid",roomNum);
+                    jsonObject.put("memberid",userID);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/users/insert")
+                        .contentType("application/json; charset=utf-8")
+                        .type("POST")
+                        .data(jsonObject.toString())
+                        .dataType("text")
+                        .context(ConferenceActivity.this)
+                        .success(new Function() {
+                            @Override
+                            public void invoke($ $, Object... objects) {
+                                String result=objects[0].toString();
+                                Log.d("test1",objects[0].getClass().toString());
+                                Log.d("test1",objects[0].toString());
+                                try {
+                                    Log.d("test1",jsonObject.getString("contents"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        })
+                        .error(new Function() {
+                            @Override
+                            public void invoke($ $, Object... objects) {
+                                Log.d("test1",objects[0].toString());
+                            }
+                        }));
             }
         });
     }
