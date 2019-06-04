@@ -40,7 +40,7 @@ router.post('/select', function (req, res) {
 
 //3 args
 router.post('/insert', function (req, res) {
-  var str = "RommID : " + req.body.roomid + "\nMemberID : " + req.body.memberid+"\nContents : "+req.body.contents;
+  var str = "RommID : " + req.body.roomid + "\nMemberID : " + req.body.memberid+ "\nContents : "+req.body.contents;
   console.log(str);
   var contents = decodeURI(req.body.contents);
   console.log(contents);
