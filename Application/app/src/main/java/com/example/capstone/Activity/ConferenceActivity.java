@@ -30,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.channels.InterruptedByTimeoutException;
 import java.sql.Date;
@@ -244,16 +245,19 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
                 adapter.addDialogue(userID, formatDate, texts.get(0));
                 adapter.notifyDataSetChanged();
                 setButtonsStatus(true);
-
+                String encodeStr = "",decodeStr="";
+                try {
+                    encodeStr=URLEncoder.encode(texts.get(0),"UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
 
                 final JSONObject jsonObject=new JSONObject();
                 try {
-                    jsonObject.put("contents", URLEncoder.encode(texts.get(0),"UTF-8"));
+                    jsonObject.put("contents",encodeStr);
                     jsonObject.put("roomid",roomNum);
                     jsonObject.put("memberid",userID);
                 } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
                 $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/users/insert")
@@ -266,11 +270,9 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
                             @Override
                             public void invoke($ $, Object... objects) {
                                 String result=objects[0].toString();
-                                Log.d("test1",objects[0].getClass().toString());
-                                Log.d("test1",objects[0].toString());
                                 try {
-                                    Log.d("test1",jsonObject.getString("contents"));
-                                } catch (JSONException e) {
+                                    Log.d("test1",URLDecoder.decode(objects[0].toString(),"UTF-8"));
+                                } catch (UnsupportedEncodingException e) {
                                     e.printStackTrace();
                                 }
                             }
