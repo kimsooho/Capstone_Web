@@ -164,7 +164,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        //super.onBackPressed();
         this.finish();
     }
     //상황에 따라 버튼을 사용가능할지 불가능하게 할지 설정한다.

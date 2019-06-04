@@ -1,5 +1,6 @@
 package com.example.capstone.Adapter;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -10,10 +11,16 @@ import com.example.capstone.Fragment.TabSummaryFragment;
 
 public class ContentPagerAdapter extends FragmentStatePagerAdapter {
     private int mPageCount;
+    public int roomNum;
+    public String division;
+    public int setValue;
 
-    public ContentPagerAdapter(FragmentManager fm, int pageCount) {
+    public ContentPagerAdapter(FragmentManager fm, int pageCount, int num/*, String div, int value*/) {
         super(fm);
         this.mPageCount = pageCount;
+        this.roomNum = num;
+ /*       this.division = div;
+        this.setValue = value;*/
     }
 
     @Override
@@ -22,10 +29,17 @@ public class ContentPagerAdapter extends FragmentStatePagerAdapter {
         switch (position) {
             case 0:
                 TabDialogueFragment homeFragment = new TabDialogueFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("RoomNum", roomNum);
+                homeFragment.setArguments(bundle);
                 return homeFragment;
 
             case 1:
                 TabSummaryFragment tab2Fragment = new TabSummaryFragment();
+                Bundle bundle1 = new Bundle();
+                bundle1.putInt("RoomNum", roomNum);
+          /*      bundle1.putString("Division", division);
+                bundle1.putInt("SettingValue", setValue);*/
                 return tab2Fragment;
             default:
                 return null;
