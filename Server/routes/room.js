@@ -53,5 +53,10 @@ router.post('/chat', function(req, res){
     });
 });
 
+router.post('/lastchat', function(req, res){
+    db.Lastchat(req.body.room_id, function(err, result){
+        res.send(result);
+    });
+});
 
 module.exports = router;
