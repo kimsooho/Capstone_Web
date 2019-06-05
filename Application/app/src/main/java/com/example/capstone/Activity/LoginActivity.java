@@ -62,11 +62,6 @@ public class LoginActivity extends AppCompatActivity {
                             goList.putExtra("userID", editID.getText().toString());
 
                             startActivity(goList);
-                            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                LoginActivity.this.startForegroundService(new Intent(LoginActivity.this, ChannelListActivity.class));
-                            } else {
-                                LoginActivity.this.startService(new Intent(LoginActivity.this, ChannelListActivity.class));
-                            }*/
                         } else {
                             Toast.makeText(LoginActivity.this, "userID / PW를 확인해주세요.", Toast.LENGTH_SHORT).show();
                         }
@@ -78,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("test", objects[0].toString());
                     }
                 }));
+
     }
 
     public void JoinusClick(View v) {

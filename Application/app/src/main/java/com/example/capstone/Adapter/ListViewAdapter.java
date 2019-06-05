@@ -65,7 +65,7 @@ public class ListViewAdapter extends BaseAdapter {
         mainImage.setImageDrawable(listViewItem.getIcon());
         stateImage.setImageDrawable(listViewItem.getState());
         titleText.setText(listViewItem.getTitle());
-        peopleText.setText(listViewItem.getPeople());
+        peopleText.setText(listViewItem.getMakeMember());
 
         return convertView;
 
@@ -85,13 +85,13 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Drawable icon, Drawable state, String title, String people, int num, int st) {
+    public void addItem(Drawable icon, Drawable state, String title, String maker, int num, int st) {
         ListViewItem item = new ListViewItem();
 
         item.setIcon(icon);
         item.setState(state);
         item.setTitle(title);
-        item.setPeople(people);
+        item.setMakeMember(maker);
         item.setRoomNum(num);
         item.setStatus(st);
         listViewItemList.add(item);

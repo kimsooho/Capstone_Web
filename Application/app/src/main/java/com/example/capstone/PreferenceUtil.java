@@ -47,7 +47,7 @@ public class PreferenceUtil {
 
 
     public int getIntExtra(String key) {
-        return prefs.getInt(key, 0);
+        return prefs.getInt(key, -1);
     }
 
     public String getStringExtra(String key) {

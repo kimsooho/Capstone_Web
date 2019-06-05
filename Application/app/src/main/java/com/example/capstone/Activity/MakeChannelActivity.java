@@ -69,7 +69,7 @@ public class MakeChannelActivity extends Activity {
                     public void invoke($ $, Object... objects) {
                         String result=objects[0].toString();
                         waitingIntent.putExtra("RoomNum",Integer.parseInt(result));
-
+                        waitingIntent.putExtra("makeMember",userID);
                         waitingIntent.putExtra("where",true);
 
                         startActivity(waitingIntent);

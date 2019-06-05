@@ -9,11 +9,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,7 +47,10 @@ import self.philbrown.droidQuery.Function;
 public class ConferenceActivity extends AppCompatActivity implements View.OnClickListener, SpeechRecognizeListener {
     public static Activity activity;
     public int roomNum;
-    public String userID;
+    public String userID,makeMember;
+    public LinearLayout linearLayout ;
+
+    public Button btnStop;
 
     DialogueViewAdapter adapter;
 
@@ -59,7 +64,8 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conference);
         activity = ConferenceActivity.this;
-
+        linearLayout = (LinearLayout)findViewById(R.id.control_layout);
+        btnStop = (Button)findViewById(R.id.btn_stop);
         //주요 권한 사용자에게 다시 체크 받음
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO) && ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
@@ -81,24 +87,28 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
 
 
         setButtonsStatus(true);
-        //서버에게 방번호와 사용자 아이디를 서버에게 보내줘서 서버에게 사용자가 방에 접속했다는것을 알려야함
 
         //이전 액티비티 종료
 
         Intent intent = getIntent();
         roomNum = intent.getExtras().getInt("RoomNum");
-        userID = intent.getStringExtra("userID");
+
 
         if (intent.getExtras().getBoolean("where")) { //채널 생성 액티비티에서 왓으면 생성 액티비티 종료
+            makeMember = intent.getStringExtra("userID"); //채널생성
+            userID = intent.getStringExtra("userID"); //채널생성
             MakeChannelActivity makeChannelActivity = (MakeChannelActivity) MakeChannelActivity.createChannelActivity;
             makeChannelActivity.finish();
         }
         else//일반 접속시 패스워드 팝업 종료
         {
+            userID = intent.getStringExtra("userID");
+            makeMember = intent.getStringExtra("makeMember"); //채널생성
             PasswordPopup passwordPopup = (PasswordPopup) PasswordPopup.passwordPopup;
             passwordPopup.finish();
         }
-
+        //서버에게 방번호와 사용자 아이디를 서버에게 보내줘서 서버에게 사용자가 방에 접속했다는것을 알려야함
+        if(!userID.equals(makeMember)){ linearLayout.removeView(btnStop);}
         ListView listview;
 
         // Adapter 생성
@@ -132,7 +142,6 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         Intent goClose = new Intent(ConferenceActivity.this, CloseActivity.class);
 
         goClose.putExtra("RoomNum", roomNum);
-
         goClose.putExtra("status", true);
         startActivity(goClose);
     }

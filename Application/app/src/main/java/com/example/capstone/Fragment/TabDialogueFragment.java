@@ -30,9 +30,15 @@ public class TabDialogueFragment extends Fragment {
     DialogueViewAdapter adapter;
     public int roomNum;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            roomNum = getArguments().getInt("num");
+        }
+    }
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ListView listview;
-        roomNum = this.getArguments().getInt("RoomNum");
         // Adapter 생성
         adapter = new DialogueViewAdapter();
         View v = inflater.inflate(R.layout.tab_dialogue_item, container, false);
@@ -44,11 +50,11 @@ public class TabDialogueFragment extends Fragment {
         JSONObject jsonObject = new JSONObject();
 
         try {
-            jsonObject.put("Room_number", roomNum);
+            jsonObject.put("room_id", roomNum);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/room/roomlistfalse")
+        $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/room/chat")
                 .contentType("application/json; charset=utf-8")
                 .type("POST")
                 .data(jsonObject.toString())

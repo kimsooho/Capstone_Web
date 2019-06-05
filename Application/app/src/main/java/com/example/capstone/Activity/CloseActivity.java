@@ -65,7 +65,7 @@ public class CloseActivity extends AppCompatActivity {
 
         mViewPager = (ViewPager) findViewById(R.id.pager_content);
 
-        mContentPagerAdapter = new ContentPagerAdapter(getSupportFragmentManager(), mTabLayout.getTabCount(), roomNum/*, division, setValue*/);
+        mContentPagerAdapter = new ContentPagerAdapter(getSupportFragmentManager(), mTabLayout.getTabCount(), roomNum, division, setValue);
 
         mViewPager.setAdapter(mContentPagerAdapter);
         mViewPager.addOnPageChangeListener(

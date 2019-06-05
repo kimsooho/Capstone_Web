@@ -34,7 +34,7 @@ public class SettingPopup extends Activity {
     RadioGroup radioGroup;
 
 
-    String division; //line or percentage
+    int division; //line or percentage
     int summaryValue;
 
     @Override
@@ -48,16 +48,15 @@ public class SettingPopup extends Activity {
         radioPer = (RadioButton) findViewById(R.id.radio_per);
         radioLine = (RadioButton) findViewById(R.id.radio_line);
 
-        division = PreferenceUtil.getInstance(this).getStringExtra("Division");
+        division = PreferenceUtil.getInstance(this).getIntExtra("Division");
         summaryValue = PreferenceUtil.getInstance(this).getIntExtra("SettingValue");
-        if (division.equals("line")) {
+        if (division == 1) {
             radioLine.setChecked(true);
             radioPer.setChecked(false);
-        } else if (division.equals("percentage")) {
+        } else if (division == 0) {
             radioLine.setChecked(false);
             radioPer.setChecked(true);
         }
-        Log.d("debug", "-----------------------------22------" + summaryValue);
         editSetVale.setText(Integer.toString(summaryValue));
 
     }
@@ -82,13 +81,13 @@ public class SettingPopup extends Activity {
             return;
         }
         if (radioLine.isChecked()) {
-            division = "line";
+            division =  1;
         }
         if (radioPer.isChecked()) {
-            division = "percentage";
+            division = 0;
         }
         PreferenceUtil.getInstance(this).putIntExtra("SettingValue", summaryValue);
-        PreferenceUtil.getInstance(this).putStringExtra("Division", division);
+        PreferenceUtil.getInstance(this).putIntExtra("Division", division);
 
         this.finish();
 
