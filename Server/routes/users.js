@@ -43,7 +43,7 @@ router.post('/insert', function (req, res) {
   var str = "RommID : " + req.body.roomid + "\nMemberID : " + req.body.memberid+ "\nContents : "+req.body.contents;
   console.log(str);
   var contents = decodeURI(req.body.contents);
-  contents.replace(/#/gi, " ");
+  contents = contents.replace(/+/gi, " ");
   console.log(contents);
   options.args=[req.body.roomid, req.body.memberid, contents];
 
