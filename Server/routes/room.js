@@ -47,5 +47,11 @@ router.post('/roomlistfalse', function(req, res){
     });
 });
 
+router.post('/chat', function(req, res){
+    db.chat(req.body.room_id, function(err, result){
+        res.send(result);
+    });
+});
+
 
 module.exports = router;

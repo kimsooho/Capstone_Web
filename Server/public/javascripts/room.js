@@ -114,6 +114,36 @@ module.exports = function () {
                 });
             });
         },
+        roomListTrue: function (title, callback) {
+            pool.getConnection(function (err, con) {
+                var sql = `SELECT * FROM room WHERE title LIKE "%${title}%" AND room.status = 0`;
+                con.query(sql, function (err, result, fields) {
+                    con.release();
+                    if (err) return callback(err);
+                    callback(null, result);
+                });
+            });
+        },
+        roomListFalse: function (title, callback) {
+            pool.getConnection(function (err, con) {
+                var sql = `SELECT * FROM room WHERE title LIKE "%${title}%" AND room.status = 1`;
+                con.query(sql, function (err, result, fields) {
+                    con.release();
+                    if (err) return callback(err);
+                    callback(null, result);
+                });
+            });
+        },
+        chat: function (roomId, callback) {
+            pool.getConnection(function (err, con) {
+                var sql = `SELECT contents FROM chatlog WHERE room_id = ${roomId} `;
+                con.query(sql, function (err, result, fields) {
+                    con.release();
+                    if (err) return callback(err);
+                    callback(null, result);
+                });
+            });
+        },
         pool: pool        
     }
 };
