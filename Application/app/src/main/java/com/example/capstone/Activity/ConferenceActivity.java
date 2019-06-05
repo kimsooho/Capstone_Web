@@ -59,7 +59,6 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
     private SpeechRecognizerClient client;
     private static final int REQUEST_CODE_AUDIO_AND_WRITE_EXTERNAL_STORAGE = 0;
 
-    Button btnSay;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,12 +80,6 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
 
         // SDK 초기화
         SpeechRecognizerManager.getInstance().initializeLibrary(this);
-
-        // 클라이언트 생성 - 마이이크 아이콘에 동작하도록 하자.
-        //SpeechRecognizerClient.Builder builder = new SpeechRecognizerClient.Builder().setServiceType(SpeechRecognizerClient.SERVICE_TYPE_WEB);
-
-        btnSay = (Button) findViewById(R.id.btn_say);
-
 
         setButtonsStatus(true);
 
@@ -110,6 +103,8 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         }
 
         //서버에게 방번호와 사용자 아이디를 서버에게 보내줘서 서버에게 사용자가 방에 접속했다는것을 알려야함
+        entrance();
+
         if (!userID.equals(makeMember)) {
             linearLayout.removeView(btnStop);
         }
@@ -130,7 +125,6 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
 
             }
         });
-
 
         adapter.clear();
         adapter.notifyDataSetChanged();
@@ -155,8 +149,6 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
                             try {
                                 JSONObject object = array.getJSONObject(i);
                                 String now = object.getString("chat_date");
-                                Log.d("debug", now+"  컨퍼런스");
-
                                 String date = now.substring(11, 19);
                                 adapter.addDialogue(object.getString("member_id"), date, object.getString("contents"));
                                 adapter.notifyDataSetChanged();
@@ -207,9 +199,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
 
     public void StopCon(View v)
     {
-        //서버에게 사용자 나감을 알려야함
         Intent goClose = new Intent(ConferenceActivity.this, CloseActivity.class);
-        Log.d("debug","--------------");
         goClose.putExtra("RoomNum", roomNum);
         goClose.putExtra("status", true);
         startActivity(goClose);
@@ -221,8 +211,50 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         startActivity(goCheck);
     }
 
-    public void Say(View v) //btn_say
+    //상황에 따라 버튼을 사용가능할지 불가능하게 할지 설정한다.
+    private void setButtonsStatus(boolean enabled) {
+        findViewById(R.id.btn_say).setEnabled(enabled);
+        findViewById(R.id.btn_stop).setEnabled(enabled);
+    }
+
+    public void entrance()
     {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("room_id", roomNum);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/room/chat")
+                .contentType("application/json; charset=utf-8")
+                .type("POST")
+                .data(jsonObject.toString())
+                .dataType("json")
+                .context(ConferenceActivity.this)
+                .success(new Function() {
+                    @Override
+                    public void invoke($ $, Object... objects) {
+                        JSONArray array = (JSONArray) objects[0];
+
+                        for (int i = 0; i < array.length(); i++) {
+                            try {
+                                JSONObject object = array.getJSONObject(i);
+                                String now = object.getString("chat_date");
+                                String date = now.substring(11, 19);
+                                adapter.addDialogue(object.getString("member_id"), date, object.getString("contents"));
+                                adapter.notifyDataSetChanged();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                })
+                .error(new Function() {
+                    @Override
+                    public void invoke($ $, Object... objects) {
+                        Log.d("test1", objects[0].toString());
+                    }
+                }));
     }
 
     @Override
@@ -237,12 +269,6 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
     public void onBackPressed() {
         //super.onBackPressed();
         this.finish();
-    }
-
-    //상황에 따라 버튼을 사용가능할지 불가능하게 할지 설정한다.
-    private void setButtonsStatus(boolean enabled) {
-        findViewById(R.id.btn_say).setEnabled(enabled);
-        findViewById(R.id.btn_stop).setEnabled(enabled);
     }
 
     @Override
