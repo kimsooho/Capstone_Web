@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ListView;
 
+import com.example.capstone.Activity.ConferenceActivity;
 import com.example.capstone.Adapter.DialogueViewAdapter;
 import com.example.capstone.R;
 
@@ -58,34 +59,33 @@ public class TabDialogueFragment extends Fragment {
                 .contentType("application/json; charset=utf-8")
                 .type("POST")
                 .data(jsonObject.toString())
+                .dataType("json")
                 .context(getActivity())
                 .success(new Function() {
                     @Override
                     public void invoke($ $, Object... objects) {
-                        //JSONArray array=(JSONArray)objects[0];
-                        //JSONArray는 JSONObject로 구성
-                        //JSONArray.get(배열 인덱스)으로 각 오브젝트 전체를 구할 수 있음
-                        //JSONObject.get(json key)로 원하는 값만 구할 수 있음
-                        String title, makeMember;
-                        int roomID, roomStatus;
-                        try {
-                            JSONArray array = new JSONArray(objects[0].toString());
-                            for (int i = 0; i < array.length(); i++) {
-                                JSONObject jo = array.getJSONObject(i);
-                                title = jo.get("title").toString();
+                        JSONArray array = (JSONArray) objects[0];
+
+                        for (int i = 0; i < array.length(); i++) {
+                            try {
+                                JSONObject object = array.getJSONObject(i);
+                                String now = object.getString("chat_date");
+                               Log.d("debug", now);
+                                 String date = now.substring(11, 19);
+                                adapter.addDialogue(object.getString("member_id"), date, object.getString("contents"));
+                                adapter.notifyDataSetChanged();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
                     }
                 })
                 .error(new Function() {
                     @Override
                     public void invoke($ $, Object... objects) {
-                        Log.d("test", "서버 통신 에러");
+                        Log.d("test1", objects[0].toString());
                     }
                 }));
-
 
         // 첫 번째 아이템 추가.
 

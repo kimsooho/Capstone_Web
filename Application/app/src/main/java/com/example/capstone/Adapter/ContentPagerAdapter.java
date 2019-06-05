@@ -12,10 +12,10 @@ import com.example.capstone.Fragment.TabSummaryFragment;
 public class ContentPagerAdapter extends FragmentStatePagerAdapter {
     private int mPageCount;
     public int roomNum;
-    public String division;
+    public int division;
     public int setValue;
 
-    public ContentPagerAdapter(FragmentManager fm, int pageCount, int num, String div, int value) {
+    public ContentPagerAdapter(FragmentManager fm, int pageCount, int num, int div, int value) {
         super(fm);
         this.mPageCount = pageCount;
         this.roomNum = num;

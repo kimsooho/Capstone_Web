@@ -155,6 +155,8 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
                             try {
                                 JSONObject object = array.getJSONObject(i);
                                 String now = object.getString("chat_date");
+                                Log.d("debug", now+"  컨퍼런스");
+
                                 String date = now.substring(11, 19);
                                 adapter.addDialogue(object.getString("member_id"), date, object.getString("contents"));
                                 adapter.notifyDataSetChanged();
@@ -203,10 +205,11 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
-    public void stopConference(View v) {//btn_stop
+    public void StopCon(View v)
+    {
         //서버에게 사용자 나감을 알려야함
         Intent goClose = new Intent(ConferenceActivity.this, CloseActivity.class);
-
+        Log.d("debug","--------------");
         goClose.putExtra("RoomNum", roomNum);
         goClose.putExtra("status", true);
         startActivity(goClose);
@@ -239,7 +242,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
     //상황에 따라 버튼을 사용가능할지 불가능하게 할지 설정한다.
     private void setButtonsStatus(boolean enabled) {
         findViewById(R.id.btn_say).setEnabled(enabled);
-        findViewById(R.id.btn_stop).setEnabled(!enabled);
+        findViewById(R.id.btn_stop).setEnabled(enabled);
     }
 
     @Override
