@@ -13,7 +13,16 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.capstone.Adapter.ContentPagerAdapter;
+import com.example.capstone.PreferenceUtil;
 import com.example.capstone.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import self.philbrown.droidQuery.$;
+import self.philbrown.droidQuery.AjaxOptions;
+import self.philbrown.droidQuery.Function;
 
 //회의종료 화면
 public class CloseActivity extends AppCompatActivity {
@@ -24,24 +33,28 @@ public class CloseActivity extends AppCompatActivity {
     private ContentPagerAdapter mContentPagerAdapter;
 
     public int roomNum;
+    public String division;
+    public int setValue;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_close);
 
+
         Intent intent = getIntent();
 
         roomNum = intent.getExtras().getInt("RoomNum");
-        Log.d("debug","  d  "+roomNum);
-
-        if (intent.getExtras().getBoolean("status"))
-        {
+        division = PreferenceUtil.getInstance(this).getStringExtra("Division");
+      //  Log.d("debug", division);
+        setValue = PreferenceUtil.getInstance(this).getIntExtra("SettingValue");
+    //    Log.d("debug", setValue+"");
+        if (intent.getExtras().getBoolean("status")) {
             //회의후 넘어온 것이라면 회의 액티비티 종료
             //이전 액티비티 종료
-            ConferenceActivity conferenceActivity = (ConferenceActivity)ConferenceActivity.activity;
+            ConferenceActivity conferenceActivity = (ConferenceActivity) ConferenceActivity.activity;
             conferenceActivity.finish();
         }
-
 
         //탭
         mContext = getApplicationContext();
@@ -52,9 +65,7 @@ public class CloseActivity extends AppCompatActivity {
 
         mViewPager = (ViewPager) findViewById(R.id.pager_content);
 
-        mContentPagerAdapter = new ContentPagerAdapter(
-
-                getSupportFragmentManager(), mTabLayout.getTabCount());
+        mContentPagerAdapter = new ContentPagerAdapter(getSupportFragmentManager(), mTabLayout.getTabCount(), roomNum, division, setValue);
 
         mViewPager.setAdapter(mContentPagerAdapter);
         mViewPager.addOnPageChangeListener(
@@ -81,10 +92,11 @@ public class CloseActivity extends AppCompatActivity {
 
 
     }
+
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(CloseActivity.this,ChannelListActivity.channelListActivity.getClass());
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Intent intent = new Intent(CloseActivity.this, ChannelListActivity.channelListActivity.getClass());
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         //        super.onBackPressed();
     }

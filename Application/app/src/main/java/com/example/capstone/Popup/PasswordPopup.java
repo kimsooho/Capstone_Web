@@ -16,6 +16,7 @@ public class PasswordPopup extends Activity {
     EditText editRoomPw;
 
     String userID;
+    String makeMember;
     int roomNum;
 
     @Override
@@ -30,6 +31,7 @@ public class PasswordPopup extends Activity {
         Intent intent = getIntent();
         userID = intent.getStringExtra("userID");
         roomNum = intent.getIntExtra("RoomNum",0);
+        makeMember = intent.getStringExtra("makeMember");
     }
 
 
@@ -39,6 +41,7 @@ public class PasswordPopup extends Activity {
         Intent conferenceIntent = new Intent(PasswordPopup.this, ConferenceActivity.class);
         conferenceIntent.putExtra("userID", userID);
         conferenceIntent.putExtra("RoomNum", roomNum);
+        conferenceIntent.putExtra("makeMember", makeMember);
         conferenceIntent.putExtra("where",false);
         startActivity(conferenceIntent);
     }

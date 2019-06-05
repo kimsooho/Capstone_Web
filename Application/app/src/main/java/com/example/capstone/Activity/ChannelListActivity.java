@@ -17,6 +17,7 @@ import com.example.capstone.Adapter.ListViewAdapter;
 import com.example.capstone.Item.ListViewItem;
 import com.example.capstone.Popup.PasswordPopup;
 import com.example.capstone.Popup.SettingPopup;
+import com.example.capstone.PreferenceUtil;
 import com.example.capstone.R;
 
 import org.json.JSONArray;
@@ -43,19 +44,30 @@ public class ChannelListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel_list);
-        editSearch=(TextView)findViewById(R.id.edit_search);
-        Intent intent=getIntent();
+        editSearch = (TextView) findViewById(R.id.edit_search);
+
+        //설정 초기값 저장
+        //값 저장
+        if (PreferenceUtil.getInstance(this).getIntExtra("SettingValue") == -1) {
+            PreferenceUtil.getInstance(this).putIntExtra("SettingValue", 50);
+        }
+        //라인, 퍼센트 저장 0-퍼센트
+        if (PreferenceUtil.getInstance(this).getIntExtra("Division")==-1) {
+            PreferenceUtil.getInstance(this).putIntExtra("Division", 0);
+        }
+
+
+        Intent intent = getIntent();
         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(intent);
         }*/
 
-        id =intent.getStringExtra("ID");
+        id = intent.getStringExtra("ID");
         channelListActivity = ChannelListActivity.this;
 
 
         editSearch = (TextView) findViewById(R.id.edit_search);
         check_before = (CheckBox) findViewById(R.id.check_pre);
-
 
 
         userID = intent.getStringExtra("userID");
@@ -77,6 +89,7 @@ public class ChannelListActivity extends AppCompatActivity {
                     Intent passwordIntent = new Intent(ChannelListActivity.this, PasswordPopup.class);
                     passwordIntent.putExtra("userID", userID);
                     passwordIntent.putExtra("RoomNum", listViewItem.getRoomNum());
+                    passwordIntent.putExtra("makeMember", listViewItem.getMakeMember());
                     startActivity(passwordIntent);
                 } else {
                     Intent closeIntent = new Intent(ChannelListActivity.this, CloseActivity.class);
@@ -110,7 +123,6 @@ public class ChannelListActivity extends AppCompatActivity {
 
     public void search(View v)//검색 버튼 누르면 시작
     {
-
 	/*if(editSearch.getText().toString() != "")
         {
          빈칸 검색일 경우 이전 채널 리스트 불러오기
@@ -142,6 +154,7 @@ public class ChannelListActivity extends AppCompatActivity {
                             //JSONArray.get(배열 인덱스)으로 각 오브젝트 전체를 구할 수 있음
                             //JSONObject.get(json key)로 원하는 값만 구할 수 있음
                             String title, makeMember;
+                            Log.d("test1","hello");
                             int roomID, roomStatus;
                             try {
                                 JSONArray array = new JSONArray(objects[0].toString());
@@ -190,7 +203,6 @@ public class ChannelListActivity extends AppCompatActivity {
                                     JSONObject jo = array.getJSONObject(i);
                                     title = jo.get("title").toString();
                                     makeMember = jo.get("make_member").toString();
-                                    Log.d("test", makeMember);
                                     roomID = Integer.parseInt(jo.get("room_id").toString());
                                     roomStatus = Integer.parseInt(jo.get("status").toString()); //상태 받아와서 상태값도 저장
                                     adapter.addItem(ContextCompat.getDrawable(ChannelListActivity.this, R.drawable.main),

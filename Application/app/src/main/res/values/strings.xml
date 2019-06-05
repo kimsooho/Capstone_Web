@@ -2,4 +2,5 @@
     <string name="app_name">capstone</string>
     <color name="background">#203864</color>
     <color name="textcolor">#FFC000</color>
+    <string name="kakao_app_key"> 6b30379b84ff762e213141de609f5301</string>
 </resources>
