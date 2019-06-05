@@ -66,7 +66,6 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
                 ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_AUDIO_AND_WRITE_EXTERNAL_STORAGE);
             } else {
                 // 유저가 거부하면서 다시 묻지 않기를 클릭.. 권한이 없다고 유저에게 직접 알림.
-                Toast.makeText(this,"dd",Toast.LENGTH_LONG).show();
             }
         } else {
             //startUsingSpeechSDK();
@@ -245,7 +244,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
                 adapter.addDialogue(userID, formatDate, texts.get(0));
                 adapter.notifyDataSetChanged();
                 setButtonsStatus(true);
-                String encodeStr = "",decodeStr="";
+                String encodeStr = "";
                 try {
                     encodeStr=URLEncoder.encode(texts.get(0),"UTF-8");
                 } catch (UnsupportedEncodingException e) {
@@ -270,16 +269,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
                             @Override
                             public void invoke($ $, Object... objects) {
                                 String result=objects[0].toString();
-                                try {
-                                    Log.d("test1",jsonObject.getString("memberid"));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                try {
-                                    Log.d("test1",URLDecoder.decode(objects[0].toString(),"UTF-8"));
-                                } catch (UnsupportedEncodingException e) {
-                                    e.printStackTrace();
-                                }
+                                Log.d("test1",objects[0].toString());
                             }
                         })
                         .error(new Function() {
