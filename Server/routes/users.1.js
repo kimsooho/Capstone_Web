@@ -38,7 +38,8 @@ router.get('/select', function (req, res) {
 //3 args
 router.get('/insert', function (req, res) {
   console.log("select used python");
-  var contents = decodeURI(req.query.contents);
+  var contents = decodeURI(req.query.contents+"");
+  console.log(contents);
   options.args=[req.query.roomid, req.query.memberid, contents];
 
   PythonShell.run('insert.py', options, function (err, results) {
