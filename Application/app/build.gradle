@@ -33,4 +33,6 @@ dependencies {
     implementation files('libs/httpclient-4.2.3.jar')
     implementation files('libs/apache-httpcomponents-httpcore.jar')
     implementation files('libs/commons-logging-1.2.1.1.jar')
+    //    카카오 추가
+    implementation group: 'com.kakao.sdk', name: 'newtone', version: '6.0.1'
 }

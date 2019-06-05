@@ -78,8 +78,6 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("test", objects[0].toString());
                     }
                 }));
-        startActivity(goList);
-
     }
 
     public void JoinusClick(View v) {

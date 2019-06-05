@@ -122,7 +122,6 @@ public class ChannelListActivity extends AppCompatActivity {
 
     public void search(View v)//검색 버튼 누르면 시작
     {
-
 	/*if(editSearch.getText().toString() != "")
         {
          빈칸 검색일 경우 이전 채널 리스트 불러오기
@@ -154,6 +153,7 @@ public class ChannelListActivity extends AppCompatActivity {
                             //JSONArray.get(배열 인덱스)으로 각 오브젝트 전체를 구할 수 있음
                             //JSONObject.get(json key)로 원하는 값만 구할 수 있음
                             String title, makeMember;
+                            Log.d("test1","hello");
                             int roomID, roomStatus;
                             try {
                                 JSONArray array = new JSONArray(objects[0].toString());
