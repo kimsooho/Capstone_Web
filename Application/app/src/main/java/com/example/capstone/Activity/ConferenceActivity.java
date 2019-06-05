@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.capstone.Adapter.DialogueViewAdapter;
+import com.example.capstone.Popup.PasswordPopup;
 import com.example.capstone.Popup.PeoplePopup;
 import com.example.capstone.R;
 
@@ -21,6 +22,7 @@ import java.nio.channels.InterruptedByTimeoutException;
 public class ConferenceActivity extends AppCompatActivity {
     public static Activity activity;
     public int roomNum;
+    public String userID;
 
     DialogueViewAdapter adapter;
 
@@ -30,14 +32,25 @@ public class ConferenceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_conference);
         activity = ConferenceActivity.this;
 
-        Intent intent = getIntent();
-        roomNum = intent.getExtras().getInt("RoomNum");
+        //서버에게 방번호와 사용자 아이디를 서버에게 보내줘서 서버에게 사용자가 방에 접속했다는것을 알려야함
 
         //이전 액티비티 종료
-        WaitingActivity waitingActivity = (WaitingActivity) WaitingActivity.activity;
-        waitingActivity.finish();
-        ListView listview;
 
+        Intent intent = getIntent();
+        roomNum = intent.getExtras().getInt("RoomNum");
+        userID = intent.getStringExtra("userID");
+
+        if (intent.getExtras().getBoolean("where")) { //채널 생성 액티비티에서 왓으면 생성 액티비티 종료
+            MakeChannelActivity makeChannelActivity = (MakeChannelActivity) MakeChannelActivity.createChannelActivity;
+            makeChannelActivity.finish();
+        }
+        else//일반 접속시 패스워드 팝업 종료
+        {
+            PasswordPopup passwordPopup = (PasswordPopup) PasswordPopup.passwordPopup;
+            passwordPopup.finish();
+        }
+
+        ListView listview;
 
         // Adapter 생성
         adapter = new DialogueViewAdapter();
@@ -69,21 +82,22 @@ public class ConferenceActivity extends AppCompatActivity {
     }
 
     public void stopConference(View v) {//btn_stop
-
+        //서버에게 사용자 나감을 알려야함
         Intent goClose = new Intent(ConferenceActivity.this, CloseActivity.class);
 
-        Log.d("dbug","스탑 버튼");
-        //값보내기
-        //       goList.putExtra("key", editID.getText().toString());
+        goClose.putExtra("RoomNum", roomNum);
+
+        goClose.putExtra("status", true);
         startActivity(goClose);
     }
 
-    public void checkPeople_con(View v){ //btn_people_conference
+    public void checkPeople_con(View v) { //btn_people_conference
         Intent goCheck = new Intent(ConferenceActivity.this, PeoplePopup.class);
         //값보내기
         goCheck.putExtra("RoomNum", roomNum);
         startActivity(goCheck);
     }
+
     public void Say(View v) //btn_say
     {
         /*stt*/
@@ -93,10 +107,15 @@ public class ConferenceActivity extends AppCompatActivity {
 */
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //서버에게 사용자가 나감을 알려야함
+    }
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
+        super.onBackPressed();
+        this.finish();
     }
 }
