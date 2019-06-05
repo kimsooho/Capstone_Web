@@ -55,6 +55,18 @@ router.post('/insert', function (req, res) {
 });
 
 //3 args
+
+router.post('/all', function(req, res){
+	options.args=[req.body.roomid];
+	PythonShell.run('totalText.py', options, function(err, results){
+		if(err) throw err;
+
+		console.log('results: %j', results);
+		res.send(results);
+	});
+});
+
+
 router.post('/do', function (req, res) {
   console.log("summary");
   options.args=[req.body.roomid, req.body.memberid, req.body.ratio];
