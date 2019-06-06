@@ -14,7 +14,7 @@ curs=conn.cursor(pymysql.cursors.DictCursor)
 sql = "SELECT * FROM chatlog WHERE room_id = %s"
 roomid = sys.argv[1]
 
-summnum = sys.argv[2]#비율 또는 문장 갯수 입력
+summnum = int(sys.argv[2])#비율 또는 문장 갯수 입력
 summtype = 0
 summtype = int(sys.argv[3])
 #curs.execute(sql,(roomid, memberid))
@@ -36,9 +36,8 @@ for row in rows:
     result += (row['contents'])+" "
     #result.append(row['contents'])
 
-#print(result)
 #summtype->0 : ratio
 if summtype == 0:
 	print(summarize(result, ratio=float(summnum/100))) # 비율
 else:
-	print(summarize(result, word_count=int(summnum))) #라인
+	print(summarize(result, word_count=summnum)) #라인

@@ -61,7 +61,6 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
     DialogueViewAdapter adapter;
 
     Boolean authority;
-    Boolean threadStop;
 
     DialogueThread dt;
     MyHandler mh;
@@ -138,16 +137,15 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
-        //다이얼로그 스레드 & 핸들러 객체 생성
-        dt = new DialogueThread();
+        //핸들러 객체 생성
         mh = new MyHandler();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        threadStop=false;
+        Log.d("test1","onResume");
 
         adapter.clear();
         adapter.notifyDataSetChanged();
@@ -194,13 +192,15 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         listview.setSelection(adapter.getCount() - 1);
         setButtonsStatus(true);
 
+        dt = new DialogueThread();
         dt.start();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        threadStop=true;
+        Log.d("test1","onPause");
+        dt.interrupt();
     }
 
     public void StopCon(View v)
@@ -416,21 +416,23 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
     }
 
     class DialogueThread extends Thread {
+
         @Override
         public void run() {
             super.run();
-            while (true) {
-                if(threadStop) break;
-                Message msg = mh.obtainMessage();
+            try {
+                while (!Thread.currentThread().isInterrupted()) {
+                    Message msg = mh.obtainMessage();
 
-                msg.what = REFRESH_CHAT;
-                mh.sendMessage(msg);
+                    msg.what = REFRESH_CHAT;
+                    mh.sendMessage(msg);
 
-                try {
                     Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
+            } catch (InterruptedException e){
+
+            } finally {
+                Log.d("test1", "스레드 종료 : "+this.getState().toString());
             }
         }
     }
