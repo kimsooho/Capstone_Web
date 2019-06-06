@@ -15,6 +15,8 @@ sql = "SELECT * FROM chatlog WHERE room_id = %s"
 roomid = sys.argv[1]
 memberid = sys.argv[2]
 summnum = float(sys.argv[3])#비율 또는 문장 갯수 입력
+summtype = 0
+summtype = sys.argv[4]
 #curs.execute(sql,(roomid, memberid))
 curs.execute(sql,roomid)
 
@@ -35,5 +37,8 @@ for row in rows:
     #result.append(row['contents'])
 
 #print(result)
-
-print(summarize(result, ratio=summnum)) # 단어 50개 
+#summtype->0 : ratio
+if summtype == 0:
+	print(summarize(result, ratio=summnum)) # 비율
+else:
+	print(summarize(result, word_count=summnum)) #라인

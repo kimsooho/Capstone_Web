@@ -12,15 +12,15 @@ import com.example.capstone.Fragment.TabSummaryFragment;
 public class ContentPagerAdapter extends FragmentStatePagerAdapter {
     private int mPageCount;
     public int roomNum;
-    public String division;
+    public int division;
     public int setValue;
 
-    public ContentPagerAdapter(FragmentManager fm, int pageCount, int num/*, String div, int value*/) {
+    public ContentPagerAdapter(FragmentManager fm, int pageCount, int num, int div, int value) {
         super(fm);
         this.mPageCount = pageCount;
         this.roomNum = num;
- /*       this.division = div;
-        this.setValue = value;*/
+        this.division = div;
+        this.setValue = value;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class ContentPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 TabDialogueFragment homeFragment = new TabDialogueFragment();
                 Bundle bundle = new Bundle();
-                bundle.putInt("RoomNum", roomNum);
+                bundle.putInt("num", roomNum);
                 homeFragment.setArguments(bundle);
                 return homeFragment;
 
@@ -38,8 +38,6 @@ public class ContentPagerAdapter extends FragmentStatePagerAdapter {
                 TabSummaryFragment tab2Fragment = new TabSummaryFragment();
                 Bundle bundle1 = new Bundle();
                 bundle1.putInt("RoomNum", roomNum);
-          /*      bundle1.putString("Division", division);
-                bundle1.putInt("SettingValue", setValue);*/
                 return tab2Fragment;
             default:
                 return null;

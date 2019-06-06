@@ -47,13 +47,13 @@ public class ChannelListActivity extends AppCompatActivity {
         editSearch = (TextView) findViewById(R.id.edit_search);
 
         //설정 초기값 저장
-
-        if (PreferenceUtil.getInstance(this).getIntExtra("SettingValue") == 0) {
+        //값 저장
+        if (PreferenceUtil.getInstance(this).getIntExtra("SettingValue") == 101) {
             PreferenceUtil.getInstance(this).putIntExtra("SettingValue", 50);
         }
-
-        if (PreferenceUtil.getInstance(this).getStringExtra("Division").equals("-")) {
-            PreferenceUtil.getInstance(this).putStringExtra("Division", "percentage");
+        //라인, 퍼센트 저장 0-퍼센트
+        if (PreferenceUtil.getInstance(this).getIntExtra("Division")== 101) {
+            PreferenceUtil.getInstance(this).putIntExtra("Division", 0);
         }
 
 
@@ -89,6 +89,7 @@ public class ChannelListActivity extends AppCompatActivity {
                     Intent passwordIntent = new Intent(ChannelListActivity.this, PasswordPopup.class);
                     passwordIntent.putExtra("userID", userID);
                     passwordIntent.putExtra("RoomNum", listViewItem.getRoomNum());
+                    passwordIntent.putExtra("makeMember", listViewItem.getMakeMember());
                     startActivity(passwordIntent);
                 } else {
                     Intent closeIntent = new Intent(ChannelListActivity.this, CloseActivity.class);
@@ -202,7 +203,6 @@ public class ChannelListActivity extends AppCompatActivity {
                                     JSONObject jo = array.getJSONObject(i);
                                     title = jo.get("title").toString();
                                     makeMember = jo.get("make_member").toString();
-                                    Log.d("test", makeMember);
                                     roomID = Integer.parseInt(jo.get("room_id").toString());
                                     roomStatus = Integer.parseInt(jo.get("status").toString()); //상태 받아와서 상태값도 저장
                                     adapter.addItem(ContextCompat.getDrawable(ChannelListActivity.this, R.drawable.main),

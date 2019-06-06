@@ -12,7 +12,10 @@ sql = "INSERT INTO chatlog(room_id, member_id, contents, chat_date) VALUES(%s, %
 roomid = sys.argv[1]
 memberid = sys.argv[2]
 contents = sys.argv[3]
+
+contents = contents.replace("+"," ", len(contents))
+
 curs.execute(sql,(roomid, memberid, contents))
 conn.commit()
 
-print(contents)
+print("result : " + contents)

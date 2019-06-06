@@ -33,7 +33,7 @@ public class CloseActivity extends AppCompatActivity {
     private ContentPagerAdapter mContentPagerAdapter;
 
     public int roomNum;
-    public String division;
+    public int division;
     public int setValue;
 
     @Override
@@ -45,7 +45,7 @@ public class CloseActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         roomNum = intent.getExtras().getInt("RoomNum");
-        division = PreferenceUtil.getInstance(this).getStringExtra("Division");
+        division = PreferenceUtil.getInstance(this).getIntExtra("Division");
       //  Log.d("debug", division);
         setValue = PreferenceUtil.getInstance(this).getIntExtra("SettingValue");
     //    Log.d("debug", setValue+"");
@@ -65,7 +65,7 @@ public class CloseActivity extends AppCompatActivity {
 
         mViewPager = (ViewPager) findViewById(R.id.pager_content);
 
-        mContentPagerAdapter = new ContentPagerAdapter(getSupportFragmentManager(), mTabLayout.getTabCount(), roomNum/*, division, setValue*/);
+        mContentPagerAdapter = new ContentPagerAdapter(getSupportFragmentManager(), mTabLayout.getTabCount(), roomNum, division, setValue);
 
         mViewPager.setAdapter(mContentPagerAdapter);
         mViewPager.addOnPageChangeListener(

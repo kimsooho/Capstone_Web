@@ -114,6 +114,46 @@ module.exports = function () {
                 });
             });
         },
+        roomListTrue: function (title, callback) {
+            pool.getConnection(function (err, con) {
+                var sql = `SELECT * FROM room WHERE title LIKE "%${title}%" AND room.status = 0`;
+                con.query(sql, function (err, result, fields) {
+                    con.release();
+                    if (err) return callback(err);
+                    callback(null, result);
+                });
+            });
+        },
+        roomListFalse: function (title, callback) {
+            pool.getConnection(function (err, con) {
+                var sql = `SELECT * FROM room WHERE title LIKE "%${title}%" AND room.status = 1`;
+                con.query(sql, function (err, result, fields) {
+                    con.release();
+                    if (err) return callback(err);
+                    callback(null, result);
+                });
+            });
+        },
+        chat: function (roomId, callback) {
+            pool.getConnection(function (err, con) {
+                var sql = `SELECT contents, member_id, chat_date FROM chatlog WHERE room_id = ${roomId} ORDER BY chat_date`;
+                con.query(sql, function (err, result, fields) {
+                    con.release();
+                    if (err) return callback(err);
+                    callback(null, result);
+                });
+            });
+        },        
+        Lastchat: function (roomId, callback) {
+            pool.getConnection(function (err, con) {
+                var sql = `SELECT contents, member_id, chat_date FROM chatlog WHERE room_id = ${roomId} ORDER BY chat_date DESC`;
+                con.query(sql, function (err, result, fields) {
+                    con.release();
+                    if (err) return callback(err);
+                    callback(null, result[0]);
+                });
+            });
+        },
         pool: pool        
     }
 };

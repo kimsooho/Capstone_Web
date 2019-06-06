@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
 
             android:layout_gravity="center"
-            android:background="@drawable/login"
+            android:background="@drawable/start"
             android:onClick="LoginClick" />
     </LinearLayout>
 

@@ -30,20 +30,22 @@ public class TabSummaryFragment extends Fragment {
     public String divsion;
     public int setValue;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            roomNum = getArguments().getInt("num");
+        }
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        roomNum = this.getArguments().getInt("RoomNum");
-
-        //     divsion = this.getArguments().getString("Division");
-        //      setValue =this.getArguments().getInt("SettingValue");
 
         //서버에 설정값 전송 후 데이터 받기
         JSONObject jsonObject = new JSONObject();
-
         try {
-            jsonObject.put("Room_number", roomNum);
-            jsonObject.put("division", PreferenceUtil.getInstance(getActivity()).getStringExtra("Division")); //percentage or line
-            jsonObject.put("Value", PreferenceUtil.getInstance(getActivity()).getIntExtra("SettingValue"));
+            jsonObject.put("room_id", roomNum);
+            jsonObject.put("summtype", PreferenceUtil.getInstance(getActivity()).getIntExtra("Division")); //percentage(0) or line(1)
+            jsonObject.put("ratio", PreferenceUtil.getInstance(getActivity()).getIntExtra("SettingValue"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
