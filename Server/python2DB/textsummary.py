@@ -39,7 +39,7 @@ for row in rows:
 #print(result)
 #summtype->0 : ratio
 if summtype == 0:
-	summnum /= float(summnum/100);
+	summnum /= float(summnum/100)
 	print(summarize(result, ratio=summnum)) # 비율
 else:
 	print(summarize(result, word_count=summnum)) #라인
