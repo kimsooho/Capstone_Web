@@ -25,7 +25,6 @@ public class ContentPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-
         switch (position) {
             case 0:
                 TabDialogueFragment homeFragment = new TabDialogueFragment();
@@ -37,7 +36,8 @@ public class ContentPagerAdapter extends FragmentStatePagerAdapter {
             case 1:
                 TabSummaryFragment tab2Fragment = new TabSummaryFragment();
                 Bundle bundle1 = new Bundle();
-                bundle1.putInt("RoomNum", roomNum);
+                bundle1.putInt("num", roomNum);
+                tab2Fragment.setArguments(bundle1);
                 return tab2Fragment;
             default:
                 return null;
