@@ -64,7 +64,7 @@ module.exports = function () {
                 });
             });
         },
-        roomJoin : function(room_id, member_id, room_pwd){
+        roomJoin : function(room_id, member_id, room_pwd,callback){
             pool.getConnection(function (err, con) {
                 var sql = `SELECT count(*) cnt FROM room JOIN join_user WHERE room.room_id='${room_id}' AND member_id='${member_id}' AND room_pwd='${room_pwd}'`;
                 con.query(sql, function (err, result) {                    
