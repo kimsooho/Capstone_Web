@@ -208,12 +208,6 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         startActivity(goCheck);
     }
 
-    //상황에 따라 버튼을 사용가능할지 불가능하게 할지 설정한다.
-    private void setButtonsStatus(boolean enabled) {
-        findViewById(R.id.btn_say).setEnabled(enabled);
-        findViewById(R.id.btn_stop).setEnabled(enabled);
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

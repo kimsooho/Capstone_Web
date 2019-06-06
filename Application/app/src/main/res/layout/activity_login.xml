@@ -42,9 +42,7 @@
             android:background="@drawable/id"
             android:paddingLeft="70dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:gravity="right|center_vertical"
-            android:paddingLeft="5dp" />
+            android:inputType="textPersonName" />
 
         <Space
             android:layout_width="match_parent"
