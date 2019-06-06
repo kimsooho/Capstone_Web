@@ -60,6 +60,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
     DialogueViewAdapter adapter;
 
     Boolean authority;
+    Boolean threadStop;
 
     DialogueThread dt;
     MyHandler mh;
@@ -144,6 +145,9 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onResume() {
         super.onResume();
+
+        threadStop=false;
+
         adapter.clear();
         adapter.notifyDataSetChanged();
         JSONObject jsonObject = new JSONObject();
@@ -195,7 +199,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onPause() {
         super.onPause();
-        dt.stop();
+        threadStop=true;
     }
 
     public void StopCon(View v)
@@ -384,7 +388,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         public void run() {
             super.run();
             while (true) {
-
+                if(threadStop) break;
                 Message msg = mh.obtainMessage();
 
                 msg.what = REFRESH_CHAT;
