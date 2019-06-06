@@ -56,7 +56,7 @@ module.exports = function () {
         },
         conferenceStart: function (id) {
             pool.getConnection(function (err, con) {
-                var sql = `UPDATE room SET status = 1 WHERE room_id = ${id}`;
+                var sql = `UPDATE room SET status = 0 WHERE room_id = ${id}`;
                 con.query(sql, function (err, result) {
                     con.release();
                     if (err) console.log(err);
@@ -66,7 +66,7 @@ module.exports = function () {
         },
         conferenceEnd: function (id) {
             pool.getConnection(function (err, con) {
-                var sql = `UPDATE room SET status = 2 WHERE room_id = ${id}`;
+                var sql = `UPDATE room SET status = 1 WHERE room_id = ${id}`;
                 con.query(sql, function (err, result) {
                     con.release();
                     if (err) console.log(err);
