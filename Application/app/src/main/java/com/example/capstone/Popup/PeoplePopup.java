@@ -60,6 +60,8 @@ public class PeoplePopup extends Activity {
         Log.d("debug1","리줌");
         if(!adapter.isEmpty())
         {
+            Log.d("debug", "clear");
+
             adapter.clear();
         }
 
@@ -87,8 +89,10 @@ public class PeoplePopup extends Activity {
                             JSONArray array = new JSONArray(objects[0].toString());
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject jo = array.getJSONObject(i);
+                                Log.d("debug", jo.toString());
+
                                 userID = jo.get("member_id").toString();
-                                //  Log.d("debug", userID);
+                                  Log.d("debug", userID);
                                 List.add(userID);
                             }
                             adapter.notifyDataSetChanged();
@@ -103,7 +107,6 @@ public class PeoplePopup extends Activity {
                         Log.d("debug", "서버 통신 에러");
                     }
                 }));
-
         adapter.notifyDataSetChanged();
 
     }

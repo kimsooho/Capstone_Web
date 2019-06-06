@@ -69,6 +69,7 @@ public class PasswordPopup extends Activity {
                     public void invoke($ $, Object... objects) {
                         String result = objects[0].toString();
                         if (result.equals("success")) {
+                            Log.d("debug", "ㅂㅂㅂ");
                             conferenceIntent.putExtra("userID", userID);
                             conferenceIntent.putExtra("RoomNum", roomNum);
                             conferenceIntent.putExtra("makeMember", makeMember);
