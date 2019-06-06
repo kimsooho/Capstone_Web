@@ -170,7 +170,7 @@ module.exports = function () {
                 con.query(sql, function (err, result, fields) {
                     con.release();
                     if (err) return callback(err);
-                    callback(null, result[0].cnt);
+                    callback(null, result);
                 });
             });
         },
