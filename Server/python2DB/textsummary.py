@@ -39,6 +39,6 @@ for row in rows:
 #print(result)
 #summtype->0 : ratio
 if summtype == 0:
-	print(summarize(result, ratio=float(summnum))) # 비율
+	print(summarize(result, ratio=float(summnum/100))) # 비율
 else:
 	print(summarize(result, word_count=int(summnum))) #라인
