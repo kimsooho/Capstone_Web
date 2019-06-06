@@ -58,30 +58,32 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:stackFromBottom="true"/>
+            android:stackFromBottom="true"
+            android:transcriptMode="alwaysScroll"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="8"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:id="@+id/control_layout">
 
             <Button
                 android:id="@+id/btn_say"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="발언권" />
+                android:text="발언권"
+                android:onClick="onClick"/>
 
-            <ImageButton
+            <Button
                 android:id="@+id/btn_stop"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:onClick="stopConference"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/stop_grey" />
+                android:layout_weight="3"
+                android:onClick="StopCon"
+                android:text="Button" />
+
         </LinearLayout>
 </LinearLayout>
 

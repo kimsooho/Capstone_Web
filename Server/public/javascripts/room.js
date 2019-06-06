@@ -12,6 +12,16 @@ module.exports = function () {
                 });
             });
         },
+        status: function (room_id, callback) {
+            pool.getConnection(function (err, con) {
+                var sql = `select status from room where room_id = ${room_id}`;
+                con.query(sql, function (err, result, fields) {
+                    con.release();
+                    if (err) return callback(err);
+                    callback(null, result);
+                });
+            });
+        },
         users: function (room_id, callback) {
             pool.getConnection(function (err, con) {
                 var sql = `SELECT member_id FROM join_user WHERE room_id = ${room_id}`;
@@ -25,18 +35,18 @@ module.exports = function () {
         insert: function (title, pwd, make_member, callback) {
             pool.getConnection(function (err, con) {
                 var sql = `insert into room (title, room_pwd, status, make_time, make_member) values ('${title}', '${pwd}', 0, NOW(), '${make_member}')`;
-                con.query(sql, function (err, result) {                                        
+                con.query(sql, function (err, result) {
                     if (err) console.log(err);
                     else {
                         sql = `SELECT room_id 
                                     FROM room 
                                     WHERE title = '${title}' AND make_member = '${make_member}' AND room_pwd = '${pwd}'
                                     ORDER BY room_id DESC`;
-                        con.query(sql, function (err, result) {                            
-                            console.log("roomid : "+result[0].room_id);
-                            if(err) return callback(null, "fail");                            
+                        con.query(sql, function (err, result) {
+                            console.log("roomid : " + result[0].room_id);
+                            if (err) return callback(null, "fail");
                             else {
-                                callback(null, result[0].room_id);                                
+                                callback(null, result[0].room_id);
                             }
                             con.release();
                         });
@@ -44,9 +54,9 @@ module.exports = function () {
                 });
             });
         },
-        conferenceStart : function(id){
+        conferenceStart: function (id) {
             pool.getConnection(function (err, con) {
-                var sql = `UPDATE room SET status = 1 WHERE room_id = ${id}`;
+                var sql = `UPDATE room SET status = 0 WHERE room_id = ${id}`;
                 con.query(sql, function (err, result) {
                     con.release();
                     if (err) console.log(err);
@@ -54,37 +64,47 @@ module.exports = function () {
                 });
             });
         },
-        conferenceEnd : function(id){
+        conferenceEnd: function (id) {
             pool.getConnection(function (err, con) {
-                var sql = `UPDATE room SET status = 2 WHERE room_id = ${id}`;
+                var sql = `UPDATE room SET status = 1 WHERE room_id = ${id}`;
                 con.query(sql, function (err, result) {
                     con.release();
                     if (err) console.log(err);
                     else console.log('회의 종료');
                 });
             });
+
         },
         roomJoin : function(room_id, member_id, room_pwd,callback){
             pool.getConnection(function (err, con) {
-                var sql = `SELECT count(*) cnt FROM room JOIN join_user WHERE room.room_id='${room_id}' AND member_id='${member_id}' AND room_pwd='${room_pwd}'`;
-                con.query(sql, function (err, result) {                    
+                var sql = `SELECT count(*) cnt FROM room WHERE room_id = ${room_id} AND room_pwd = "${room_pwd}"`;
+                con.query(sql, function (err, result) {
                     if (err) console.log(err);
-                    else if(result[0].cnt == 0){ // 회의에 첫 참가
-                        sql = `insert into join_user (room_id, member_id, status) values (${room_id}, '${member_id}', 0)`;
-                        con.query(sql, function(err_, result_){
-                            if(err_) console.log(err_);                            
+                    else if (result[0].cnt == 0) {
+                        return callback(null, "join fail");
+                    } else {
+                        sql = `SELECT count(*) cnt FROM room JOIN join_user WHERE room.room_id='${room_id}' AND member_id='${member_id}' AND room_pwd='${room_pwd}'`;
+                        con.query(sql, function (err, result1) {
+                            if (err) console.log(err);
+                            else if (result1[0].cnt == 0) { // 회의에 첫 참가
+                                sql = `insert into join_user (room_id, member_id, status) values (${room_id}, '${member_id}', 0)`;
+                                con.query(sql, function (err_, result_) {
+                                    if (err_) console.log(err_);
+                                });
+                            } else {
+                                sql = `UPDATE join_user SET status = 0 WHERE room_id = ${room_id} AND member_id = '${member_id}'`;
+                                con.query(sql, function (err__, result__) {
+                                    if (err__) console.log(err__);
+                                });
+                            }
                         });
-                    }else{
-                        sql = `UPDATE join_user SET status = 0 WHERE room_id = ${room_id} AND member_id = '${member_id}'`;
-                        con.query(sql, function(err__, result__){
-                            if(err__) console.log(err__);                            
-                        });
+                        callback(null, "success");
                     }
                 });
                 con.release();
             });
         },
-        roomOut : function(room_id, member_id){
+        roomOut: function (room_id, member_id) {
             pool.getConnection(function (err, con) {
                 var sql = `UPDATE join_user SET status = 1 WHERE room_id = ${room_id} AND member_id = '${member_id}'`;
                 con.query(sql, function (err, result) {
@@ -94,7 +114,7 @@ module.exports = function () {
                 });
             });
         },
-        roomEnd : function(room_id, member_id){
+        roomEnd: function (room_id, member_id) {
             pool.getConnection(function (err, con) {
                 var sql = `UPDATE join_user SET status = 2 WHERE room_id = ${room_id} AND member_id = '${member_id}'`;
                 con.query(sql, function (err, result) {
@@ -143,17 +163,17 @@ module.exports = function () {
                     callback(null, result);
                 });
             });
-        },        
+        },
         Lastchat: function (roomId, callback) {
             pool.getConnection(function (err, con) {
-                var sql = `SELECT contents, member_id, chat_date FROM chatlog WHERE room_id = ${roomId} ORDER BY chat_date DESC`;
+                var sql = `SELECT count(*) cnt FROM chatlog WHERE room_id = ${roomId};`;
                 con.query(sql, function (err, result, fields) {
                     con.release();
                     if (err) return callback(err);
-                    callback(null, result[0]);
+                    callback(null, result);
                 });
             });
         },
-        pool: pool        
+        pool: pool
     }
 };

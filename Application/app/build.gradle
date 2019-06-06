@@ -17,6 +17,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'lib/x86_64/darwin/libscrypt.dylib'
+        exclude 'lib/x86_64/freebsd/libscrypt.so'
+        exclude 'lib/x86_64/linux/libscrypt.so'
+    }
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'x86_64', 'armeabi', 'armeabi-v7a', 'mips', 'mips64', 'arm64-v8a'
+            universalApk false
+        }
+    }
 }
 
 dependencies {
@@ -29,5 +42,12 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     //tab레이아웃 추가하면서 생김
     implementation files('libs/droidQuery-1.1.0-sources.jar')
-    implementation 'com.android.support:support-v4:28.0.0'
+
+    implementation 'com.android.support:support-v4:26.0.0'
+    implementation files('libs/httpclient-4.2.3.jar')
+    implementation files('libs/apache-httpcomponents-httpcore.jar')
+    implementation files('libs/commons-logging-1.2.1.1.jar')
+    //    카카오 추가
+    implementation group: 'com.kakao.sdk', name: 'newtone', version: '6.0.1'
+
 }

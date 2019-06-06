@@ -1,8 +1,11 @@
 package com.example.capstone.Activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,28 +24,31 @@ import self.philbrown.droidQuery.AjaxOptions;
 import self.philbrown.droidQuery.Function;
 
 public class LoginActivity extends AppCompatActivity {
-    EditText editID, editPW;
-    String id,pw;
+    EditText editID, editPW; //사용자 id,pw
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        editID = (EditText)findViewById(R.id.edit_id);
-        editPW = (EditText)findViewById(R.id.edit_pw);
+        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
+            ActivityCompat.requestPermissions(LoginActivity.this, new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
 
+        }
+
+        editID = (EditText) findViewById(R.id.edit_id);
+        editPW = (EditText) findViewById(R.id.edit_pw);
     }
-    public void LoginClick(View v)
-    {
 
+
+    public void LoginClick(View v) {
         final Intent goList = new Intent(LoginActivity.this, ChannelListActivity.class);
-        JSONObject jsonObject=new JSONObject();
+        JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("id",editID.getText().toString());
-            jsonObject.put("pwd",editPW.getText().toString());
-            Log.d("test",editID.getText().toString());
-
+            jsonObject.put("id", editID.getText().toString());
+            jsonObject.put("pwd", editPW.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -54,20 +60,12 @@ public class LoginActivity extends AppCompatActivity {
                 .success(new Function() {
                     @Override
                     public void invoke($ $, Object... objects) {
-                        String result=objects[0].toString();
-                        Log.d("test",objects[0].toString());
-                        if(result.equals("success")){
-
+                        String result = objects[0].toString();
+                        Log.d("test", objects[0].toString());
+                        if (result.equals("success")) {
                             goList.putExtra("userID", editID.getText().toString());
-
                             startActivity(goList);
-                            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                LoginActivity.this.startForegroundService(new Intent(LoginActivity.this, ChannelListActivity.class));
-                            } else {
-                                LoginActivity.this.startService(new Intent(LoginActivity.this, ChannelListActivity.class));
-                            }*/
-                        }
-                        else{
+                        } else {
                             Toast.makeText(LoginActivity.this, "userID / PW를 확인해주세요.", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -75,12 +73,13 @@ public class LoginActivity extends AppCompatActivity {
                 .error(new Function() {
                     @Override
                     public void invoke($ $, Object... objects) {
-                        Log.d("test",objects[0].toString());
+                        Log.d("test", objects[0].toString());
                     }
                 }));
+
     }
-    public void JoinusClick(View v)
-    {
+
+    public void JoinusClick(View v) {
         Intent goJoin = new Intent(LoginActivity.this, JoinActivity.class);
         startActivity(goJoin);
     }

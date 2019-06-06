@@ -16,7 +16,7 @@ roomid = sys.argv[1]
 
 summnum = sys.argv[2]#비율 또는 문장 갯수 입력
 summtype = 0
-summtype = sys.argv[3]
+summtype = int(sys.argv[3])
 #curs.execute(sql,(roomid, memberid))
 curs.execute(sql,roomid)
 
@@ -31,16 +31,14 @@ rows = curs.fetchall()
 #print(news.text) # 전체 출력
 
 #print(summarize(news.text, ratio=0.1)) # 문장 비율
-result ="\n"
+result =""
 for row in rows:
-    result += (row['contents'])+"\n"
+    result += (row['contents'])+" "
     #result.append(row['contents'])
 
 #print(result)
 #summtype->0 : ratio
 if summtype == 0:
-	summnum = float(summnum/100);
-	print("type : "+summtype+"| num :"+summnum);
-	print(summarize(result, ratio=summnum)) # 비율
+	print(summarize(result, ratio=float(summnum))) # 비율
 else:
-	print(summarize(result, word_count=summnum)) #라인
+	print(summarize(result, word_count=int(summnum))) #라인
