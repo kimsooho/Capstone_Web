@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.capstone.Adapter.DialogueViewAdapter;
+import com.example.capstone.Item.DialogueViewItem;
 import com.example.capstone.Popup.PasswordPopup;
 import com.example.capstone.Popup.PeoplePopup;
 import com.example.capstone.R;
@@ -120,46 +121,67 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
 
         adapter.clear();
         adapter.notifyDataSetChanged();
-        JSONObject jsonObject = new JSONObject();
+        final JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("room_id", roomNum);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/room/chat")
-                .contentType("application/json; charset=utf-8")
-                .type("POST")
-                .data(jsonObject.toString())
-                .dataType("json")
-                .context(ConferenceActivity.this)
-                .success(new Function() {
-                    @Override
-                    public void invoke($ $, Object... objects) {
-                        JSONArray array = (JSONArray) objects[0];
-
-                        for (int i = 0; i < array.length(); i++) {
-                            try {
-                                JSONObject object = array.getJSONObject(i);
-                                String now=object.getString("chat_date");
-                                String date=now.substring(11,19);
-                                adapter.addDialogue(object.getString("member_id"),date , object.getString("contents"));
-                                adapter.notifyDataSetChanged();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                })
-                .error(new Function() {
-                    @Override
-                    public void invoke($ $, Object... objects) {
-                        Log.d("test1", objects[0].toString());
-                    }
-                }));
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+
+                $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/room/chat")
+                        .contentType("application/json; charset=utf-8")
+                        .type("POST")
+                        .data(jsonObject.toString())
+                        .dataType("json")
+                        .context(ConferenceActivity.this)
+                        .success(new Function() {
+                            @Override
+                            public void invoke($ $, Object... objects) {
+                                JSONArray array = (JSONArray) objects[0];
+
+                                for (int i = 0; i < array.length(); i++) {
+                                    try {
+                                        JSONObject object = array.getJSONObject(i);
+                                        String now = object.getString("chat_date");
+                                        String date1 = now.substring(0, 10);
+                                        String date2 = now.substring(11, 19);
+                                        String date = date1 + " " + date2;
+                                        adapter.addDialogue(object.getString("member_id"), date, object.getString("contents"));
+                                        adapter.notifyDataSetChanged();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                //dialogue();
+                            }
+                        })
+                        .error(new Function() {
+                            @Override
+                            public void invoke($ $, Object... objects) {
+                                Log.d("test1", objects[0].toString());
+                            }
+                        }));
+            }
+
+        });
+
+    }
+
+    public void dialogue() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Log.d("test1", String.valueOf(adapter.getCount()));
+                //if (adapter.getCount() == 0) continue;
                 JSONObject jsonObject = new JSONObject();
                 try {
                     jsonObject.put("room_id", roomNum);
@@ -175,7 +197,22 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
                         .success(new Function() {
                             @Override
                             public void invoke($ $, Object... objects) {
-                                JSONObject object= (JSONObject) objects[0];
+                                JSONObject object = (JSONObject) objects[0];
+                                try {
+                                    String now = object.getString("chat_date");
+                                    String date1 = now.substring(0, 10);
+                                    String date2 = now.substring(11, 19);
+                                    String date = date1 + " " + date2;
+                                    DialogueViewItem item = (DialogueViewItem) adapter.getItem(adapter.getCount() - 1);
+                                    Log.d("test1", date + " " + item.getDate());
+                                    if (date.equals(item.getDate())) return;
+                                    else {
+                                        adapter.addDialogue(object.getString("member_id"), date, object.getString("contents"));
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
 
                             }
                         })
@@ -186,6 +223,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
                             }
                         }));
             }
+
         });
     }
 
