@@ -143,6 +143,30 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("test1","onPause");
+        dt.interrupt();
+        adapter.clear();
+        adapter.notifyDataSetChanged();
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("test1","onStop");
+        adapter.clear();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("test1","onRestart");
+        adapter.clear();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         Log.d("test1","onResume");
@@ -194,13 +218,6 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
 
         dt = new DialogueThread();
         dt.start();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d("test1","onPause");
-        dt.interrupt();
     }
 
     public void StopCon(View v)
