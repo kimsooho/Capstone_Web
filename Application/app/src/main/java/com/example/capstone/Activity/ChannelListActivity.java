@@ -182,7 +182,7 @@ public class ChannelListActivity extends AppCompatActivity {
                                     roomID = Integer.parseInt(jo.get("room_id").toString());
                                     roomStatus = Integer.parseInt(jo.get("status").toString()); //상태 받아와서 상태값도 저장
                                     adapter.addItem(ContextCompat.getDrawable(ChannelListActivity.this, R.drawable.main),
-                                            ContextCompat.getDrawable(ChannelListActivity.this, R.drawable.green),
+                                            ContextCompat.getDrawable(ChannelListActivity.this, R.drawable.green), //룸상태 0
                                             title, makeMember, roomID, roomStatus);
                                     adapter.notifyDataSetChanged();
 

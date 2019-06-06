@@ -50,13 +50,16 @@ public class PasswordPopup extends Activity {
         final Intent conferenceIntent = new Intent(PasswordPopup.this, ConferenceActivity.class);
 
         //비밀번호 맞는지 체크
+        //서버에게 방번호와 사용자 아이디를 서버에게 보내줘서 서버에게 사용자가 방에 접속 알림
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("id", "");
+            jsonObject.put("member_id", userID);
+            jsonObject.put("room_id", roomNum);
+            jsonObject.put("room_pwd", editRoomPw.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/login")
+        $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/join")
                 .contentType("application/json; charset=utf-8")
                 .type("POST")
                 .data(jsonObject.toString())
@@ -65,7 +68,6 @@ public class PasswordPopup extends Activity {
                     @Override
                     public void invoke($ $, Object... objects) {
                         String result = objects[0].toString();
-                        Log.d("test", objects[0].toString());
                         if (result.equals("success")) {
                             conferenceIntent.putExtra("userID", userID);
                             conferenceIntent.putExtra("RoomNum", roomNum);
@@ -80,9 +82,15 @@ public class PasswordPopup extends Activity {
                 .error(new Function() {
                     @Override
                     public void invoke($ $, Object... objects) {
-                        Log.d("test", objects[0].toString());
+                        Log.d("test", "ㅂㅂㅂ");
                     }
                 }));
+
+      /*  conferenceIntent.putExtra("userID", userID);
+        conferenceIntent.putExtra("RoomNum", roomNum);
+        conferenceIntent.putExtra("makeMember", makeMember);
+        conferenceIntent.putExtra("where",false);
+        startActivity(conferenceIntent);*/
     }
     public void btn_room_cancel(View v)
     {

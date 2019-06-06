@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.example.capstone.Activity.ChannelListActivity;
 import com.example.capstone.PreferenceUtil;
 import com.example.capstone.R;
 
@@ -22,6 +25,7 @@ import self.philbrown.droidQuery.Function;
 
 public class TabSummaryFragment extends Fragment {
 
+    TextView textSummary;
     public TabSummaryFragment() {
     }
 
@@ -40,6 +44,7 @@ public class TabSummaryFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        textSummary = getActivity().findViewById(R.id.text_summary);
         //서버에 설정값 전송 후 데이터 받기
         JSONObject jsonObject = new JSONObject();
         try {
@@ -49,7 +54,7 @@ public class TabSummaryFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/room/roomlistfalse")
+        $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/users/do")
                 .contentType("application/json; charset=utf-8")
                 .type("POST")
                 .data(jsonObject.toString())
@@ -67,7 +72,8 @@ public class TabSummaryFragment extends Fragment {
                             JSONArray array = new JSONArray(objects[0].toString());
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject jo = array.getJSONObject(i);
-                                title = jo.get("title").toString();
+                                Log.d("qq",jo.toString());
+                                textSummary.append(jo.toString()+"\n");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

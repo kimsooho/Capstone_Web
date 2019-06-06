@@ -13,14 +13,14 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.8" />
+        android:layout_weight="1.5" />
 
-        <ImageView
-            android:id="@+id/img_create"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.8"
-            android:background="@drawable/create_main" />
+    <ImageView
+        android:id="@+id/img_create"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/create_main" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,29 +29,44 @@
             android:orientation="vertical"
             android:padding="10dp">
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5" />
+
             <EditText
                 android:id="@+id/edit_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 android:background="@drawable/team_name"
                 android:ems="10"
 
                 android:inputType="textPersonName"
+                android:paddingLeft="70dp"
                 tools:background="@drawable/team_name" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5" />
 
             <EditText
                 android:id="@+id/edit_pw_create"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 android:background="@drawable/pw"
                 android:ems="10"
                 android:inputType="textPersonName"
+                android:paddingLeft="70dp"
                 android:visibility="visible"
                 tools:background="@drawable/pw" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5" />
 
         </LinearLayout>
 
