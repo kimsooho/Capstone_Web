@@ -31,9 +31,9 @@ rows = curs.fetchall()
 #print(news.text) # 전체 출력
 
 #print(summarize(news.text, ratio=0.1)) # 문장 비율
-result ="\n"
+result =""
 for row in rows:
-    result += (row['contents'])+"\n"
+    result += (row['contents'])+" "
     #result.append(row['contents'])
 
 #print(result)
