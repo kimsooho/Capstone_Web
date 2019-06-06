@@ -37,4 +37,10 @@ router.post('/joinusers', function(req, res){
     });
 });
 
+router.post('/joinusersin', function(req, res){
+    db.usersIn(req.body.room_id, function(err, result){
+        res.send(result);
+    });
+})
+
 module.exports = router;
