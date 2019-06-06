@@ -33,7 +33,7 @@ module.exports = function () {
                                     WHERE title = '${title}' AND make_member = '${make_member}' AND room_pwd = '${pwd}'
                                     ORDER BY room_id DESC`;
                         con.query(sql, function (err, result) {                            
-                            console.log(result[0].room_id + " : zzzz");
+                            console.log("roomid : "+result[0].room_id);
                             if(err) return callback(null, "fail");                            
                             else {
                                 callback(null, result[0].room_id);                                
@@ -66,7 +66,7 @@ module.exports = function () {
         },
         roomJoin : function(room_id, member_id, room_pwd){
             pool.getConnection(function (err, con) {
-                var sql = `SELECT count(*) cnt FROM join_user WHERE room_id = '${room_id}' AND member_id = '${member_id}' AND room_pwd= '${room_pwd}'`;
+                var sql = `SELECT count(*) cnt FROM room JOIN join_user WHERE room.room_id='${room_id}' AND member_id='${member_id}' AND room_pwd='${room_pwd}'`;
                 con.query(sql, function (err, result) {                    
                     if (err) console.log(err);
                     else if(result[0].cnt == 0){ // 회의에 첫 참가

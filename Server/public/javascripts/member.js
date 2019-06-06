@@ -28,7 +28,14 @@ module.exports = function () {
                 con.query(sql, function (err, result) {
                     con.release();
                     if(err) return callback(err);
-                    else if(result[0].id_check==1) callback(null, "success");
+                    else if(result[0].id_check==1) {
+			callback(null, "success");
+/*			var loginsql = `UPDATE member SET loginStatus=TRUE WHERE id='${u__id}'`;
+			con.query(loginsql, function(err, result){
+				con.release();
+				console.log("login : "+u_id);
+			});*/
+			}
                     else callback(null, "fail");
                 });
             });
