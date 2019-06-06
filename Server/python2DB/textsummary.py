@@ -16,7 +16,7 @@ roomid = sys.argv[1]
 
 summnum = float(sys.argv[3])#비율 또는 문장 갯수 입력
 summtype = 0
-summtype = sys.argv[4]
+summtype = int(sys.argv[4])
 #curs.execute(sql,(roomid, memberid))
 curs.execute(sql,roomid)
 
