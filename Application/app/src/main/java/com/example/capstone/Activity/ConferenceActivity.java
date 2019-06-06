@@ -61,6 +61,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
     DialogueViewAdapter adapter;
 
     Boolean authority;
+    Boolean threadStop;
 
     DialogueThread dt;
     MyHandler mh;
@@ -140,13 +141,14 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         //다이얼로그 스레드 & 핸들러 객체 생성
         dt = new DialogueThread();
         mh = new MyHandler();
-
-        dt.start();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        threadStop=false;
+
         adapter.clear();
         adapter.notifyDataSetChanged();
         JSONObject jsonObject = new JSONObject();
@@ -192,6 +194,13 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         listview.setSelection(adapter.getCount() - 1);
         setButtonsStatus(true);
 
+        dt.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        threadStop=true;
     }
 
     public void StopCon(View v)
@@ -380,7 +389,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         public void run() {
             super.run();
             while (true) {
-
+                if(threadStop) break;
                 Message msg = mh.obtainMessage();
 
                 msg.what = REFRESH_CHAT;
