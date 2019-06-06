@@ -166,7 +166,7 @@ module.exports = function () {
         },
         Lastchat: function (roomId, callback) {
             pool.getConnection(function (err, con) {
-                var sql = `SELECT count(*) cnt FROM chatlog WHERE room_id = 3;`;
+                var sql = `SELECT count(*) cnt FROM chatlog WHERE room_id = ${roomId};`;
                 con.query(sql, function (err, result, fields) {
                     con.release();
                     if (err) return callback(err);
