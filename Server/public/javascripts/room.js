@@ -68,15 +68,15 @@ module.exports = function () {
         roomJoin: function (room_id, member_id, room_pwd, callback) {
             pool.getConnection(function (err, con) {
                 var sql = `SELECT count(*) cnt FROM room WHERE room_id = ${room_id} AND room_pwd = "${room_pwd}"`;
-                con.query(sql, function (err, reuslt) {
+                con.query(sql, function (err, result) {
                     if (err) console.log(err);
                     else if (result[0].cnt == 0) {
                         return callback(null, "join fail");
                     } else {
                         sql = `SELECT count(*) cnt FROM room JOIN join_user WHERE room.room_id='${room_id}' AND member_id='${member_id}' AND room_pwd='${room_pwd}'`;
-                        con.query(sql, function (err, result) {
+                        con.query(sql, function (err, result1) {
                             if (err) console.log(err);
-                            else if (result[0].cnt == 0) { // 회의에 첫 참가
+                            else if (result1[0].cnt == 0) { // 회의에 첫 참가
                                 sql = `insert into join_user (room_id, member_id, status) values (${room_id}, '${member_id}', 0)`;
                                 con.query(sql, function (err_, result_) {
                                     if (err_) console.log(err_);
