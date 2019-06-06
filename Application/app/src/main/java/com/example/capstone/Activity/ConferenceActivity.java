@@ -211,7 +211,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
             jsonObject.put("room_id", roomNum);
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }//회의종료 날리기
         $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/room/end")
                 .contentType("application/json; charset=utf-8")
                 .type("POST")
@@ -248,7 +248,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+
         Log.d("debug1","~~~~~~~~~~~~~~~~온 디스트로이");
         //서버에게 사용자가 나감을 알려야함
         JSONObject jsonObject = new JSONObject();
@@ -275,6 +275,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
                         Log.d("test1", objects[0].toString());
                     }
                 }));
+        super.onDestroy();
 
         // API를 더이상 사용하지 않을 때 finalizeLibrary()를 호출한다.
         SpeechRecognizerManager.getInstance().finalizeLibrary();

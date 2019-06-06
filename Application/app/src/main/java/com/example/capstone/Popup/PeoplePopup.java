@@ -29,17 +29,39 @@ public class PeoplePopup extends Activity {
     public int roomNum;
     Vector<String> List;
     ArrayAdapter adapter;
+    ListView listview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.popup_people);
+        List = new Vector<String>();
+
+        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, List);
+        listview = (ListView) findViewById(R.id.listView_people);
+        listview.setAdapter(adapter);
 
         Intent intent = getIntent();
         roomNum = intent.getExtras().getInt("RoomNum");
-        List = new Vector<String>();
         //String[] List;
         /*현재 이방에 참여중인 인원 가져와서 List Vector에 넣기*/
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        //안드로이드 백버튼 막기
+        return;
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("debug1","리줌");
+        if(!adapter.isEmpty())
+        {
+            adapter.clear();
+        }
 
 
         JSONObject jsonObject = new JSONObject();
@@ -48,7 +70,7 @@ public class PeoplePopup extends Activity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/join/joinusers")
+        $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/join/joinusersin")
                 .contentType("application/json; charset=utf-8")
                 .type("POST")
                 .data(jsonObject.toString())
@@ -82,18 +104,9 @@ public class PeoplePopup extends Activity {
                     }
                 }));
 
-        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, List);
+        adapter.notifyDataSetChanged();
 
-        ListView listview = (ListView) findViewById(R.id.listView_people);
-        listview.setAdapter(adapter);
     }
-
-    @Override
-    public void onBackPressed() {
-        //안드로이드 백버튼 막기
-        return;
-    }
-
 
 }
 

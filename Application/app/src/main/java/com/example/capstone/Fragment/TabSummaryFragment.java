@@ -43,12 +43,15 @@ public class TabSummaryFragment extends Fragment {
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.d("qq","온크리에이트");
+        View v = inflater.inflate(R.layout.tab_summary_item, container, false);
 
-        textSummary = getActivity().findViewById(R.id.text_summary);
+
+        textSummary = v.findViewById(R.id.text_summary);
         //서버에 설정값 전송 후 데이터 받기
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("room_id", roomNum);
+            jsonObject.put("roomid", roomNum);
             jsonObject.put("summtype", PreferenceUtil.getInstance(getActivity()).getIntExtra("Division")); //percentage(0) or line(1)
             jsonObject.put("ratio", PreferenceUtil.getInstance(getActivity()).getIntExtra("SettingValue"));
         } catch (JSONException e) {
@@ -68,16 +71,25 @@ public class TabSummaryFragment extends Fragment {
                         //JSONObject.get(json key)로 원하는 값만 구할 수 있음
                         String title, makeMember;
                         int roomID, roomStatus;
-                        try {
-                            JSONArray array = new JSONArray(objects[0].toString());
+                        Log.d("qq",objects[0].getClass().toString());
+                        String temp = (String)objects[0];
+                        String[] result = temp.split(",");
+
+                        for(int i=0; i<result.length; i++)
+                        {
+                            textSummary.append(result[i].toString()+"\n");
+                        }
+                        /*try {
+                            JSONArray array = (JSONArray) objects[0];
+                            Log.d("qq","arry"+array.toString());
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject jo = array.getJSONObject(i);
-                                Log.d("qq",jo.toString());
+                                Log.d("qq","부분"+jo.toString());
                                 textSummary.append(jo.toString()+"\n");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                        }
+                        }*/
                     }
                 })
                 .error(new Function() {
@@ -87,7 +99,7 @@ public class TabSummaryFragment extends Fragment {
                     }
                 }));
 
-        return inflater.inflate(R.layout.tab_summary_item, container, false);
+        return v;
 
     }
 }
