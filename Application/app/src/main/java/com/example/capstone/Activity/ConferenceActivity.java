@@ -23,7 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.capstone.Adapter.DialogueViewAdapter;
-import com.example.capstone.Item.DialogueViewItem;
 import com.example.capstone.Popup.PasswordPopup;
 import com.example.capstone.Popup.PeoplePopup;
 import com.example.capstone.R;
@@ -149,7 +148,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         super.onResume();
         adapter.clear();
         adapter.notifyDataSetChanged();
-        final JSONObject jsonObject = new JSONObject();
+        JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("room_id", roomNum);
         } catch (JSONException e) {
