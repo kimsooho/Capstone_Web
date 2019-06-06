@@ -68,8 +68,9 @@ router.post('/all', function(req, res){
 
 
 router.post('/do', function (req, res) {
-  console.log("summary");
-  options.args=[req.body.roomid, req.body.memberid, req.body.ratio, req.body.summtype];
+  console.log("summary "+req.body.ratio+" | "+req.body.summtype);
+
+  options.args=[req.body.roomid, req.body.ratio, req.body.summtype];
   //입력이 들어오면 사람과 방번호를 통해 모든 회의목록을 띄워
   //요약하도록 파이썬 프로그램 요청
   PythonShell.run('textsummary.py', options, function (err, results) {
