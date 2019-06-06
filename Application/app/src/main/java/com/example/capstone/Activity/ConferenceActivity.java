@@ -382,6 +382,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
             while (true) {
 
                 Message msg = mh.obtainMessage();
+
                 msg.what = REFRESH_CHAT;
                 mh.sendMessage(msg);
 
@@ -411,12 +412,25 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
                             .contentType("application/json; charset=utf-8")
                             .type("POST")
                             .data(jsonObject.toString())
-                            .dataType("text")
+                            .dataType("json")
                             .context(ConferenceActivity.this)
                             .success(new Function() {
                                 @Override
                                 public void invoke($ $, Object... objects) {
-                                    final int totalChatCnt = Integer.parseInt(objects[0].toString());
+                                    JSONArray array= (JSONArray) objects[0];
+                                    JSONObject object= null;
+                                    try {
+                                        object = array.getJSONObject(0);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    int temp = 0;
+                                    try {
+                                        temp = Integer.parseInt(object.getString("cnt"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    final int totalChatCnt = temp;
                                     final int curChatCnt = adapter.getCount();
                                     if (totalChatCnt == curChatCnt) return;
                                     else {
