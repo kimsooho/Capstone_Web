@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -459,6 +460,47 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
                                 @Override
                                 public void invoke($ $, Object... objects) {
                                     Log.d("test1", objects[0].toString());
+                                }
+                            }));
+                    /////////////////////////////////////////////////////////////////////////////////////////////////////
+                    //방상태 받기
+                    try {
+                        jsonObject.put("room_id", roomNum);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/room/count")
+                            .contentType("application/json; charset=utf-8")
+                            .type("POST")
+                            .data(jsonObject.toString())
+                            .dataType("text")
+                            .context(ConferenceActivity.this)
+                            .success(new Function() {
+                                @Override
+                                public void invoke($ $, Object... objects) {
+                                    //JSONArray array=(JSONArray)objects[0];
+                                    //JSONArray는 JSONObject로 구성
+                                    //JSONArray.get(배열 인덱스)으로 각 오브젝트 전체를 구할 수 있음
+                                    //JSONObject.get(json key)로 원하는 값만 구할 수 있음
+                                    String status;
+                                    try {
+                                        JSONArray array = new JSONArray(objects[0].toString());
+                                            JSONObject jo = array.getJSONObject(0);
+                                            status = jo.get("status").toString();
+
+                                            if(status.equals("1"))
+                                            {
+                                                btnStop.performClick();
+                                            }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            })
+                            .error(new Function() {
+                                @Override
+                                public void invoke($ $, Object... objects) {
+                                    Log.d("test", "서버 통신 에러");
                                 }
                             }));
                     break;

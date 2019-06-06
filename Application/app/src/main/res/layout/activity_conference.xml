@@ -80,9 +80,9 @@
                 android:id="@+id/btn_stop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:onClick="StopCon"
-                android:text="Button" />
+                android:layout_weight="3.5"
+                android:background="@drawable/stop"
+                android:onClick="StopCon" />
 
         </LinearLayout>
 </LinearLayout>
