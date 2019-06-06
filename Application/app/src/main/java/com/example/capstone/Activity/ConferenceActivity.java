@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -60,7 +61,6 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
     DialogueViewAdapter adapter;
 
     Boolean authority;
-    Boolean threadStop;
 
     DialogueThread dt;
     MyHandler mh;
@@ -137,16 +137,15 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
-        //다이얼로그 스레드 & 핸들러 객체 생성
-        dt = new DialogueThread();
+        //핸들러 객체 생성
         mh = new MyHandler();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        threadStop=false;
+        Log.d("test1","onResume");
 
         adapter.clear();
         adapter.notifyDataSetChanged();
@@ -193,21 +192,52 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         listview.setSelection(adapter.getCount() - 1);
         setButtonsStatus(true);
 
+        dt = new DialogueThread();
         dt.start();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        threadStop=true;
+        Log.d("test1","onPause");
+        dt.interrupt();
     }
 
     public void StopCon(View v)
     {
-        Intent goClose = new Intent(ConferenceActivity.this, CloseActivity.class);
-        goClose.putExtra("RoomNum", roomNum);
-        goClose.putExtra("status", true);
-        startActivity(goClose);
+        final Intent goClose = new Intent(ConferenceActivity.this, CloseActivity.class);
+        final JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("room_id", roomNum);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }//회의종료 날리기
+        $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/room/end")
+                .contentType("application/json; charset=utf-8")
+                .type("POST")
+                .data(jsonObject.toString())
+                .dataType("text")
+                .context(ConferenceActivity.this)
+                .success(new Function() {
+                    @Override
+                    public void invoke($ $, Object... objects) {
+                        //JSONArray array=(JSONArray)objects[0];
+                        //JSONArray는 JSONObject로 구성
+                        //JSONArray.get(배열 인덱스)으로 각 오브젝트 전체를 구할 수 있음
+                        //JSONObject.get(json key)로 원하는 값만 구할 수 있음
+                        goClose.putExtra("RoomNum", roomNum);
+                        goClose.putExtra("status", true);
+                        startActivity(goClose);
+
+                    }
+                }) .error(new Function() {
+                    @Override
+                    public void invoke($ $, Object... objects) {
+                        Log.d("test", "서버 통신 에러");
+                    }
+                }));
+
+
     }
 
     public void checkPeople_con(View v) { //btn_people_conference
@@ -218,7 +248,8 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+
+        Log.d("debug1","~~~~~~~~~~~~~~~~온 디스트로이");
         //서버에게 사용자가 나감을 알려야함
         JSONObject jsonObject = new JSONObject();
         try {
@@ -244,6 +275,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
                         Log.d("test1", objects[0].toString());
                     }
                 }));
+        super.onDestroy();
 
         // API를 더이상 사용하지 않을 때 finalizeLibrary()를 호출한다.
         SpeechRecognizerManager.getInstance().finalizeLibrary();
@@ -384,21 +416,23 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
     }
 
     class DialogueThread extends Thread {
+
         @Override
         public void run() {
             super.run();
-            while (true) {
-                if(threadStop) break;
-                Message msg = mh.obtainMessage();
+            try {
+                while (!Thread.currentThread().isInterrupted()) {
+                    Message msg = mh.obtainMessage();
 
-                msg.what = REFRESH_CHAT;
-                mh.sendMessage(msg);
+                    msg.what = REFRESH_CHAT;
+                    mh.sendMessage(msg);
 
-                try {
                     Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
+            } catch (InterruptedException e){
+
+            } finally {
+                Log.d("test1", "스레드 종료 : "+this.getState().toString());
             }
         }
     }
@@ -482,6 +516,42 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
                                 @Override
                                 public void invoke($ $, Object... objects) {
                                     Log.d("test1", objects[0].toString());
+                                }
+                            }));
+                    /////////////////////////////////////////////////////////////////////////////////////////////////////
+                    //방상태 받기
+                    $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/room/status")
+                            .contentType("application/json; charset=utf-8")
+                            .type("POST")
+                            .data(jsonObject.toString())
+                            .dataType("text")
+                            .context(ConferenceActivity.this)
+                            .success(new Function() {
+                                @Override
+                                public void invoke($ $, Object... objects) {
+                                    //JSONArray array=(JSONArray)objects[0];
+                                    //JSONArray는 JSONObject로 구성
+                                    //JSONArray.get(배열 인덱스)으로 각 오브젝트 전체를 구할 수 있음
+                                    //JSONObject.get(json key)로 원하는 값만 구할 수 있음
+                                    String status;
+                                    try {
+                                        JSONArray array = new JSONArray(objects[0].toString());
+                                            JSONObject jo = array.getJSONObject(0);
+                                            status = jo.get("status").toString();
+                                            Log.d( "debug1",status);
+                                            if(status.equals("1"))
+                                            {
+                                                btnStop.performClick();
+                                            }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            })
+                            .error(new Function() {
+                                @Override
+                                public void invoke($ $, Object... objects) {
+                                    Log.d("test", "서버 통신 에러");
                                 }
                             }));
                     break;
