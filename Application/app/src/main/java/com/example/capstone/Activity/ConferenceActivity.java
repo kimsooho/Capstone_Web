@@ -478,12 +478,8 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
                             }));
                     /////////////////////////////////////////////////////////////////////////////////////////////////////
                     //방상태 받기
-                    try {
-                        jsonObject.put("room_id", roomNum);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/room/count")
+                  Log.d("debug1","~~~~~~~");
+                    $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/room/status")
                             .contentType("application/json; charset=utf-8")
                             .type("POST")
                             .data(jsonObject.toString())
@@ -501,7 +497,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
                                         JSONArray array = new JSONArray(objects[0].toString());
                                             JSONObject jo = array.getJSONObject(0);
                                             status = jo.get("status").toString();
-
+Log.d( "debug1",status);
                                             if(status.equals("1"))
                                             {
                                                 btnStop.performClick();
