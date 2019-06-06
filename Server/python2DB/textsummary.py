@@ -13,10 +13,10 @@ curs=conn.cursor(pymysql.cursors.DictCursor)
 #sql = "SELECT * FROM chatlog WHERE room_id = %s AND member_id = %s"
 sql = "SELECT * FROM chatlog WHERE room_id = %s"
 roomid = sys.argv[1]
-memberid = sys.argv[2]
-summnum = float(sys.argv[3])#비율 또는 문장 갯수 입력
+
+summnum = float(sys.argv[2])#비율 또는 문장 갯수 입력
 summtype = 0
-summtype = sys.argv[4]
+summtype = sys.argv[3]
 #curs.execute(sql,(roomid, memberid))
 curs.execute(sql,roomid)
 
