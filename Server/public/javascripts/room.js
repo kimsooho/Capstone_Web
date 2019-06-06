@@ -12,6 +12,16 @@ module.exports = function () {
                 });
             });
         },
+        status: function (room_id, callback) {
+            pool.getConnection(function (err, con) {
+                var sql = `select status from room where room_id = ${room_id}`;
+                con.query(sql, function (err, result, fields) {
+                    con.release();
+                    if (err) return callback(err);
+                    callback(null, result[0].status);
+                });
+            });
+        },
         users: function (room_id, callback) {
             pool.getConnection(function (err, con) {
                 var sql = `SELECT member_id FROM join_user WHERE room_id = ${room_id}`;

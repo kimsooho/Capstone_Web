@@ -59,4 +59,10 @@ router.post('/lastchat', function(req, res){
     });
 });
 
+router.post('/status', function(req, res){
+    db.status(req.body.room_id, function(err, result){
+        res.send(result);
+    });
+});
+
 module.exports = router;
