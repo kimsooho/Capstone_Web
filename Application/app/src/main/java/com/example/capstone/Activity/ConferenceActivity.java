@@ -205,10 +205,39 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
 
     public void StopCon(View v)
     {
-        Intent goClose = new Intent(ConferenceActivity.this, CloseActivity.class);
-        goClose.putExtra("RoomNum", roomNum);
-        goClose.putExtra("status", true);
-        startActivity(goClose);
+        final Intent goClose = new Intent(ConferenceActivity.this, CloseActivity.class);
+        final JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("room_id", roomNum);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/room/end")
+                .contentType("application/json; charset=utf-8")
+                .type("POST")
+                .data(jsonObject.toString())
+                .dataType("text")
+                .context(ConferenceActivity.this)
+                .success(new Function() {
+                    @Override
+                    public void invoke($ $, Object... objects) {
+                        //JSONArray array=(JSONArray)objects[0];
+                        //JSONArray는 JSONObject로 구성
+                        //JSONArray.get(배열 인덱스)으로 각 오브젝트 전체를 구할 수 있음
+                        //JSONObject.get(json key)로 원하는 값만 구할 수 있음
+                        goClose.putExtra("RoomNum", roomNum);
+                        goClose.putExtra("status", true);
+                        startActivity(goClose);
+
+                    }
+                }) .error(new Function() {
+                    @Override
+                    public void invoke($ $, Object... objects) {
+                        Log.d("test", "서버 통신 에러");
+                    }
+                }));
+
+
     }
 
     public void checkPeople_con(View v) { //btn_people_conference
@@ -220,6 +249,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.d("debug1","~~~~~~~~~~~~~~~~온 디스트로이");
         //서버에게 사용자가 나감을 알려야함
         JSONObject jsonObject = new JSONObject();
         try {
@@ -487,7 +517,6 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
                             }));
                     /////////////////////////////////////////////////////////////////////////////////////////////////////
                     //방상태 받기
-                  Log.d("debug1","~~~~~~~");
                     $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/room/status")
                             .contentType("application/json; charset=utf-8")
                             .type("POST")
@@ -506,7 +535,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
                                         JSONArray array = new JSONArray(objects[0].toString());
                                             JSONObject jo = array.getJSONObject(0);
                                             status = jo.get("status").toString();
-Log.d( "debug1",status);
+                                            Log.d( "debug1",status);
                                             if(status.equals("1"))
                                             {
                                                 btnStop.performClick();

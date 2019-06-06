@@ -48,7 +48,9 @@ public class CloseActivity extends AppCompatActivity {
         division = PreferenceUtil.getInstance(this).getIntExtra("Division");
         setValue = PreferenceUtil.getInstance(this).getIntExtra("SettingValue");
         if (intent.getExtras().getBoolean("status")) {//방장이 종료 버튼을 눌러서 액티비티 전환시
-
+            Log.d("debug1","종료");
+            ConferenceActivity conferenceActivity = (ConferenceActivity) ConferenceActivity.activity;
+            conferenceActivity.finish();
             //서버에 회의 종료 날리기
             JSONObject jsonObject = new JSONObject();
             try {
@@ -84,8 +86,7 @@ public class CloseActivity extends AppCompatActivity {
                         }
                     }));
 
-            ConferenceActivity conferenceActivity = (ConferenceActivity) ConferenceActivity.activity;
-            conferenceActivity.finish();
+
         }
 
         //탭
