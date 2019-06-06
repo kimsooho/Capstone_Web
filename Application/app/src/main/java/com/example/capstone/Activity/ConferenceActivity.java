@@ -139,8 +139,6 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         //다이얼로그 스레드 & 핸들러 객체 생성
         dt = new DialogueThread();
         mh = new MyHandler();
-
-        dt.start();
     }
 
     @Override
@@ -191,6 +189,13 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         listview.setSelection(adapter.getCount() - 1);
         setButtonsStatus(true);
 
+        dt.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        dt.stop();
     }
 
     public void StopCon(View v)
