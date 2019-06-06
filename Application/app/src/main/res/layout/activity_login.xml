@@ -7,7 +7,8 @@
     android:background="@color/background"
     android:orientation="vertical"
     android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:paddingRight="10dp"
+   >
 
     <Space
         android:layout_width="match_parent"
@@ -39,6 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:background="@drawable/id"
+            android:paddingLeft="70dp"
             android:ems="10"
             android:inputType="textPersonName"
             android:gravity="right|center_vertical"
@@ -56,8 +58,8 @@
             android:layout_weight="0.5"
             android:background="@drawable/pw"
             android:ems="10"
-            android:gravity="right|center_vertical"
-            android:inputType="textPassword" />
+            android:paddingLeft="70dp"
+            android:inputType="numberPassword" />
 
         <Space
             android:layout_width="match_parent"

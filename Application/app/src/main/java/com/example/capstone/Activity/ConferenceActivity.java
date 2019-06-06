@@ -103,8 +103,8 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
 
 
         if (intent.getExtras().getBoolean("where")) { //채널 생성 액티비티에서 왓으면 생성 액티비티 종료
-            makeMember = intent.getStringExtra("userID"); //채널생성
-            userID = intent.getStringExtra("userID"); //채널생성
+            makeMember = intent.getStringExtra("makeMember"); //채널생성
+            userID = intent.getStringExtra("makeMember"); //채널생성
             MakeChannelActivity makeChannelActivity = (MakeChannelActivity) MakeChannelActivity.createChannelActivity;
             makeChannelActivity.finish();
         } else//일반 접속시 패스워드 팝업 종료
@@ -115,7 +115,6 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
             passwordPopup.finish();
         }
 
-        //서버에게 방번호와 사용자 아이디를 서버에게 보내줘서 서버에게 사용자가 방에 접속했다는것을 알려야함
         if (!userID.equals(makeMember)) {
             linearLayout.removeView(btnStop);
             authority = false;
@@ -195,10 +194,9 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
 
     }
 
-    public void StopCon(View v) {
-        //서버에게 사용자 나감을 알려야함
+    public void StopCon(View v)
+    {
         Intent goClose = new Intent(ConferenceActivity.this, CloseActivity.class);
-        Log.d("debug", "--------------");
         goClose.putExtra("RoomNum", roomNum);
         goClose.putExtra("status", true);
         startActivity(goClose);
@@ -210,14 +208,41 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         startActivity(goCheck);
     }
 
-    public void Say(View v) //btn_say
-    {
+    //상황에 따라 버튼을 사용가능할지 불가능하게 할지 설정한다.
+    private void setButtonsStatus(boolean enabled) {
+        findViewById(R.id.btn_say).setEnabled(enabled);
+        findViewById(R.id.btn_stop).setEnabled(enabled);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         //서버에게 사용자가 나감을 알려야함
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("room_id", roomNum);
+            jsonObject.put("member_id", userID);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/join/roomout") //0입 1나감
+                .contentType("application/json; charset=utf-8")
+                .type("POST")
+                .data(jsonObject.toString())
+                .dataType("json")
+                .context(ConferenceActivity.this)
+                .success(new Function() {
+                    @Override
+                    public void invoke($ $, Object... objects) {
+                    }
+                })
+                .error(new Function() {
+                    @Override
+                    public void invoke($ $, Object... objects) {
+                        Log.d("test1", objects[0].toString());
+                    }
+                }));
+
         // API를 더이상 사용하지 않을 때 finalizeLibrary()를 호출한다.
         SpeechRecognizerManager.getInstance().finalizeLibrary();
     }

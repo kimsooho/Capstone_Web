@@ -70,7 +70,6 @@ public class TabDialogueFragment extends Fragment {
                             try {
                                 JSONObject object = array.getJSONObject(i);
                                 String now = object.getString("chat_date");
-                               Log.d("debug", now);
                                  String date = now.substring(11, 19);
                                 adapter.addDialogue(object.getString("member_id"), date, object.getString("contents"));
                                 adapter.notifyDataSetChanged();

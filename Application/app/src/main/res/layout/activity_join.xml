@@ -40,6 +40,7 @@
             android:layout_weight="0.5"
             android:background="@drawable/join_name"
             android:ems="10"
+            android:paddingLeft="70dp"
             android:inputType="textPersonName" />
 
         <Space
@@ -66,7 +67,8 @@
             android:layout_weight="0.5"
             android:background="@drawable/pw"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:paddingLeft="70dp"
+            android:inputType="number" />
 
         <Space
             android:layout_width="match_parent"

@@ -46,12 +46,44 @@ public class CloseActivity extends AppCompatActivity {
 
         roomNum = intent.getExtras().getInt("RoomNum");
         division = PreferenceUtil.getInstance(this).getIntExtra("Division");
-      //  Log.d("debug", division);
         setValue = PreferenceUtil.getInstance(this).getIntExtra("SettingValue");
-    //    Log.d("debug", setValue+"");
-        if (intent.getExtras().getBoolean("status")) {
-            //회의후 넘어온 것이라면 회의 액티비티 종료
-            //이전 액티비티 종료
+        if (intent.getExtras().getBoolean("status")) {//방장이 종료 버튼을 눌러서 액티비티 전환시
+
+            //서버에 회의 종료 날리기
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("room_id", roomNum);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/room/chat")
+                    .contentType("application/json; charset=utf-8")
+                    .type("POST")
+                    .data(jsonObject.toString())
+                    .dataType("json")
+                    .context(CloseActivity.this)
+                    .success(new Function() {
+                        @Override
+                        public void invoke($ $, Object... objects) {
+                            JSONArray array = (JSONArray) objects[0];
+
+                            for (int i = 0; i < array.length(); i++) {
+                                try {
+                                    JSONObject object = array.getJSONObject(i);
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    })
+                    .error(new Function() {
+                        @Override
+                        public void invoke($ $, Object... objects) {
+                            Log.d("test1", objects[0].toString());
+                        }
+                    }));
+
             ConferenceActivity conferenceActivity = (ConferenceActivity) ConferenceActivity.activity;
             conferenceActivity.finish();
         }
@@ -75,7 +107,6 @@ public class CloseActivity extends AppCompatActivity {
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
             @Override
-
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition());
             }

@@ -31,20 +31,25 @@ import self.philbrown.droidQuery.Function;
 
 public class ChannelListActivity extends AppCompatActivity {
 
-
-    String id;
     static public ChannelListActivity channelListActivity;
-    String userID;
+    String userID; //사용자 id
+
+    ListViewAdapter adapter;
+
     TextView editSearch;
     ListView listView;
-    ListViewAdapter adapter;
     CheckBox check_before;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel_list);
+
+        channelListActivity = ChannelListActivity.this;
+
         editSearch = (TextView) findViewById(R.id.edit_search);
+        editSearch = (TextView) findViewById(R.id.edit_search);
+        check_before = (CheckBox) findViewById(R.id.check_pre);
 
         //설정 초기값 저장
         //값 저장
@@ -56,20 +61,7 @@ public class ChannelListActivity extends AppCompatActivity {
             PreferenceUtil.getInstance(this).putIntExtra("Division", 0);
         }
 
-
         Intent intent = getIntent();
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(intent);
-        }*/
-
-        id = intent.getStringExtra("ID");
-        channelListActivity = ChannelListActivity.this;
-
-
-        editSearch = (TextView) findViewById(R.id.edit_search);
-        check_before = (CheckBox) findViewById(R.id.check_pre);
-
-
         userID = intent.getStringExtra("userID");
 
         // Adapter 생성
@@ -100,40 +92,24 @@ public class ChannelListActivity extends AppCompatActivity {
             }
         });
     }
-
-    public void waiting(View v) {
-        Intent goWaiting = new Intent(ChannelListActivity.this, WaitingActivity.class);
-        startActivity(goWaiting);
-    }
-
     public void MakeChannel(View v) {
         Intent goMake = new Intent(ChannelListActivity.this, MakeChannelActivity.class);
         goMake.putExtra("userID", userID);
         //값보내기
-        //       goList.putExtra("key", editID.getText().toString());
         startActivity(goMake);
     }
 
     public void Setting(View v) {
         Intent goSetting = new Intent(ChannelListActivity.this, SettingPopup.class);
         //값보내기
-        //       goList.putExtra("key", editID.getText().toString());
         startActivity(goSetting);
     }
 
     public void search(View v)//검색 버튼 누르면 시작
     {
-	/*if(editSearch.getText().toString() != "")
-        {
-         빈칸 검색일 경우 이전 채널 리스트 불러오기
-        }else{} */
-        /*검색어가 포함된 방들의 타이틀, 방 만든사람, 방번호 다 가져와야함*/
-
         adapter.getListViewItemList().removeAll(adapter.getListViewItemList());
-        /*검색어가 포함된 방들의 타이틀, 방 만든사람, 방번호 다 가져와야함*/
-        //before checkBox 선택시 이전 회의 목록 불러오기
-        JSONObject jsonObject = new JSONObject();
 
+        JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("title", editSearch.getText());
         } catch (JSONException e) {
@@ -206,7 +182,7 @@ public class ChannelListActivity extends AppCompatActivity {
                                     roomID = Integer.parseInt(jo.get("room_id").toString());
                                     roomStatus = Integer.parseInt(jo.get("status").toString()); //상태 받아와서 상태값도 저장
                                     adapter.addItem(ContextCompat.getDrawable(ChannelListActivity.this, R.drawable.main),
-                                            ContextCompat.getDrawable(ChannelListActivity.this, R.drawable.green),
+                                            ContextCompat.getDrawable(ChannelListActivity.this, R.drawable.green), //룸상태 0
                                             title, makeMember, roomID, roomStatus);
                                     adapter.notifyDataSetChanged();
 

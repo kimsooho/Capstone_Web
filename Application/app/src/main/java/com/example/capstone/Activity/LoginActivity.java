@@ -24,8 +24,7 @@ import self.philbrown.droidQuery.AjaxOptions;
 import self.philbrown.droidQuery.Function;
 
 public class LoginActivity extends AppCompatActivity {
-    EditText editID, editPW;
-    String id, pw;
+    EditText editID, editPW; //사용자 id,pw
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,18 +41,20 @@ public class LoginActivity extends AppCompatActivity {
         editID = (EditText) findViewById(R.id.edit_id);
         editPW = (EditText) findViewById(R.id.edit_pw);
 
+            ActivityCompat.requestPermissions(LoginActivity.this, new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE},0);
 
+        }
+
+        editID = (EditText) findViewById(R.id.edit_id);
+        editPW = (EditText) findViewById(R.id.edit_pw);
     }
 
     public void LoginClick(View v) {
-
         final Intent goList = new Intent(LoginActivity.this, ChannelListActivity.class);
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("id", editID.getText().toString());
             jsonObject.put("pwd", editPW.getText().toString());
-            Log.d("test", editID.getText().toString());
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -68,9 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                         String result = objects[0].toString();
                         Log.d("test", objects[0].toString());
                         if (result.equals("success")) {
-
                             goList.putExtra("userID", editID.getText().toString());
-
                             startActivity(goList);
                         } else {
                             Toast.makeText(LoginActivity.this, "userID / PW를 확인해주세요.", Toast.LENGTH_SHORT).show();
