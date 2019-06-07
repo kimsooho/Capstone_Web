@@ -149,12 +149,12 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         dt.interrupt();
     }
 
-
     @Override
     protected void onStop() {
         super.onStop();
         Log.d("test1","onStop");
     }
+
 
     @Override
     protected void onRestart() {
@@ -298,6 +298,10 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
 
         // API를 더이상 사용하지 않을 때 finalizeLibrary()를 호출한다.
         SpeechRecognizerManager.getInstance().finalizeLibrary();
+
+        if(dt.getState()!= Thread.State.TERMINATED){
+            dt.interrupt();
+        }
     }
 
     @Override

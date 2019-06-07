@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.capstone.Adapter.ListViewAdapter;
 import com.example.capstone.Item.ListViewItem;
@@ -198,6 +199,9 @@ public class ChannelListActivity extends AppCompatActivity {
                             Log.d("test", "서버 통신 에러");
                         }
                     }));
+        }
+        if(adapter.getCount()==0){
+            Toast.makeText(ChannelListActivity.this,"검색된 방이 없습니다!",Toast.LENGTH_SHORT).show();
         }
     }
 
