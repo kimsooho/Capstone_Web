@@ -147,23 +147,17 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         super.onPause();
         Log.d("test1","onPause");
         dt.interrupt();
-        adapter.clear();
-        adapter.notifyDataSetChanged();
     }
     @Override
     protected void onStop() {
         super.onStop();
         Log.d("test1","onStop");
-        adapter.clear();
-        adapter.notifyDataSetChanged();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
         Log.d("test1","onRestart");
-        adapter.clear();
-        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -216,8 +210,14 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         listview.setSelection(adapter.getCount() - 1);
         setButtonsStatus(true);
 
-        dt = new DialogueThread();
-        dt.start();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dt = new DialogueThread();
+                dt.start();
+            }
+        },1000);
     }
 
     public void StopCon(View v)
