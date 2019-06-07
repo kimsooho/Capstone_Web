@@ -148,6 +148,8 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         Log.d("test1","onPause");
         dt.interrupt();
     }
+
+
     @Override
     protected void onStop() {
         super.onStop();

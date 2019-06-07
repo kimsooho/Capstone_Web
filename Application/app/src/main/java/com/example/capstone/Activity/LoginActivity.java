@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        Log.d("test1","ajax 입구");
         $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/login")
                 .contentType("application/json; charset=utf-8")
                 .type("POST")
@@ -61,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void invoke($ $, Object... objects) {
                         String result = objects[0].toString();
-                        Log.d("test", objects[0].toString());
+                        Log.d("test1", objects[0].toString());
                         if (result.equals("success")) {
                             goList.putExtra("userID", editID.getText().toString());
                             startActivity(goList);
@@ -73,10 +74,10 @@ public class LoginActivity extends AppCompatActivity {
                 .error(new Function() {
                     @Override
                     public void invoke($ $, Object... objects) {
-                        Log.d("test", objects[0].toString());
+                        Log.d("test1", objects[0].toString());
+                        Toast.makeText(LoginActivity.this,objects[0].toString(),Toast.LENGTH_LONG).show();
                     }
                 }));
-
     }
 
     public void JoinusClick(View v) {
