@@ -50,12 +50,18 @@ module.exports = function () {
                     else {
                         sql = `SELECT room_id 
                                     FROM room 
-                                    WHERE title = '${title}' AND make_member = '${make_member}' AND room_pwd = '${pwd}'
-                                    ORDER BY room_id DESC`;
+                                    WHERE title = '${title}' AND make_member = '${make_member}' AND room_pwd = '${pwd}' ORDER BY room_id DESC`;
                         con.query(sql, function (err, result) {
                             console.log("roomid : " + result[0].room_id);
                             if (err) return callback(null, "fail");
                             else {
+				sql = `INSERT INTO join_user(room_id, member_id, status) VALUES(${result[0].room_id}, '${make_member}', 0)`;
+				con.query(sql, function(err, result){
+					if(err) console.log(err);
+					else{
+						console.log("방장 입장");
+					}
+				});
                                 callback(null, result[0].room_id);
                             }
                             con.release();
@@ -93,7 +99,7 @@ module.exports = function () {
                     else if (result[0].cnt == 0) {
                         return callback(null, "join fail");
                     } else {
-                        sql = `SELECT count(*) cnt FROM room JOIN join_user WHERE room.room_id='${room_id}' AND member_id='${member_id}' AND room_pwd='${room_pwd}'`;
+                        sql = `SELECT count(*) cnt FROM join_user WHERE room_id='${room_id}' AND member_id='${member_id}'`;
                         con.query(sql, function (err, result1) {
                             if (err) console.log(err);
                             else if (result1[0].cnt == 0) { // 회의에 첫 참가
