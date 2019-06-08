@@ -200,7 +200,7 @@ public class ChannelListActivity extends AppCompatActivity {
                         }
                     }));
         }
-        if(adapter.getCount()==0){
+        if(adapter.getCount()==0){ //위 에이잭스 동기로 해야할듯
             Toast.makeText(ChannelListActivity.this,"검색된 방이 없습니다!",Toast.LENGTH_SHORT).show();
         }
     }
