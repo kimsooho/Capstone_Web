@@ -140,6 +140,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
         //핸들러 객체 생성
         mh = new MyHandler();
 
+
     }
 
     @Override
@@ -321,9 +322,11 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         int id = v.getId();
+        Log.d("MainActivity", "ServiceType : ");
+
         String serviceType = SpeechRecognizerClient.SERVICE_TYPE_WEB;
         Log.i("MainActivity", "ServiceType : " + serviceType);
-
+        Log.d("MainActivity", "ServiceType2 ");
         //음성인식 시작 버튼-마이크 버튼
         if (id == R.id.btn_say) {
             SpeechRecognizerClient.Builder builder = new SpeechRecognizerClient.Builder().setServiceType(serviceType);
@@ -525,6 +528,8 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
                                                                 e.printStackTrace();
                                                             }
                                                         }
+
+
                                                     }
                                                 })
                                                 .error(new Function() {
