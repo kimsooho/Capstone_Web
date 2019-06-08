@@ -36,20 +36,19 @@
 
             <Button
                 android:id="@+id/btn_people_conference"
-                android:layout_width="46dp"
-                android:layout_height="wrap_content"
+                android:layout_width="35dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="1dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
                 android:background="@drawable/user"
                 android:onClick="checkPeople_con"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/imageView3"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
 
@@ -72,16 +71,24 @@
                 android:id="@+id/btn_say"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="3dp"
                 android:layout_weight="1"
-                android:text="발언권"
-                android:onClick="onClick"/>
+                android:onClick="onClick"
+                android:text="발언권" />
 
             <Button
                 android:id="@+id/btn_stop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="3.5"
-                android:background="@drawable/stop"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="6"
+                android:background="@drawable/stop_x"
+                android:elevation="0dp"
                 android:onClick="StopCon" />
 
         </LinearLayout>
