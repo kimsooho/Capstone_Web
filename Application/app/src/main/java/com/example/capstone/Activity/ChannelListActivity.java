@@ -109,8 +109,9 @@ public class ChannelListActivity extends AppCompatActivity {
 
     public void search(View v)//검색 버튼 누르면 시작
     {
-        adapter.getListViewItemList().removeAll(adapter.getListViewItemList());
-
+        //adapter.getListViewItemList().removeAll(adapter.getListViewItemList());
+        adapter.clear();
+        adapter.notifyDataSetChanged();
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("title", editSearch.getText());
