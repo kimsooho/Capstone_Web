@@ -108,8 +108,9 @@ public class ChannelListActivity extends AppCompatActivity {
 
     public void search(View v)//검색 버튼 누르면 시작
     {
-        adapter.getListViewItemList().removeAll(adapter.getListViewItemList());
-
+        //adapter.getListViewItemList().removeAll(adapter.getListViewItemList());
+        adapter.clear();
+        adapter.notifyDataSetChanged();
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("title", editSearch.getText());
@@ -147,6 +148,10 @@ public class ChannelListActivity extends AppCompatActivity {
                                             ContextCompat.getDrawable(ChannelListActivity.this, R.drawable.red),
                                             title, makeMember, roomID, roomStatus);
                                     adapter.notifyDataSetChanged();
+                                    Log.d("test1", String.valueOf(adapter.getCount()));
+                                    if(adapter.getCount()==0){
+                                        Toast.makeText(ChannelListActivity.this,"검색된 방이 없습니다!",Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -186,7 +191,9 @@ public class ChannelListActivity extends AppCompatActivity {
                                             ContextCompat.getDrawable(ChannelListActivity.this, R.drawable.green), //룸상태 0
                                             title, makeMember, roomID, roomStatus);
                                     adapter.notifyDataSetChanged();
-
+                                    if(adapter.getCount()==0){
+                                        Toast.makeText(ChannelListActivity.this,"검색된 방이 없습니다!",Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -199,9 +206,6 @@ public class ChannelListActivity extends AppCompatActivity {
                             Log.d("test", "서버 통신 에러");
                         }
                     }));
-        }
-        if(adapter.getCount()==0){
-            Toast.makeText(ChannelListActivity.this,"검색된 방이 없습니다!",Toast.LENGTH_SHORT).show();
         }
     }
 
