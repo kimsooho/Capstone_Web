@@ -55,7 +55,7 @@ public class ChannelListActivity extends AppCompatActivity {
         //설정 초기값 저장
         //값 저장
         if (PreferenceUtil.getInstance(this).getIntExtra("SettingValue") == 101) {
-            PreferenceUtil.getInstance(this).putIntExtra("SettingValue", 50);
+            PreferenceUtil.getInstance(this).putIntExtra("SettingValue", 20);
         }
         //라인, 퍼센트 저장 0-퍼센트
         if (PreferenceUtil.getInstance(this).getIntExtra("Division") == 101) {

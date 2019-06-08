@@ -58,7 +58,7 @@
                 android:layout_weight="0.5"
                 android:background="@drawable/pw"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:paddingLeft="70dp"
                 android:visibility="visible"
                 tools:background="@drawable/pw" />

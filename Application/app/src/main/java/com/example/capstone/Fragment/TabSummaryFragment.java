@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.capstone.Activity.ChannelListActivity;
 import com.example.capstone.PreferenceUtil;
@@ -22,6 +23,7 @@ import org.json.JSONObject;
 
 import self.philbrown.droidQuery.$;
 import self.philbrown.droidQuery.AjaxOptions;
+import self.philbrown.droidQuery.AjaxTask;
 import self.philbrown.droidQuery.Function;
 
 public class TabSummaryFragment extends Fragment {
@@ -80,15 +82,23 @@ public class TabSummaryFragment extends Fragment {
 
                         for(int i=0; i<result.length; i++)
                         {
-                            textSummary.append(result[i].toString().substring(1,result[i].length()-1)+"\n");
+                            textSummary.append(result[i].toString().substring(1,result[i].length()-1)+"\n\n");
                             Log.d("chat",result[i].toString().substring(1,result[i].length()-1));
+                        }
+
+                        if(textSummary.getText().toString().equals("\n\n"))
+                        {
+                            Toast.makeText(getContext(),"대화 내용이 부족하여 요약 할 수 없습니다.",Toast.LENGTH_SHORT).show();
                         }
                     }
                 })
                 .error(new Function() {
                     @Override
                     public void invoke($ $, Object... objects) {
-                        Log.d("test", "서버 통신 에러");
+                        if((int)objects[1] == 0)
+                        {
+                            Toast.makeText(getContext(),"대화 내용이 부족하여 요약 할 수 없습니다.",Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }));
 
