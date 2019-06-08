@@ -28,7 +28,7 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:layout_weight="8"
-                android:background="@drawable/text"
+                android:background="@drawable/listening_green"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

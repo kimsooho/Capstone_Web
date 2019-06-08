@@ -33,5 +33,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="대화내용"
-        android:textSize="8pt"/>
+        android:textSize="8pt" />
 </LinearLayout>
