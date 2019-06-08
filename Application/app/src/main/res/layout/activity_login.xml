@@ -42,8 +42,7 @@
             android:background="@drawable/id"
             android:ems="10"
             android:inputType="textPersonName"
-            android:paddingLeft="70dp"
-            android:text="admin" />
+            android:paddingLeft="70dp" />
 
         <Space
             android:layout_width="match_parent"
@@ -58,8 +57,7 @@
             android:background="@drawable/pw"
             android:ems="10"
             android:inputType="numberPassword"
-            android:paddingLeft="70dp"
-            android:text="1111" />
+            android:paddingLeft="70dp" />
 
         <Space
             android:layout_width="match_parent"
