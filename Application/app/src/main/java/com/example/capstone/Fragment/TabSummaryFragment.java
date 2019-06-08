@@ -5,11 +5,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.capstone.Activity.ChannelListActivity;
 import com.example.capstone.PreferenceUtil;
@@ -21,6 +23,7 @@ import org.json.JSONObject;
 
 import self.philbrown.droidQuery.$;
 import self.philbrown.droidQuery.AjaxOptions;
+import self.philbrown.droidQuery.AjaxTask;
 import self.philbrown.droidQuery.Function;
 
 public class TabSummaryFragment extends Fragment {
@@ -40,14 +43,15 @@ public class TabSummaryFragment extends Fragment {
         if (getArguments() != null) {
             roomNum = getArguments().getInt("num");
         }
+
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d("qq","온크리에이트");
         View v = inflater.inflate(R.layout.tab_summary_item, container, false);
 
 
         textSummary = v.findViewById(R.id.text_summary);
+        textSummary.setMovementMethod(new ScrollingMovementMethod());
         //서버에 설정값 전송 후 데이터 받기
         JSONObject jsonObject = new JSONObject();
         try {
@@ -71,31 +75,30 @@ public class TabSummaryFragment extends Fragment {
                         //JSONObject.get(json key)로 원하는 값만 구할 수 있음
                         String title, makeMember;
                         int roomID, roomStatus;
-                        Log.d("qq",objects[0].getClass().toString());
                         String temp = (String)objects[0];
+                        temp = temp.substring(1,temp.length()-1);
+                        Log.d("debug",temp);
                         String[] result = temp.split(",");
 
                         for(int i=0; i<result.length; i++)
                         {
-                            textSummary.append(result[i].toString()+"\n");
+                            textSummary.append(result[i].toString().substring(1,result[i].length()-1)+"\n\n");
+                            Log.d("chat",result[i].toString().substring(1,result[i].length()-1));
                         }
-                        /*try {
-                            JSONArray array = (JSONArray) objects[0];
-                            Log.d("qq","arry"+array.toString());
-                            for (int i = 0; i < array.length(); i++) {
-                                JSONObject jo = array.getJSONObject(i);
-                                Log.d("qq","부분"+jo.toString());
-                                textSummary.append(jo.toString()+"\n");
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }*/
+
+                        if(textSummary.getText().toString().equals("\n\n"))
+                        {
+                            Toast.makeText(getContext(),"대화 내용이 부족하여 요약 할 수 없습니다.",Toast.LENGTH_SHORT).show();
+                        }
                     }
                 })
                 .error(new Function() {
                     @Override
                     public void invoke($ $, Object... objects) {
-                        Log.d("test", "서버 통신 에러");
+                        if((int)objects[1] == 0)
+                        {
+                            Toast.makeText(getContext(),"대화 내용이 부족하여 요약 할 수 없습니다.",Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }));
 

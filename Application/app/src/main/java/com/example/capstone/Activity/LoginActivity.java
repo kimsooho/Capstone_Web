@@ -74,7 +74,6 @@ public class LoginActivity extends AppCompatActivity {
                 .error(new Function() {
                     @Override
                     public void invoke($ $, Object... objects) {
-                        Log.d("test1", objects[0].toString());
                         Toast.makeText(LoginActivity.this,objects[0].toString(),Toast.LENGTH_LONG).show();
                     }
                 }));

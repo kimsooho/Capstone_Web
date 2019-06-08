@@ -518,6 +518,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
                                                                 String date1 = now.substring(0, 10);
                                                                 String date2 = now.substring(11, 19);
                                                                 String date = date1 + " " + date2;
+                                                                Log.d("debug","call="+date);
                                                                 adapter.addDialogue(object.getString("member_id"), date, object.getString("contents"));
                                                                 adapter.notifyDataSetChanged();
                                                             } catch (JSONException e) {
@@ -561,7 +562,7 @@ public class ConferenceActivity extends AppCompatActivity implements View.OnClic
                                         JSONArray array = new JSONArray(objects[0].toString());
                                             JSONObject jo = array.getJSONObject(0);
                                             status = jo.get("status").toString();
-                                            Log.d( "debug1",status);
+                                            Log.d( "debug1","status="+status);
                                             if(status.equals("1"))
                                             {
                                                 btnStop.performClick();
