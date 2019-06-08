@@ -33,47 +33,62 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5" />
 
-        <EditText
-            android:id="@+id/edit__id"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:background="@drawable/join_name"
-            android:ems="10"
-            android:paddingLeft="70dp"
-            android:inputType="textPersonName" />
+            android:layout_weight="0.4"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edit__id"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="@drawable/join_name"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:paddingLeft="70dp" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="중복체크" />
+        </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5" />
 
-        <Button
-            android:id="@+id/button3"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="중복체크" />
+            android:layout_weight="0.4"
+            android:orientation="horizontal">
 
+            <EditText
+                android:id="@+id/edit_pw"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="@drawable/pw"
+                android:ems="10"
+                android:inputType="number"
+                android:paddingLeft="70dp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5" />
+
+        </LinearLayout>
         <Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5" />
 
-        <EditText
-            android:id="@+id/edit_pw"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:background="@drawable/pw"
-            android:ems="10"
-            android:paddingLeft="70dp"
-            android:inputType="number" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5" />
     </LinearLayout>
 
     <LinearLayout
@@ -88,6 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/start_x" />
+
     </LinearLayout>
 
 </LinearLayout>
