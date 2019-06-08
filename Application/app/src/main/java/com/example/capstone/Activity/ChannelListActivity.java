@@ -58,7 +58,7 @@ public class ChannelListActivity extends AppCompatActivity {
             PreferenceUtil.getInstance(this).putIntExtra("SettingValue", 50);
         }
         //라인, 퍼센트 저장 0-퍼센트
-        if (PreferenceUtil.getInstance(this).getIntExtra("Division")== 101) {
+        if (PreferenceUtil.getInstance(this).getIntExtra("Division") == 101) {
             PreferenceUtil.getInstance(this).putIntExtra("Division", 0);
         }
 
@@ -93,6 +93,7 @@ public class ChannelListActivity extends AppCompatActivity {
             }
         });
     }
+
     public void MakeChannel(View v) {
         Intent goMake = new Intent(ChannelListActivity.this, MakeChannelActivity.class);
         goMake.putExtra("userID", userID);
@@ -131,7 +132,7 @@ public class ChannelListActivity extends AppCompatActivity {
                             //JSONArray.get(배열 인덱스)으로 각 오브젝트 전체를 구할 수 있음
                             //JSONObject.get(json key)로 원하는 값만 구할 수 있음
                             String title, makeMember;
-                            Log.d("test1","hello");
+                            Log.d("test1", "hello");
                             int roomID, roomStatus;
                             try {
                                 JSONArray array = new JSONArray(objects[0].toString());
@@ -146,10 +147,12 @@ public class ChannelListActivity extends AppCompatActivity {
                                     adapter.addItem(ContextCompat.getDrawable(ChannelListActivity.this, R.drawable.main),
                                             ContextCompat.getDrawable(ChannelListActivity.this, R.drawable.red),
                                             title, makeMember, roomID, roomStatus);
-                                    adapter.notifyDataSetChanged();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                                if (adapter.getCount() == 0) { //위 에이잭스 동기로 해야할듯
+                                    Toast.makeText(ChannelListActivity.this, "검색된 방이 없습니다!", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         }
                     })
@@ -158,8 +161,19 @@ public class ChannelListActivity extends AppCompatActivity {
                         public void invoke($ $, Object... objects) {
                             Log.d("test", "서버 통신 에러");
                         }
+                    })
+                    .complete(new Function() {
+                        @Override
+                        public void invoke($ $, Object... objects) {
+                            if (adapter.getCount() == 0) { //위 에이잭스 동기로 해야할듯
+                                Toast.makeText(ChannelListActivity.this, "검색된 방이 없습니다!", Toast.LENGTH_SHORT).show();
+                            }
+                            adapter.notifyDataSetChanged();
+                        }
                     }));
+
         } else {
+            Log.d("debug", "룸리스트 트루");
             $.ajax(new AjaxOptions().url("http://emperorp.iptime.org/room/roomlisttrue")
                     .contentType("application/json; charset=utf-8")
                     .type("POST")
@@ -185,11 +199,10 @@ public class ChannelListActivity extends AppCompatActivity {
                                     adapter.addItem(ContextCompat.getDrawable(ChannelListActivity.this, R.drawable.main),
                                             ContextCompat.getDrawable(ChannelListActivity.this, R.drawable.green), //룸상태 0
                                             title, makeMember, roomID, roomStatus);
-                                    adapter.notifyDataSetChanged();
-
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
+
                             }
                         }
                     })
@@ -198,10 +211,15 @@ public class ChannelListActivity extends AppCompatActivity {
                         public void invoke($ $, Object... objects) {
                             Log.d("test", "서버 통신 에러");
                         }
+                    }).complete(new Function() {
+                        @Override
+                        public void invoke($ $, Object... objects) {
+                            if (adapter.getCount() == 0) { //위 에이잭스 동기로 해야할듯
+                                Toast.makeText(ChannelListActivity.this, "검색된 방이 없습니다!", Toast.LENGTH_SHORT).show();
+                            }
+                            adapter.notifyDataSetChanged();
+                        }
                     }));
-        }
-        if(adapter.getCount()==0){ //위 에이잭스 동기로 해야할듯
-            Toast.makeText(ChannelListActivity.this,"검색된 방이 없습니다!",Toast.LENGTH_SHORT).show();
         }
     }
 
