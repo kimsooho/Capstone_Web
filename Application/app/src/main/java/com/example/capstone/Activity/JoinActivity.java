@@ -58,6 +58,11 @@ public class JoinActivity extends Activity {
     }
 
     public void checkID(View view){
+        if(editID.getText().toString().equals(""))
+        {
+            Toast.makeText(JoinActivity.this, "ID를 입력하세요",Toast.LENGTH_SHORT).show();
+            return;
+        }
         JSONObject jsonObject=new JSONObject();
         try {
             jsonObject.put("id",editID.getText().toString());

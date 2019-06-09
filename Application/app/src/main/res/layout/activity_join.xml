@@ -53,8 +53,10 @@
                 android:id="@+id/button3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
                 android:layout_weight="1.5"
-                android:text="중복체크" />
+                android:background="@drawable/check_x"
+                android:onClick="checkID" />
         </LinearLayout>
 
         <Space
